@@ -54,7 +54,7 @@ always say that the files are unencrypted :) ).
 ## Development Setup
 
 * PostgreSQL service must be started by running `sudo service postgresql start`.
-* Prisma's `docker-compose.yml` file should have the host set to 
+* Prisma's `docker-compose.yml` file should have the host set to
   `host.docker.internal`
 and *not* `localhost` due an issue with host redirection of localhost in docker.
 See [Prisma cannot run command "prisma deploy" because prisma in docker cannot run](https://github.com/prisma/prisma/issues/2761)

@@ -11,25 +11,16 @@
     "url": "git+https://github.com/dbpiper/Euclid.git"
   },
   "author": "",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/dbpiper/Euclid/issues"
   },
   "homepage": "https://github.com/dbpiper/Euclid#readme",
   "devDependencies": {
-    "@commitlint/cli": "^7.3.1",
-    "@commitlint/config-conventional": "^7.3.1",
-    "commitlint": "^7.3.1",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.12.3",
-    "husky": "^1.3.1"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "npx commitlint -E HUSKY_GIT_PARAMS"
-    }
+    "eslint-plugin-react": "^7.12.3"
   }
 }

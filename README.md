@@ -16,7 +16,7 @@ to its benefits and that you can get many of the same benefits without
 the cost by using Tern.js. He talked about this in [You Might Not Need TypeScript (or Static Types)](https://medium.com/javascript-scene/you-might-not-need-typescript-or-static-types-aa7cb670a77b)
 a few years ago also.
 
-### git-cryptA
+### git-crypt
 This project encrypts secret information such as: API keys, usernames, and
 passwords using the `git-crypt` tool. Simply install it and then someone
 who already has access (such as me) will need to use the command

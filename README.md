@@ -26,3 +26,11 @@ you will be using to unlock the repo with.
 
 Then you simply clone the repo as usual and run `git-crypt unlock` to
 get access to the secret files.
+
+
+## Development Setup
+
+* PostgreSQL service must be started by running `sudo service postgresql start`.
+* Prisma's `docker-compose.yml` file should have the host set to `host.docker.internal`
+and *not* `localhost` due an issue with host redirection of localhost in docker.
+See [Prisma cannot run command "prisma deploy" because prisma in docker cannot run](https://github.com/prisma/prisma/issues/2761)

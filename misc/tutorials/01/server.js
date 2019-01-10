@@ -11,7 +11,8 @@ const app = express();
 (async () => {
   const db = await massive(connectionString);
 
-  await db.insert_colors();
+  const colors = await db.select_colors();
+  console.log(colors);
 })();
 app.get('/', (req, res) => {
   res.send('hello world');

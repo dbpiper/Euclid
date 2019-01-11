@@ -1,6 +1,7 @@
 # git-crypt encryption rules
 *-secret* filter=git-crypt diff=git-crypt
 *docker-compose* filter=git-crypt diff=git-crypt
+*prisma.* filter=git-crypt diff=git-crypt
 .gitattributes !filter !diff
 
 

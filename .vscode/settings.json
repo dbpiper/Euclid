@@ -1,25 +1,5 @@
 {
   "editor.fontFamily": "InputMono, Consolas, 'Courier New', monospace",
   "editor.tabSize": 2,
-  "files.eol": "\n",
-  "cSpell.words": [
-    "app",
-    "browserslist",
-    "commitlint",
-    "eslint",
-    "fixes",
-    "flexbugs",
-    "flowtype",
-    "gitattributes",
-    "jsdom",
-    "linebreak",
-    "markdownlint",
-    "noopener",
-    "noreferrer",
-    "plugin",
-    "polyfill",
-    "postcss",
-    "react",
-    "unencrypted"
-  ]
+  "files.eol": "\n"
 }

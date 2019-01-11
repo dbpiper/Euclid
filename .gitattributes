@@ -1,3 +1,38 @@
+# git-crypt encryption rules
 *-secret* filter=git-crypt diff=git-crypt
 *docker-compose* filter=git-crypt diff=git-crypt
 .gitattributes !filter !diff
+
+
+# text detection rules for crlf -> lf
+
+# autodetect text
+* text=auto
+
+# text files
+*.txt text
+*.js text
+*.jsx text
+*.py text
+*.sql text
+*.yaml text
+*.yml text
+*.md text
+*.json text
+*.prisma text
+*.babelrc text
+*.gitignore text
+*.firebaserc text
+*.ts text
+*.tern-project text
+LICENSE text
+*.css text
+*.scss text
+*.html text
+*Dockerfile* text
+*.sh text
+
+# binary files
+*.jpg binary
+*.png binary
+*.jpeg binary

@@ -1,7 +1,7 @@
 # git-crypt encryption rules
-*-secret* filter=git-crypt diff=git-crypt
-*docker-compose* filter=git-crypt diff=git-crypt
-*prisma.* filter=git-crypt diff=git-crypt
+**/*-secret* filter=git-crypt diff=git-crypt
+**/*docker-compose* filter=git-crypt diff=git-crypt
+**/*prisma.* filter=git-crypt diff=git-crypt
 .gitattributes !filter !diff
 
 
@@ -11,29 +11,33 @@
 * text=auto
 
 # text files
-*.txt text
-*.js text
-*.jsx text
-*.py text
-*.sql text
-*.yaml text
-*.yml text
-*.md text
-*.json text
-*.prisma text
-*.babelrc text
-*.gitignore text
-*.firebaserc text
-*.ts text
-*.tern-project text
+**/*.txt text
+**/*.js text
+**/*.jsx text
+**/*.py text
+**/*.sql text
+**/*.yaml text
+**/*.yml text
+**/*.md text
+**/*.json text
+**/*.prisma text
+**/*.babelrc text
+**/*.gitignore text
+**/*.firebaserc text
+**/*.ts text
+**/*.tern-project text
 LICENSE text
-*.css text
-*.scss text
-*.html text
-*Dockerfile* text
-*.sh text
+**/*.css text
+**/*.scss text
+**/*.html text
+**/*Dockerfile* text
+**/*.sh text
 
 # binary files
-*.jpg binary
-*.png binary
-*.jpeg binary
+**/*.jpg binary
+**/*.png binary
+**/*.jpeg binary
+
+# make diff viewers treat as binary file so it is collapsed in diffs
+# see: https://www.reddit.com/r/javascript/comments/ad6zoj/npm_vs_yarn_which_one_and_why/edezpiy
+**/*package-lock.json -diff

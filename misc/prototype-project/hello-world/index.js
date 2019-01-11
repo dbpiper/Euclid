@@ -1,15 +1,67 @@
+import { GraphQLServer } from 'graphql-yoga';
 import { prisma } from './generated/prisma-client';
 
-async function main() {
-  const users = await prisma.users({
-    where: {
-      name: 'Bob',
+const resolvers = {
+  Query: {
+    publishedPosts(root, args, context) {
+      return context.prisma.posts({ where: { published: true } });
     },
-  });
-  const userBob = users[0];
-  const updatedUser = await prisma
-    .deleteUser({ id: userBob.id });
-  console.log(updatedUser);
-}
+    post(root, args, context) {
+      return context.prisma.post({ id: args.postId });
+    },
+    postsByUser(root, args, context) {
+      return context.prisma.user({
+        id: args.userId,
+      }).posts();
+    },
+  },
+  Mutation: {
+    createDraft(root, args, context) {
+      return context.prisma.createPost(
+        {
+          title: args.title,
+          author: {
+            connect: { id: args.userId },
+          },
+        },
+      );
+    },
+    publish(root, args, context) {
+      return context.prisma.updatePost(
+        {
+          where: { id: args.postId },
+          data: { published: true },
+        },
+      );
+    },
+    createUser(root, args, context) {
+      return context.prisma.createUser(
+        { name: args.name },
+      );
+    },
+  },
+  User: {
+    posts(root, args, context) {
+      return context.prisma.user({
+        id: root.id,
+      }).posts();
+    },
+  },
+  Post: {
+    author(root, args, context) {
+      return context.prisma.post({
+        id: root.id,
+      }).author();
+    },
+  },
+};
 
-main().catch(e => console.error(e));
+const server = new GraphQLServer({
+  typeDefs: './schema.graphql',
+  resolvers,
+  context: {
+    prisma,
+  },
+});
+
+server.start(() => console.log('Server is running on http://localhost:4000'));

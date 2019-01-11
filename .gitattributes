@@ -1,3 +1,3 @@
 *-secret* filter=git-crypt diff=git-crypt
-*docker-compose.yaml filter=git-crypt diff=git-crypt
+*docker-compose* filter=git-crypt diff=git-crypt
 .gitattributes !filter !diff

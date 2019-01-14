@@ -4,11 +4,17 @@
   "description": "The server for Euclid",
   "main": "index.js",
   "scripts": {
+    "start": "babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "David Piper",
   "license": "MIT",
   "dependencies": {
-    "prisma": "^1.24.0"
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "graphql-yoga": "^1.16.9",
+    "prisma": "^1.24.0",
+    "prisma-client-lib": "^1.24.0"
   }
 }

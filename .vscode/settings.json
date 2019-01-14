@@ -11,6 +11,8 @@
     "flexbugs",
     "flowtype",
     "jsdom",
+    "noopener",
+    "noreferrer",
     "plugin",
     "polyfill",
     "postcss",

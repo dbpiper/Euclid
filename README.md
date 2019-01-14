@@ -13,7 +13,6 @@ In addition, I have found myself very disappointed with the analytic capabilitie
 
 However, upon reflection it seems that (at least upon first glance to me) the exact same mechanism that can be used to track *all* types of consumer goods. So things like Smartphone prices or Food prices can theoretically also be tracked which could prove interesting as well.
 
-
 ## Style Guidelines
 
 [Software Style Guide](style-guide.md)
@@ -21,6 +20,7 @@ However, upon reflection it seems that (at least upon first glance to me) the ex
 ## Tools
 
 ### Tern.js
+
 I have chosen to use Tern.js to provide type information to the project
 rather than using TypeScript (which was the original plan). This
 was based on reading [Eric Elliott's opinions on the topic](https://medium.com/@_ericelliott/yep-i-suspect-a-large-number-of-converts-are-just-beginning-to-wake-up-to-the-typescript-hangover-978d1708e36e)
@@ -30,6 +30,7 @@ the cost by using Tern.js. He talked about this in [You Might Not Need TypeScrip
 a few years ago also.
 
 ### git-crypt
+
 This project encrypts secret information such as: API keys, usernames, and
 passwords using the `git-crypt` tool. Simply install it and then someone
 who already has access (such as me) will need to use the command
@@ -50,10 +51,16 @@ encryption to actually happen with `git-crypt`. Thus  you would need
 to do this *before* you run the verification step (otherwise it would just
 always say that the files are unencrypted :) ).
 
-
 ## Development Setup
 
 * PostgreSQL service must be started by running `sudo service postgresql start`.
-* Prisma's `docker-compose.yml` file should have the host set to `host.docker.internal`
+* Prisma's `docker-compose.yml` file should have the host set to 
+  `host.docker.internal`
 and *not* `localhost` due an issue with host redirection of localhost in docker.
 See [Prisma cannot run command "prisma deploy" because prisma in docker cannot run](https://github.com/prisma/prisma/issues/2761)
+
+## Steps to run
+
+1. PostgreSQL service must be started by running `sudo service postgresql start`.
+2. Start the Prisma container by running `docker-compose up -d`.
+3. Deploy the Prisma API by running `prisma deploy`.

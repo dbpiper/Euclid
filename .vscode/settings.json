@@ -1,5 +1,9 @@
 {
   "editor.fontFamily": "InputMono, Consolas, 'Courier New', monospace",
   "editor.tabSize": 2,
-  "files.eol": "\n"
+  "files.eol": "\n",
+  "cSpell.words": [
+    "commitlint",
+    "unencrypted"
+  ]
 }

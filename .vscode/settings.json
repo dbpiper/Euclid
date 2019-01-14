@@ -3,7 +3,18 @@
   "editor.tabSize": 2,
   "files.eol": "\n",
   "cSpell.words": [
+    "app",
+    "browserslist",
     "commitlint",
+    "eslint",
+    "fixes",
+    "flexbugs",
+    "flowtype",
+    "jsdom",
+    "plugin",
+    "polyfill",
+    "postcss",
+    "react",
     "unencrypted"
   ]
 }

@@ -42,7 +42,17 @@ Then you simply clone the repo as usual and run `git-crypt unlock` to
 get access to the secret files.
 
 Files that contain sensitive information should be encrypted.
-Furthermore, they should be verified as encrypted by using the
+
+To encrypt files add a rule in `.gitattributes` for the file.
+For example adding:
+
+  ```gitattributes
+  **/*-secret* filter=git-crypt diff=git-crypt
+  ```
+
+to `.gitattributes` encrypts all files with "-secret" somewhere in their name.
+
+They should be verified as encrypted by using the
 `git crypt status` command, or
 [manually](https://github.com/AGWA/git-crypt/issues/129).
 Only once they have been verified should they be committed and pushed.

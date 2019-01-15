@@ -12,6 +12,8 @@
     "flowtype",
     "gitattributes",
     "jsdom",
+    "linebreak",
+    "markdownlint",
     "noopener",
     "noreferrer",
     "plugin",

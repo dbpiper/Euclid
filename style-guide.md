@@ -3,6 +3,7 @@
 * [SQL Style Guide](https://www.sqlstyle.guide) -- though no manual SQL should be *needed/written*.
 * [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
 * [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/)
+* [markdownlint for VS Code](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) or [markdownlint for Node.js](https://github.com/DavidAnson/markdownlint)
 
 The project uses the above style guides in their own relevant domains. However,
 it should be noted that it is *not* following the suggestion from the Airbnb
@@ -12,6 +13,16 @@ However, .jsx files are *not* supported by React Native and are *not*
 recommended by the React team. Furthermore, the create-react-app doesn't use
 them anymore. So it seems prudent to follow the industry rather than Airbnb in
 this case.
+
+For Markdown some linting that is compatible with [markdownlint for VS Code](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) *must* be used. Since [markdownlint for VS Code](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) uses [markdownlint for Node.js](https://github.com/DavidAnson/markdownlint) this is the obvious choice if you
+have some objection to writing your Markdown in VS Code, say if you use VIM.
+However, since I personally use VS Code, this will not be supported or
+or documented by me.
+
+*Note* I actually do use VIM for some things, such as writing git commit messages. However, I personally like to have a rendered preview which VS Code
+provides that would require a ton of customization to achieve in VIM.
+Furthermore copy-pasting links and general interaction with the clipboard
+are *not* VIM's strong suit.
 
 ## Line Endings
 

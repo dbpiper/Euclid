@@ -41,3 +41,4 @@ Dockerfile text
 # make diff viewers treat as binary file so it is collapsed in diffs
 # see: https://www.reddit.com/r/javascript/comments/ad6zoj/npm_vs_yarn_which_one_and_why/edezpiy
 package-lock.json -diff
+**/generated/prisma-client/** -diff

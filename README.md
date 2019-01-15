@@ -47,7 +47,7 @@ To encrypt files add a rule in `.gitattributes` for the file.
 For example adding:
 
   ```gitattributes
-  **/*-secret* filter=git-crypt diff=git-crypt
+  *-secret* filter=git-crypt diff=git-crypt
   ```
 
 to `.gitattributes` encrypts all files with "-secret" somewhere in their name.

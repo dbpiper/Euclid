@@ -19,7 +19,10 @@
   "settings": {
     "import/resolver": {
       "babel-module": {
-        "root": ["./src"]
+        "root": ["./src"],
+        "alias": {
+          "App": ["./src/screens/App"]
+        }
       }
     }
   }

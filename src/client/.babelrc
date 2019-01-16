@@ -6,7 +6,9 @@
   "plugins": [
     ["module-resolver", {
       "root": ["./src"],
-      "alias": {}
+      "alias": {
+        "App": ["./src/screens/App"]
+      }
     }]
   ]
 }

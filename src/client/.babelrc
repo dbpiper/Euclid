@@ -4,11 +4,15 @@
     "@babel/preset-react"
   ],
   "plugins": [
-    ["module-resolver", {
-      "root": ["./src"],
-      "alias": {
-        "App": ["./src/screens/App"]
-      }
-    }]
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "App": ["./src/screens/App"]
+        }
+      },
+      "recharts"
+    ]
   ]
 }

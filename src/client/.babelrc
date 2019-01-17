@@ -4,15 +4,15 @@
     "@babel/preset-react"
   ],
   "plugins": [
-    [
-      "module-resolver",
-      {
+      ["module-resolver", {
         "root": ["./src"],
         "alias": {
           "App": ["./src/screens/App"]
         }
-      },
-      "recharts"
-    ]
+      }],
+      "recharts",
+      ["@babel/plugin-transform-runtime", {
+        "regenerator": true
+      }]
   ]
 }

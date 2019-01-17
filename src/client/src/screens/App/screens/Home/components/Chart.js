@@ -22,17 +22,14 @@ const ChartSection = styled.section`
   width: 60%;
   height: 100%;
   margin: auto;
+  display: block;
 `;
 
 const ChartBody = styled.div`
-  display: block;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  left: 33%;
-  transform: translate(0, -50%);
-  margin-right: -50%;
+  width: 730px;
+  height: 250px;
+  margin: auto;
+  padding-top: 10%;
 `;
 
 

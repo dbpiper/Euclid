@@ -44,10 +44,6 @@ const darkTooltipContentStyle = {
 
 const generateData = async function generateData() {
   const fakeArray = [];
-  // const pvStart = faker.random.number();
-  // const uvStart = faker.random.number();
-  // let pv = pvStart;
-  // let uv = uvStart;
 
   const dateFormat = 'YYYY-MM-DD';
   const iex = new IEXClient(_fetch);
@@ -58,18 +54,10 @@ const generateData = async function generateData() {
   R.forEach((elem) => {
     fakeArray.push({
       name: moment(_.first(elem).date, dateFormat).diff(firstDate, 'days'),
-      pv: _.first(elem).high,
-      uv: _.last(elem).high,
+      Apple: _.first(elem).high,
+      Dow: _.last(elem).high,
     });
   }, joinedChart);
-  console.log('apple');
-  console.log(chartApple);
-  console.log('doj');
-  console.log(chartDoj);
-  console.log('zipped');
-  console.log(joinedChart);
-  console.log('final');
-  console.log(fakeArray);
   return fakeArray;
 };
 
@@ -122,8 +110,8 @@ class Chart extends React.Component {
               contentStyle={darkTooltipContentStyle}
             />
             <Legend />
-            <Line dot={false} type="monotone" dataKey="pv" stroke="#8884d8" />
-            <Line dot={false} type="monotone" dataKey="uv" stroke="#82ca9d" />
+            <Line dot={false} type="monotone" dataKey="Apple" stroke="#8884d8" />
+            <Line dot={false} type="monotone" dataKey="Dow" stroke="#82ca9d" />
           </LineChart>
         </ChartBody>
       </ChartSection>

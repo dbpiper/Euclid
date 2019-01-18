@@ -16,6 +16,12 @@ import moment from 'moment';
 import { IEXClient } from 'iex-api';
 import * as _fetch from 'isomorphic-fetch';
 import _ from 'lodash';
+import ApolloClient from 'apollo-boost';
+import gql from 'graphql-tag';
+
+const client = new ApolloClient({
+  uri: 'https://48p1r2roz4.sse.codesandbox.io',
+});
 
 const ChartSection = styled.section`
   background-color: #111111;
@@ -42,24 +48,6 @@ const darkTooltipContentStyle = {
   borderRightColor: '#3d3d3d',
 };
 
-const generateData = async function generateData() {
-  const fakeArray = [];
-
-  const dateFormat = 'YYYY-MM-DD';
-  const iex = new IEXClient(_fetch);
-  const chartApple = await iex.stockChart('AAPL', '2y');
-  const chartDoj = await iex.stockChart('DIA', '2y');
-  const firstDate = moment(_.first(chartApple).date, dateFormat);
-  const joinedChart = R.zip(chartApple, chartDoj);
-  R.forEach((elem) => {
-    fakeArray.push({
-      name: moment(_.first(elem).date, dateFormat).diff(firstDate, 'days'),
-      Apple: _.first(elem).high,
-      Dow: _.last(elem).high,
-    });
-  }, joinedChart);
-  return fakeArray;
-};
 
 class Chart extends React.Component {
   constructor() {
@@ -70,8 +58,19 @@ class Chart extends React.Component {
   }
 
   async componentDidMount() {
-    const chartData = await generateData();
-    this.setState({ chartData });
+    // const chartData = await generateData();
+    // this.setState({ chartData });
+
+    const results = await client.query({
+      query: gql`
+        {
+          rates(currency: "USD") {
+            currency
+          }
+        }
+      `,
+    });
+    console.log(results);
   }
 
   render() {

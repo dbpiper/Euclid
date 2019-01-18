@@ -4,7 +4,12 @@
 * [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
 * [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/)
 * [markdownlint for VS Code](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) or [markdownlint for Node.js](https://github.com/DavidAnson/markdownlint)
-* Using [Ryan Florence's React Directory Structure](https://gist.github.com/ryanflorence/daafb1e3cb8ad740b346) with some modifications for the client-side structure
+* Using [Ryan Florence's React Directory Structure](https://gist.github.com/ryanflorence/daafb1e3cb8ad740b346)
+  with some modifications for the client-side structure
+* [JSDoc](https://github.com/jsdoc3/jsdoc) for Documentation I'm personally
+  using [Document This](https://marketplace.visualstudio.com/items?itemName=joelday.docthis)
+  which is a VS Code extension that will automatically generate JSDoc comments.
+  This is optional, however it is very helpful.
 
 The project uses the above style guides in their own relevant domains. However,
 it should be noted that it is *not* following the suggestion from the Airbnb

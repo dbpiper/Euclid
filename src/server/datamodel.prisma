@@ -1,3 +1,15 @@
+type Stock {
+  id: ID! @unique
+  price: Float!
+  date: Int!
+}
+
+type Stocks {
+  id: ID! @unique
+  stocks: [Stock!]!
+  ticker: String!
+}
+
 type User {
   id: ID! @unique
   email: String @unique

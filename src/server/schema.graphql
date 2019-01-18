@@ -1,25 +1,46 @@
 type Query {
-  publishedPosts: [Post!]!
-  post(postId: ID!): Post
-  postsByUser(userId: ID!): [Post!]!
+  stock(stockId: ID!): Stock
+  stockList(stockListTicker: String!): StockList
 }
 
 type Mutation {
-  createUser(name: String!): User
-  createDraft(title: String!, userId: ID!): Post
-  publish(postId: ID!): Post
+  createStock(price: Float!, date: Int!): Stock
+  createStockList(ticker: String!, stocks: [Stock!]!): StockList
 }
 
-type User {
+type Stock {
   id: ID!
-  email: String
-  name: String!
-  posts: [Post!]!
+  price: Float!
+  date: Int!
 }
 
-type Post {
-  id: ID!
-  title: String!
-  published: Boolean!
-  author: User
+type StockList {
+  ticker: String!
+  stocks: [Stock!]!
 }
+
+# type Query {
+#   publishedPosts: [Post!]!
+#   post(postId: ID!): Post
+#   postsByUser(userId: ID!): [Post!]!
+# }
+
+# type Mutation {
+#   createUser(name: String!): User
+#   createDraft(title: String!, userId: ID!): Post
+#   publish(postId: ID!): Post
+# }
+
+# type User {
+#   id: ID!
+#   email: String
+#   name: String!
+#   posts: [Post!]!
+# }
+
+# type Post {
+#   id: ID!
+#   title: String!
+#   published: Boolean!
+#   author: User
+# }

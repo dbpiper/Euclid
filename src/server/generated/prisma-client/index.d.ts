@@ -14,7 +14,8 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
 
 export interface Exists {
-  user: (where?: UserWhereInput) => Promise<boolean>;
+  stock: (where?: StockWhereInput) => Promise<boolean>;
+  stockList: (where?: StockListWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -36,51 +37,93 @@ export interface Prisma {
    * Queries
    */
 
-  user: (where: UserWhereUniqueInput) => UserPromise;
-  users: (
+  stock: (where: StockWhereUniqueInput) => StockPromise;
+  stocks: (
     args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
+      where?: StockWhereInput;
+      orderBy?: StockOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
       first?: Int;
       last?: Int;
     }
-  ) => FragmentableArray<User>;
-  usersConnection: (
+  ) => FragmentableArray<Stock>;
+  stocksConnection: (
     args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
+      where?: StockWhereInput;
+      orderBy?: StockOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
       first?: Int;
       last?: Int;
     }
-  ) => UserConnectionPromise;
+  ) => StockConnectionPromise;
+  stockList: (where: StockListWhereUniqueInput) => StockListPromise;
+  stockLists: (
+    args?: {
+      where?: StockListWhereInput;
+      orderBy?: StockListOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<StockList>;
+  stockListsConnection: (
+    args?: {
+      where?: StockListWhereInput;
+      orderBy?: StockListOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => StockListConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
    * Mutations
    */
 
-  createUser: (data: UserCreateInput) => UserPromise;
-  updateUser: (
-    args: { data: UserUpdateInput; where: UserWhereUniqueInput }
-  ) => UserPromise;
-  updateManyUsers: (
-    args: { data: UserUpdateManyMutationInput; where?: UserWhereInput }
+  createStock: (data: StockCreateInput) => StockPromise;
+  updateStock: (
+    args: { data: StockUpdateInput; where: StockWhereUniqueInput }
+  ) => StockPromise;
+  updateManyStocks: (
+    args: { data: StockUpdateManyMutationInput; where?: StockWhereInput }
   ) => BatchPayloadPromise;
-  upsertUser: (
+  upsertStock: (
     args: {
-      where: UserWhereUniqueInput;
-      create: UserCreateInput;
-      update: UserUpdateInput;
+      where: StockWhereUniqueInput;
+      create: StockCreateInput;
+      update: StockUpdateInput;
     }
-  ) => UserPromise;
-  deleteUser: (where: UserWhereUniqueInput) => UserPromise;
-  deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
+  ) => StockPromise;
+  deleteStock: (where: StockWhereUniqueInput) => StockPromise;
+  deleteManyStocks: (where?: StockWhereInput) => BatchPayloadPromise;
+  createStockList: (data: StockListCreateInput) => StockListPromise;
+  updateStockList: (
+    args: { data: StockListUpdateInput; where: StockListWhereUniqueInput }
+  ) => StockListPromise;
+  updateManyStockLists: (
+    args: {
+      data: StockListUpdateManyMutationInput;
+      where?: StockListWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertStockList: (
+    args: {
+      where: StockListWhereUniqueInput;
+      create: StockListCreateInput;
+      update: StockListUpdateInput;
+    }
+  ) => StockListPromise;
+  deleteStockList: (where: StockListWhereUniqueInput) => StockListPromise;
+  deleteManyStockLists: (where?: StockListWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -90,9 +133,12 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  user: (
-    where?: UserSubscriptionWhereInput
-  ) => UserSubscriptionPayloadSubscription;
+  stock: (
+    where?: StockSubscriptionWhereInput
+  ) => StockSubscriptionPayloadSubscription;
+  stockList: (
+    where?: StockListSubscriptionWhereInput
+  ) => StockListSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -103,11 +149,23 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type UserOrderByInput =
+export type StockOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
+  | "price_ASC"
+  | "price_DESC"
+  | "date_ASC"
+  | "date_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type StockListOrderByInput =
+  | "ticker_ASC"
+  | "ticker_DESC"
+  | "id_ASC"
+  | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -115,11 +173,11 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type UserWhereUniqueInput = AtLeastOne<{
+export type StockWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface UserWhereInput {
+export interface StockWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -134,88 +192,232 @@ export interface UserWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  AND?: UserWhereInput[] | UserWhereInput;
-  OR?: UserWhereInput[] | UserWhereInput;
-  NOT?: UserWhereInput[] | UserWhereInput;
+  price?: Float;
+  price_not?: Float;
+  price_in?: Float[] | Float;
+  price_not_in?: Float[] | Float;
+  price_lt?: Float;
+  price_lte?: Float;
+  price_gt?: Float;
+  price_gte?: Float;
+  date?: Int;
+  date_not?: Int;
+  date_in?: Int[] | Int;
+  date_not_in?: Int[] | Int;
+  date_lt?: Int;
+  date_lte?: Int;
+  date_gt?: Int;
+  date_gte?: Int;
+  AND?: StockWhereInput[] | StockWhereInput;
+  OR?: StockWhereInput[] | StockWhereInput;
+  NOT?: StockWhereInput[] | StockWhereInput;
 }
 
-export interface UserCreateInput {
-  name: String;
+export type StockListWhereUniqueInput = AtLeastOne<{
+  ticker: String;
+}>;
+
+export interface StockListWhereInput {
+  ticker?: String;
+  ticker_not?: String;
+  ticker_in?: String[] | String;
+  ticker_not_in?: String[] | String;
+  ticker_lt?: String;
+  ticker_lte?: String;
+  ticker_gt?: String;
+  ticker_gte?: String;
+  ticker_contains?: String;
+  ticker_not_contains?: String;
+  ticker_starts_with?: String;
+  ticker_not_starts_with?: String;
+  ticker_ends_with?: String;
+  ticker_not_ends_with?: String;
+  stocks_every?: StockWhereInput;
+  stocks_some?: StockWhereInput;
+  stocks_none?: StockWhereInput;
+  AND?: StockListWhereInput[] | StockListWhereInput;
+  OR?: StockListWhereInput[] | StockListWhereInput;
+  NOT?: StockListWhereInput[] | StockListWhereInput;
 }
 
-export interface UserUpdateInput {
-  name?: String;
+export interface StockCreateInput {
+  price: Float;
+  date: Int;
 }
 
-export interface UserUpdateManyMutationInput {
-  name?: String;
+export interface StockUpdateInput {
+  price?: Float;
+  date?: Int;
 }
 
-export interface UserSubscriptionWhereInput {
+export interface StockUpdateManyMutationInput {
+  price?: Float;
+  date?: Int;
+}
+
+export interface StockListCreateInput {
+  ticker: String;
+  stocks?: StockCreateManyInput;
+}
+
+export interface StockCreateManyInput {
+  create?: StockCreateInput[] | StockCreateInput;
+  connect?: StockWhereUniqueInput[] | StockWhereUniqueInput;
+}
+
+export interface StockListUpdateInput {
+  ticker?: String;
+  stocks?: StockUpdateManyInput;
+}
+
+export interface StockUpdateManyInput {
+  create?: StockCreateInput[] | StockCreateInput;
+  update?:
+    | StockUpdateWithWhereUniqueNestedInput[]
+    | StockUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | StockUpsertWithWhereUniqueNestedInput[]
+    | StockUpsertWithWhereUniqueNestedInput;
+  delete?: StockWhereUniqueInput[] | StockWhereUniqueInput;
+  connect?: StockWhereUniqueInput[] | StockWhereUniqueInput;
+  disconnect?: StockWhereUniqueInput[] | StockWhereUniqueInput;
+  deleteMany?: StockScalarWhereInput[] | StockScalarWhereInput;
+  updateMany?:
+    | StockUpdateManyWithWhereNestedInput[]
+    | StockUpdateManyWithWhereNestedInput;
+}
+
+export interface StockUpdateWithWhereUniqueNestedInput {
+  where: StockWhereUniqueInput;
+  data: StockUpdateDataInput;
+}
+
+export interface StockUpdateDataInput {
+  price?: Float;
+  date?: Int;
+}
+
+export interface StockUpsertWithWhereUniqueNestedInput {
+  where: StockWhereUniqueInput;
+  update: StockUpdateDataInput;
+  create: StockCreateInput;
+}
+
+export interface StockScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  price?: Float;
+  price_not?: Float;
+  price_in?: Float[] | Float;
+  price_not_in?: Float[] | Float;
+  price_lt?: Float;
+  price_lte?: Float;
+  price_gt?: Float;
+  price_gte?: Float;
+  date?: Int;
+  date_not?: Int;
+  date_in?: Int[] | Int;
+  date_not_in?: Int[] | Int;
+  date_lt?: Int;
+  date_lte?: Int;
+  date_gt?: Int;
+  date_gte?: Int;
+  AND?: StockScalarWhereInput[] | StockScalarWhereInput;
+  OR?: StockScalarWhereInput[] | StockScalarWhereInput;
+  NOT?: StockScalarWhereInput[] | StockScalarWhereInput;
+}
+
+export interface StockUpdateManyWithWhereNestedInput {
+  where: StockScalarWhereInput;
+  data: StockUpdateManyDataInput;
+}
+
+export interface StockUpdateManyDataInput {
+  price?: Float;
+  date?: Int;
+}
+
+export interface StockListUpdateManyMutationInput {
+  ticker?: String;
+}
+
+export interface StockSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  node?: StockWhereInput;
+  AND?: StockSubscriptionWhereInput[] | StockSubscriptionWhereInput;
+  OR?: StockSubscriptionWhereInput[] | StockSubscriptionWhereInput;
+  NOT?: StockSubscriptionWhereInput[] | StockSubscriptionWhereInput;
+}
+
+export interface StockListSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: StockListWhereInput;
+  AND?: StockListSubscriptionWhereInput[] | StockListSubscriptionWhereInput;
+  OR?: StockListSubscriptionWhereInput[] | StockListSubscriptionWhereInput;
+  NOT?: StockListSubscriptionWhereInput[] | StockListSubscriptionWhereInput;
 }
 
 export interface NodeNode {
   id: ID_Output;
 }
 
-export interface User {
+export interface Stock {
   id: ID_Output;
-  name: String;
+  price: Float;
+  date: Int;
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
+export interface StockPromise extends Promise<Stock>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  price: () => Promise<Float>;
+  date: () => Promise<Int>;
 }
 
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface StockSubscription
+  extends Promise<AsyncIterator<Stock>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<Float>>;
+  date: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface UserConnection {
+export interface StockConnection {
   pageInfo: PageInfo;
-  edges: UserEdge[];
+  edges: StockEdge[];
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface StockConnectionPromise
+  extends Promise<StockConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  edges: <T = FragmentableArray<StockEdge>>() => T;
+  aggregate: <T = AggregateStockPromise>() => T;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface StockConnectionSubscription
+  extends Promise<AsyncIterator<StockConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<StockEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateStockSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -241,35 +443,127 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserEdge {
-  node: User;
+export interface StockEdge {
+  node: Stock;
   cursor: String;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
+export interface StockEdgePromise extends Promise<StockEdge>, Fragmentable {
+  node: <T = StockPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface StockEdgeSubscription
+  extends Promise<AsyncIterator<StockEdge>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
+  node: <T = StockSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser {
+export interface AggregateStock {
   count: Int;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface AggregateStockPromise
+  extends Promise<AggregateStock>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface AggregateStockSubscription
+  extends Promise<AsyncIterator<AggregateStock>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface StockList {
+  ticker: String;
+}
+
+export interface StockListPromise extends Promise<StockList>, Fragmentable {
+  ticker: () => Promise<String>;
+  stocks: <T = FragmentableArray<Stock>>(
+    args?: {
+      where?: StockWhereInput;
+      orderBy?: StockOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface StockListSubscription
+  extends Promise<AsyncIterator<StockList>>,
+    Fragmentable {
+  ticker: () => Promise<AsyncIterator<String>>;
+  stocks: <T = Promise<AsyncIterator<StockSubscription>>>(
+    args?: {
+      where?: StockWhereInput;
+      orderBy?: StockOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface StockListConnection {
+  pageInfo: PageInfo;
+  edges: StockListEdge[];
+}
+
+export interface StockListConnectionPromise
+  extends Promise<StockListConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<StockListEdge>>() => T;
+  aggregate: <T = AggregateStockListPromise>() => T;
+}
+
+export interface StockListConnectionSubscription
+  extends Promise<AsyncIterator<StockListConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<StockListEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateStockListSubscription>() => T;
+}
+
+export interface StockListEdge {
+  node: StockList;
+  cursor: String;
+}
+
+export interface StockListEdgePromise
+  extends Promise<StockListEdge>,
+    Fragmentable {
+  node: <T = StockListPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface StockListEdgeSubscription
+  extends Promise<AsyncIterator<StockListEdge>>,
+    Fragmentable {
+  node: <T = StockListSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateStockList {
+  count: Int;
+}
+
+export interface AggregateStockListPromise
+  extends Promise<AggregateStockList>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateStockListSubscription
+  extends Promise<AsyncIterator<AggregateStockList>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -290,48 +584,92 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface UserSubscriptionPayload {
+export interface StockSubscriptionPayload {
   mutation: MutationType;
-  node: User;
+  node: Stock;
   updatedFields: String[];
-  previousValues: UserPreviousValues;
+  previousValues: StockPreviousValues;
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface StockSubscriptionPayloadPromise
+  extends Promise<StockSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
+  node: <T = StockPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  previousValues: <T = StockPreviousValuesPromise>() => T;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface StockSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<StockSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
+  node: <T = StockSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  previousValues: <T = StockPreviousValuesSubscription>() => T;
 }
 
-export interface UserPreviousValues {
+export interface StockPreviousValues {
   id: ID_Output;
-  name: String;
+  price: Float;
+  date: Int;
 }
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
+export interface StockPreviousValuesPromise
+  extends Promise<StockPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  price: () => Promise<Float>;
+  date: () => Promise<Int>;
 }
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
+export interface StockPreviousValuesSubscription
+  extends Promise<AsyncIterator<StockPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<Float>>;
+  date: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface StockListSubscriptionPayload {
+  mutation: MutationType;
+  node: StockList;
+  updatedFields: String[];
+  previousValues: StockListPreviousValues;
+}
+
+export interface StockListSubscriptionPayloadPromise
+  extends Promise<StockListSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = StockListPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = StockListPreviousValuesPromise>() => T;
+}
+
+export interface StockListSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<StockListSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = StockListSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = StockListPreviousValuesSubscription>() => T;
+}
+
+export interface StockListPreviousValues {
+  ticker: String;
+}
+
+export interface StockListPreviousValuesPromise
+  extends Promise<StockListPreviousValues>,
+    Fragmentable {
+  ticker: () => Promise<String>;
+}
+
+export interface StockListPreviousValuesSubscription
+  extends Promise<AsyncIterator<StockListPreviousValues>>,
+    Fragmentable {
+  ticker: () => Promise<AsyncIterator<String>>;
 }
 
 /*
@@ -341,14 +679,19 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
 */
-export type String = string;
+export type Float = number;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
@@ -363,7 +706,11 @@ export type Long = string;
 
 export const models: Model[] = [
   {
-    name: "User",
+    name: "Stock",
+    embedded: false
+  },
+  {
+    name: "StockList",
     embedded: false
   }
 ];

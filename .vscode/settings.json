@@ -12,6 +12,7 @@
     "flexbugs",
     "flowtype",
     "gitattributes",
+    "graphql",
     "jsdom",
     "linebreak",
     "markdownlint",

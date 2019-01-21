@@ -11,7 +11,7 @@ import {
   Line,
 } from 'recharts';
 // import faker from 'faker';
-// import * as R from 'ramda';
+import * as R from 'ramda';
 import moment from 'moment';
 // import _ from 'lodash';
 import { Query } from 'react-apollo';
@@ -71,13 +71,21 @@ class Chart extends React.Component {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
 
+          const tickerStocks = R.map((stockElem) => {
+            const tickerObj = {
+              date: stockElem.date,
+            };
+            tickerObj[data.stockList.ticker] = stockElem.price;
+            return tickerObj;
+          }, data.stockList.stocks);
+
           return (
             <ChartSection>
               <ChartBody>
                 <LineChart
                   width={730}
                   height={250}
-                  data={data.stockList.stocks}
+                  data={tickerStocks}
                   margin={{
                     top: 5, right: 30, left: 20, bottom: 5,
                   }}
@@ -108,15 +116,18 @@ class Chart extends React.Component {
                     }
                   />
                   <YAxis
-                    dataKey="price"
                     tick={{ stroke: 'none', fill: '#c0bebb' }}
                   />
                   <Tooltip
                     contentStyle={darkTooltipContentStyle}
+                    formatter={value => (`$${value}`)}
+                    labelFormatter={value => (
+                      moment.unix(value).format('MMMM DD, YYYY')
+                    )
+                    }
                   />
                   <Legend />
-                  <Line dot={false} type="monotone" dataKey="price" stroke="#8884d8" />
-                  {/* <Line dot={false} type="monotone" dataKey="Dow" stroke="#82ca9d" /> */}
+                  <Line dot={false} type="monotone" dataKey={data.stockList.ticker} stroke="#8884d8" />
                 </LineChart>
               </ChartBody>
             </ChartSection>

@@ -117,6 +117,7 @@ class Chart extends React.Component {
                   />
                   <YAxis
                     tick={{ stroke: 'none', fill: '#c0bebb' }}
+                    tickFormatter={tick => `$${tick}`}
                   />
                   <Tooltip
                     contentStyle={darkTooltipContentStyle}

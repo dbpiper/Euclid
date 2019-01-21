@@ -42,7 +42,6 @@ const darkTooltipContentStyle = {
   borderRightColor: '#3d3d3d',
 };
 
-
 class Chart extends React.Component {
   constructor() {
     super();
@@ -72,7 +71,6 @@ class Chart extends React.Component {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
 
-          console.log(data);
           return (
             <ChartSection>
               <ChartBody>
@@ -93,17 +91,21 @@ class Chart extends React.Component {
                     scale="time"
                     type="number"
                     domain={['dataMin', 'dataMax']}
-                    interval={90}
+                    interval="preserveEnd"
                     tick={{ stroke: 'none', fill: '#c0bebb' }}
-                    // minTickGap={30}
-                    // maxTickGap={30}
+                    minTickGap={30}
+                    maxTickGap={62}
                     tickFormatter={
-                      unixTime => (
-                        // moment((Math.round(tickNum / 30) % 12) + 1, 'MM').format('MMMM');
-                        moment.unix(unixTime).format('MMMM')
-                      )
+                      (unixTime) => {
+                        const month = moment.unix(unixTime).format('MMMM');
+
+                        if (month.length < 6) {
+                          return month;
+                        }
+
+                        return moment.unix(unixTime).format('MMM.');
+                      }
                     }
-                    // tickFormatter={tickNum => Math.round(tickNum / 30)}
                   />
                   <YAxis
                     dataKey="price"

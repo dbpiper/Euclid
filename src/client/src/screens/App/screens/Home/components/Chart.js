@@ -12,9 +12,9 @@ import * as R from 'ramda';
 import moment from 'moment';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import PropTypes from 'prop-types';
 
 import TimeWindow from '../shared/TimeWindow';
-import { TimeWindowConsumer } from '../shared/TimeWindowContext';
 
 const darkTooltipContentStyle = {
   backgroundColor: '#18181a',
@@ -52,95 +52,100 @@ class Chart extends React.Component {
   }
 
   render() {
+    const { timeWindow } = this.props;
     return (
-      <TimeWindowConsumer>
-        { timeWindow => (
-          <Query
-            query={gql`
-              query {
-                stockList(where: { ticker: "AAPL"}) {
-                  ticker
-                  stocks(where: {date_gt: ${getEarliestTime(timeWindow)}}) {
-                    id
-                    price
-                    date
+      <Query
+        query={gql`
+          query {
+            stockList(where: { ticker: "AAPL"}) {
+              ticker
+              stocks(where: {date_gt: ${getEarliestTime(timeWindow)}}) {
+                id
+                price
+                date
+              }
+            }
+          }
+        `}
+      >
+        {({
+          loading,
+          error,
+          data,
+        }) => {
+          if (loading) return <p>Loading...</p>;
+          if (error) return <p>Error :(</p>;
+
+          const tickerStocks = R.map((stockElem) => {
+            const tickerObj = {
+              date: stockElem.date,
+            };
+            tickerObj[data.stockList.ticker] = stockElem.price;
+            return tickerObj;
+          }, data.stockList.stocks);
+
+          return (
+            <LineChart
+              width={730}
+              height={250}
+              data={tickerStocks}
+              margin={{
+                top: 5, right: 30, left: 20, bottom: 5,
+              }}
+            >
+              <CartesianGrid
+                stroke="#3d3d3d"
+                strokeDasharray="3 3"
+              />
+              <XAxis
+                dataKey="date"
+                scale="time"
+                type="number"
+                domain={['dataMin', 'dataMax']}
+                interval="preserveEnd"
+                tick={{ stroke: 'none', fill: '#c0bebb' }}
+                minTickGap={30}
+                maxTickGap={62}
+                tickFormatter={
+                  (unixTime) => {
+                    const month = moment.unix(unixTime).format('MMMM');
+
+                    if (month.length < 6) {
+                      return month;
+                    }
+
+                    return moment.unix(unixTime).format('MMM.');
                   }
                 }
-              }
-            `}
-          >
-            {({
-              loading,
-              error,
-              data,
-            }) => {
-              if (loading) return <p>Loading...</p>;
-              if (error) return <p>Error :(</p>;
-
-              const tickerStocks = R.map((stockElem) => {
-                const tickerObj = {
-                  date: stockElem.date,
-                };
-                tickerObj[data.stockList.ticker] = stockElem.price;
-                return tickerObj;
-              }, data.stockList.stocks);
-
-              return (
-                <LineChart
-                  width={730}
-                  height={250}
-                  data={tickerStocks}
-                  margin={{
-                    top: 5, right: 30, left: 20, bottom: 5,
-                  }}
-                >
-                  <CartesianGrid
-                    stroke="#3d3d3d"
-                    strokeDasharray="3 3"
-                  />
-                  <XAxis
-                    dataKey="date"
-                    scale="time"
-                    type="number"
-                    domain={['dataMin', 'dataMax']}
-                    interval="preserveEnd"
-                    tick={{ stroke: 'none', fill: '#c0bebb' }}
-                    minTickGap={30}
-                    maxTickGap={62}
-                    tickFormatter={
-                      (unixTime) => {
-                        const month = moment.unix(unixTime).format('MMMM');
-
-                        if (month.length < 6) {
-                          return month;
-                        }
-
-                        return moment.unix(unixTime).format('MMM.');
-                      }
-                    }
-                  />
-                  <YAxis
-                    tick={{ stroke: 'none', fill: '#c0bebb' }}
-                    tickFormatter={tick => `$${tick}`}
-                  />
-                  <Tooltip
-                    contentStyle={darkTooltipContentStyle}
-                    formatter={value => (`$${value}`)}
-                    labelFormatter={value => (
-                      moment.unix(value).format('MMMM DD, YYYY')
-                    )
-                    }
-                  />
-                  <Legend />
-                  <Line dot={false} type="monotone" dataKey={data.stockList.ticker} stroke="#8884d8" />
-                </LineChart>
-              );
-            }}
-          </Query>
-        )}
-      </TimeWindowConsumer>
+              />
+              <YAxis
+                tick={{ stroke: 'none', fill: '#c0bebb' }}
+                tickFormatter={tick => `$${tick}`}
+              />
+              <Tooltip
+                contentStyle={darkTooltipContentStyle}
+                formatter={value => (`$${value}`)}
+                labelFormatter={value => (
+                  moment.unix(value).format('MMMM DD, YYYY')
+                )
+                }
+              />
+              <Legend />
+              <Line dot={false} type="monotone" dataKey={data.stockList.ticker} stroke="#8884d8" />
+            </LineChart>
+          );
+        }}
+      </Query>
     );
   }
 }
+
+Chart.defaultProps = {
+  timeWindow: TimeWindow.ThreeYears,
+};
+
+Chart.propTypes = {
+  timeWindow: PropTypes.string,
+};
 
 export default Chart;

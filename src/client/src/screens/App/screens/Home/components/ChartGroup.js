@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Chart from './Chart';
 
 import TimeWindow from '../shared/TimeWindow';
-import { TimeWindowProvider } from '../shared/TimeWindowContext';
 
 
 const ChartSection = styled.section`
@@ -83,9 +82,7 @@ class ChartGroup extends React.Component {
               </LinkButton>
             </Header>
           </HeaderContainer>
-          <TimeWindowProvider value={timeWindow}>
-            <Chart timeWindow={timeWindow} />
-          </TimeWindowProvider>
+          <Chart timeWindow={timeWindow} />
         </ChartBody>
       </ChartSection>
     );

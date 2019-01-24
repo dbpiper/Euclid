@@ -4,8 +4,7 @@ import * as R from 'ramda';
 import { prisma } from './generated/prisma-client';
 
 import resolvers from './src/resolvers';
-// import fetchStock from './src/fetchStock';
-// import formatStockData from './src/formatStockData';
+import pullAndSaveData from './src/pullAndSaveData';
 
 
 const server = new GraphQLServer({
@@ -20,16 +19,21 @@ const server = new GraphQLServer({
 server.start(() => console.log('Server is running on http://localhost:4000'));
 
 (async () => {
-  // const data = await fetchStock('AAPL');
-  // const formattedData = formatStockData(data);
-  // await prisma
-  //   .createStockList({
-  //     ticker: formattedData.ticker,
-  //     stocks: {
-  //       create: formattedData.data,
-  //     },
-  //   });
-  const stockList = await prisma
-    .stockList({ ticker: 'AAPL' });
-  console.log(stockList);
+  try {
+    await pullAndSaveData('AAPL');
+    await pullAndSaveData('SPY');
+    await pullAndSaveData('AMZN');
+    await pullAndSaveData('GOOG');
+    await pullAndSaveData('YELP');
+
+    // await pullAndSaveData('VFIAX'); IEX gives null dates
+    // await pullAndSaveData('LNKD'); IEX give null dates
+
+    await pullAndSaveData('MSFT');
+  } catch (err) {
+    console.log(err);
+  }
+  // const stockList = await prisma
+  //   .stockList({ ticker: 'AAPL' });
+  // console.log(stockList);
 })();

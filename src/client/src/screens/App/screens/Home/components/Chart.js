@@ -45,11 +45,26 @@ const getEarliestTime = (timeWindow) => {
 };
 
 class Chart extends React.Component {
+  static monthFormat(unixTime) {
+    const month = moment.unix(unixTime).format('MMMM');
+
+    if (month.length < 6) {
+      return month;
+    }
+
+    return moment.unix(unixTime).format('MMM.');
+  }
+
+  static formatXAxis(unixTime) {
+    return Chart.monthFormat(unixTime);
+  }
+
   constructor() {
     super();
     this.state = {
     };
   }
+
 
   render() {
     const { timeWindow } = this.props;
@@ -120,15 +135,7 @@ class Chart extends React.Component {
                 minTickGap={30}
                 maxTickGap={62}
                 tickFormatter={
-                  (unixTime) => {
-                    const month = moment.unix(unixTime).format('MMMM');
-
-                    if (month.length < 6) {
-                      return month;
-                    }
-
-                    return moment.unix(unixTime).format('MMM.');
-                  }
+                  unixTime => Chart.formatXAxis(unixTime)
                 }
               />
               <YAxis

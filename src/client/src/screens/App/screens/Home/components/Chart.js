@@ -1,6 +1,4 @@
 import React from 'react';
-
-import styled from 'styled-components';
 import {
   LineChart,
   CartesianGrid,
@@ -10,28 +8,13 @@ import {
   Legend,
   Line,
 } from 'recharts';
-// import faker from 'faker';
 import * as R from 'ramda';
 import moment from 'moment';
-// import _ from 'lodash';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const ChartSection = styled.section`
-  background-color: #111111;
-  width: 60%;
-  height: 100%;
-  margin: auto;
-  display: block;
-`;
-
-const ChartBody = styled.div`
-  width: 730px;
-  height: 250px;
-  margin: auto;
-  padding-top: 10%;
-`;
-
+import TimeWindow from '../shared/TimeWindow';
+import { TimeWindowConsumer } from '../shared/TimeWindowContext';
 
 const darkTooltipContentStyle = {
   backgroundColor: '#18181a',
@@ -40,6 +23,25 @@ const darkTooltipContentStyle = {
   borderTopColor: '#3d3d3d',
   borderLeftColor: '#3d3d3d',
   borderRightColor: '#3d3d3d',
+};
+
+const getEarliestTime = (timeWindow) => {
+  switch (timeWindow) {
+    case TimeWindow.AllTime:
+      return 0;
+    case TimeWindow.YTD:
+      return moment(`01/01/${moment().year()}`, 'MM/DD/YYYY').unix();
+    case TimeWindow.SixMonths:
+      return moment().subtract(6, 'months').unix();
+    case TimeWindow.OneYear:
+      return moment().subtract(1, 'year').unix();
+    case TimeWindow.ThreeYears:
+      return moment().subtract(3, 'years').unix();
+    case TimeWindow.FiveYears:
+      return moment().subtract(5, 'years').unix();
+    default:
+      return 0;
+  }
 };
 
 class Chart extends React.Component {
@@ -51,37 +53,39 @@ class Chart extends React.Component {
 
   render() {
     return (
-      <Query
-        query={gql`
-          query {
-            stockList(where: {
-              ticker: "AAPL"
-            }) {
-              ticker
-              stocks {
-                id
-                price
-                date
+      <TimeWindowConsumer>
+        { timeWindow => (
+          <Query
+            query={gql`
+              query {
+                stockList(where: { ticker: "AAPL"}) {
+                  ticker
+                  stocks(where: {date_gt: ${getEarliestTime(timeWindow)}}) {
+                    id
+                    price
+                    date
+                  }
+                }
               }
-            }
-          }
-        `}
-      >
-        {({ loading, error, data }) => {
-          if (loading) return <p>Loading...</p>;
-          if (error) return <p>Error :(</p>;
+            `}
+          >
+            {({
+              loading,
+              error,
+              data,
+            }) => {
+              if (loading) return <p>Loading...</p>;
+              if (error) return <p>Error :(</p>;
 
-          const tickerStocks = R.map((stockElem) => {
-            const tickerObj = {
-              date: stockElem.date,
-            };
-            tickerObj[data.stockList.ticker] = stockElem.price;
-            return tickerObj;
-          }, data.stockList.stocks);
+              const tickerStocks = R.map((stockElem) => {
+                const tickerObj = {
+                  date: stockElem.date,
+                };
+                tickerObj[data.stockList.ticker] = stockElem.price;
+                return tickerObj;
+              }, data.stockList.stocks);
 
-          return (
-            <ChartSection>
-              <ChartBody>
+              return (
                 <LineChart
                   width={730}
                   height={250}
@@ -130,12 +134,11 @@ class Chart extends React.Component {
                   <Legend />
                   <Line dot={false} type="monotone" dataKey={data.stockList.ticker} stroke="#8884d8" />
                 </LineChart>
-              </ChartBody>
-            </ChartSection>
-          );
-        }}
-      </Query>
-
+              );
+            }}
+          </Query>
+        )}
+      </TimeWindowConsumer>
     );
   }
 }

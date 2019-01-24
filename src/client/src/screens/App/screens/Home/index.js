@@ -1,13 +1,13 @@
 import React from 'react';
 
 import Header from 'App/shared/Header';
-import Chart from './components/Chart';
+import ChartGroup from './components/ChartGroup';
 
 const Home = function Home() {
   return (
     <>
       <Header />
-      <Chart />
+      <ChartGroup />
     </>
   );
 };

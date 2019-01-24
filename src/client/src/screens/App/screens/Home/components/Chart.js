@@ -73,16 +73,29 @@ class Chart extends React.Component {
           error,
           data,
         }) => {
-          if (loading) return <p>Loading...</p>;
+          if (loading && error === false) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
 
-          const tickerStocks = R.map((stockElem) => {
-            const tickerObj = {
-              date: stockElem.date,
+          let tickerStocks = [];
+          let { stockList } = data;
+
+          if (!(data.stockList && data.stockList.ticker
+            && data.stockList.stocks)) {
+            stockList = {
+              ticker: '',
+              stocks: [],
             };
-            tickerObj[data.stockList.ticker] = stockElem.price;
-            return tickerObj;
-          }, data.stockList.stocks);
+          }
+
+          if (stockList.stocks.length > 0) {
+            tickerStocks = R.map((stockElem) => {
+              const tickerObj = {
+                date: stockElem.date,
+              };
+              tickerObj[data.stockList.ticker] = stockElem.price;
+              return tickerObj;
+            }, stockList.stocks);
+          }
 
           return (
             <LineChart
@@ -131,7 +144,7 @@ class Chart extends React.Component {
                 }
               />
               <Legend />
-              <Line dot={false} type="monotone" dataKey={data.stockList.ticker} stroke="#8884d8" />
+              <Line dot={false} type="monotone" dataKey={stockList.ticker} stroke="#8884d8" />
             </LineChart>
           );
         }}

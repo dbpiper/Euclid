@@ -13,6 +13,7 @@ import moment from 'moment';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import TimeWindow from '../shared/TimeWindow';
 
@@ -55,7 +56,31 @@ class Chart extends React.Component {
     return moment.unix(unixTime).format('MMM.');
   }
 
-  static formatXAxis(unixTime) {
+  static dayMonthFormat(unixTime) {
+    const month = moment.unix(unixTime).format('MMMM D');
+
+    if (month.length < 6) {
+      return month;
+    }
+
+    return moment.unix(unixTime).format('MMM. D');
+  }
+
+  static longDayMonthFormat(unixTime) {
+    const month = moment.unix(unixTime).format('MMMM D');
+    return month;
+  }
+
+  static formatXAxis(unixTime, firstDate) {
+    const elapsedMonths = moment().diff(moment.unix(firstDate), 'months');
+
+    if (elapsedMonths < 3) {
+      return Chart.longDayMonthFormat(unixTime);
+    }
+    if (elapsedMonths < 7) {
+      return Chart.dayMonthFormat(unixTime);
+    }
+
     return Chart.monthFormat(unixTime);
   }
 
@@ -93,6 +118,8 @@ class Chart extends React.Component {
 
           let tickerStocks = [];
           let { stockList } = data;
+          let firstDate = moment(`01/01/${moment().year()}`, 'MM/DD/YYYY')
+            .unix();
 
           if (!(data.stockList && data.stockList.ticker
             && data.stockList.stocks)) {
@@ -110,6 +137,8 @@ class Chart extends React.Component {
               tickerObj[data.stockList.ticker] = stockElem.price;
               return tickerObj;
             }, stockList.stocks);
+
+            firstDate = _.first(_.sortBy(tickerStocks, ['date'])).date;
           }
 
           return (
@@ -135,7 +164,7 @@ class Chart extends React.Component {
                 minTickGap={30}
                 maxTickGap={62}
                 tickFormatter={
-                  unixTime => Chart.formatXAxis(unixTime)
+                  unixTime => Chart.formatXAxis(unixTime, firstDate)
                 }
               />
               <YAxis
@@ -146,9 +175,8 @@ class Chart extends React.Component {
                 contentStyle={darkTooltipContentStyle}
                 formatter={value => (`$${value}`)}
                 labelFormatter={value => (
-                  moment.unix(value).format('MMMM DD, YYYY')
-                )
-                }
+                  moment.unix(value).format('MMMM D, YYYY')
+                )}
               />
               <Legend />
               <Line dot={false} type="monotone" dataKey={stockList.ticker} stroke="#8884d8" />

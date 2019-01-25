@@ -21,7 +21,8 @@
       "babel-module": {
         "root": ["./src"],
         "alias": {
-          "App": ["./src/screens/App"]
+          "App": ["./src/screens/App"],
+          "config": ["./src/config"]
         }
       }
     }

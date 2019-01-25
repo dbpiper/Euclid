@@ -2,6 +2,8 @@
 *-secret* filter=git-crypt diff=git-crypt
 *docker-compose* filter=git-crypt diff=git-crypt
 *prisma.* filter=git-crypt diff=git-crypt
+**/generated/prisma-client/** filter=git-crypt diff=git-crypt
+.graphqlconfig filter=git-crypt diff=git-crypt
 .gitattributes !filter !diff
 
 
@@ -44,3 +46,4 @@ Dockerfile text
 # under "Marking files as binary"
 package-lock.json -diff
 **/generated/prisma-client/** -diff
+

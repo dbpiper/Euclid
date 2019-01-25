@@ -6,6 +6,7 @@ import { prisma } from './generated/prisma-client';
 import resolvers from './src/resolvers';
 import pullAndSaveData from './src/pullAndSaveData';
 
+import ServerInfo from './config/ServerInfo-secret';
 
 const server = new GraphQLServer({
   typeDefs: './schema.graphql',
@@ -16,7 +17,7 @@ const server = new GraphQLServer({
 });
 
 
-server.start(() => console.log('Server is running on http://localhost:4000'));
+server.start(() => console.log(`Server is running on ${ServerInfo.Node.uri}`));
 
 (async () => {
   try {

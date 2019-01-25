@@ -4,12 +4,11 @@ import styled from 'styled-components';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
+import ServerInfo from 'config/ServerInfo-secret';
 import Home from './screens/Home';
 
-const server = '192.168.1.6';
-
 const client = new ApolloClient({
-  uri: `http://${server}:4466`,
+  uri: ServerInfo.GraphQL.uri,
 });
 
 const AppStyles = styled.section`

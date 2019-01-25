@@ -1,5 +1,5 @@
 {
-  "editor.fontFamily": "InputMono, Consolas, 'Courier New', monospace",
+  "editor.fontFamily": "'Source Code Pro', Consolas, 'Courier New', 'monospace'",
   "editor.tabSize": 2,
   "files.eol": "\n",
   "cSpell.words": [

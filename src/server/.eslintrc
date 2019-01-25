@@ -6,5 +6,6 @@
   },
   "plugins": [
     "import"
-  ]
+  ],
+  "parser": "babel-eslint"
 }

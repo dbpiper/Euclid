@@ -6,8 +6,10 @@ import { ApolloProvider } from 'react-apollo';
 
 import Home from './screens/Home';
 
+const server = '192.168.1.6';
+
 const client = new ApolloClient({
-  uri: 'http://localhost:4466',
+  uri: `http://${server}:4466`,
 });
 
 const AppStyles = styled.section`

@@ -36,7 +36,10 @@ const LinkButton = styled.button`
   border: none;
   padding: 0 !important;
   font: inherit;
-  border-bottom: 1px solid #444444;
+  /* border-bottom: 1px solid #444444; */
+  border-bottom: 1px solid #5a5a5a;
+  /* border-bottom: 1px solid #c0bebb; */
+  /* border-bottom: 1px solid #c0bebb; */
   cursor: pointer;
   margin: 0.5rem;
 `;

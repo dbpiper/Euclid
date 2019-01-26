@@ -19,11 +19,7 @@ import TimeWindow from '../shared/TimeWindow';
 
 const darkTooltipContentStyle = {
   backgroundColor: '#18181a',
-  opacity: 1,
-  borderBottomColor: '#3d3d3d',
-  borderTopColor: '#3d3d3d',
-  borderLeftColor: '#3d3d3d',
-  borderRightColor: '#3d3d3d',
+  borderColor: '#5d5d5d',
 };
 
 const getEarliestTime = (timeWindow) => {

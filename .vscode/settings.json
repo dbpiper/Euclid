@@ -5,6 +5,7 @@
   "cSpell.words": [
     "aapl",
     "app",
+    "asyncify",
     "browserslist",
     "commitlint",
     "dropdown",
@@ -25,7 +26,9 @@
     "postcss",
     "react",
     "refetch",
-    "unencrypted"
+    "stock",
+    "unencrypted",
+    "upsert"
   ],
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,

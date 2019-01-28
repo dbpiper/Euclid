@@ -31,6 +31,9 @@ server.start(() => console.log(`Server is running on ${ServerInfo.Node.uri}`));
     // await pullAndSaveData('LNKD'); IEX give null dates
 
     await pullAndSaveData('MSFT');
+
+
+    console.log('done adding data');
   } catch (err) {
     console.log(err);
   }

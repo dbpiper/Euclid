@@ -1,10 +1,28 @@
-import * as R from 'ramda';
-import moment from 'moment';
+import async from 'async';
 
 import { prisma } from '../generated/prisma-client';
 
 import fetchStock from './fetchStock';
 import formatStockData from './formatStockData';
+
+const addEach = data => (
+  new Promise(resolve => (
+    async.eachLimit(data, 50, async (datum, callback) => {
+      const newData = {
+        date: datum.date,
+        price: datum.price,
+        ticker: datum.ticker,
+      };
+      await prisma.createStock(newData);
+      callback(); // signal that we're done
+    }, (error) => {
+      if (error) {
+        console.error(error);
+      }
+      resolve();
+    })
+  ))
+);
 
 /**
  *
@@ -16,11 +34,6 @@ import formatStockData from './formatStockData';
 module.exports = async function pullAndSaveData(ticker) {
   const data = await fetchStock(ticker, '5y');
   const formattedData = formatStockData(data);
-  await prisma
-    .createStockList({
-      ticker: formattedData.ticker,
-      stocks: {
-        create: formattedData.data,
-      },
-    });
+
+  return addEach(formattedData);
 };

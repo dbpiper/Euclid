@@ -4,8 +4,10 @@
 *prisma.* filter=git-crypt diff=git-crypt
 **/generated/prisma-client/** filter=git-crypt diff=git-crypt
 .graphqlconfig filter=git-crypt diff=git-crypt
-.gitattributes !filter !diff
+.env filter=git-crypt diff=git-crypt
 
+# don't encrypt .gitattributes!
+.gitattributes !filter !diff
 
 # text detection rules for crlf -> lf
 
@@ -46,4 +48,3 @@ Dockerfile text
 # under "Marking files as binary"
 package-lock.json -diff
 **/generated/prisma-client/** -diff
-

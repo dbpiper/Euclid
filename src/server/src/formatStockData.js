@@ -17,11 +17,9 @@ module.exports = function formatStockData(stockData) {
     return {
       date: unixTimestamp,
       price: elem.vwap,
+      ticker: stockData.ticker,
     };
   }, stockData.data);
 
-  return {
-    ticker: stockData.ticker,
-    data: formattedData,
-  };
+  return formattedData;
 };

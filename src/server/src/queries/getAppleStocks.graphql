@@ -1,12 +1,7 @@
 query {
-	stockList(where: {
-    ticker: "AAPL"
-  }) {
+  stocks(where: { ticker: "AAPL" }) {
+  	date
+    price
     ticker
-    stocks {
-      id
-      price
-      date
-    }
-  }
+	}
 }

@@ -93,14 +93,15 @@ class Chart extends React.Component {
       <Query
         query={gql`
           query {
-            stockList(where: { ticker: "AAPL"}) {
-              ticker
-              stocks(where: {date_gt: ${getEarliestTime(timeWindow)}}) {
+            stocks(where: {
+              date_gt: ${getEarliestTime(timeWindow)}
+              ticker: "AAPL"
+            }) {
                 id
                 price
                 date
+                ticker
               }
-            }
           }
         `}
       >
@@ -112,36 +113,35 @@ class Chart extends React.Component {
           if (loading && error === false) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
 
-          let tickerStocks = [];
-          let { stockList } = data;
+          let stocksCache = [];
+          let { stocks } = data;
           let firstDate = moment(`01/01/${moment().year()}`, 'MM/DD/YYYY')
             .unix();
 
-          if (!(data.stockList && data.stockList.ticker
-            && data.stockList.stocks)) {
-            stockList = {
-              ticker: '',
-              stocks: [],
-            };
+          // data is an empty object
+          // or there is no relevant data in the DB
+          if ((data && !data.stocks) || stocks.length === 0) {
+            stocks = [{ ticker: '' }];
           }
 
-          if (stockList.stocks.length > 0) {
-            tickerStocks = R.map((stockElem) => {
+          if (stocks && stocks.length > 0) {
+            stocksCache = R.map((stockElem) => {
               const tickerObj = {
                 date: stockElem.date,
               };
-              tickerObj[data.stockList.ticker] = stockElem.price;
+              // make mapping from ticker to price for Recharts to draw
+              tickerObj[stockElem.ticker] = stockElem.price;
               return tickerObj;
-            }, stockList.stocks);
+            }, stocks);
 
-            firstDate = _.first(_.sortBy(tickerStocks, ['date'])).date;
+            firstDate = _.first(_.sortBy(stocksCache, ['date'])).date;
           }
 
           return (
             <LineChart
               width={730}
               height={250}
-              data={tickerStocks}
+              data={stocksCache}
               margin={{
                 top: 5, right: 30, left: 20, bottom: 5,
               }}
@@ -175,7 +175,7 @@ class Chart extends React.Component {
                 )}
               />
               <Legend />
-              <Line dot={false} type="monotone" dataKey={stockList.ticker} stroke="#8884d8" />
+              <Line dot={false} type="monotone" dataKey={_.first(stocks).ticker} stroke="#8884d8" />
             </LineChart>
           );
         }}

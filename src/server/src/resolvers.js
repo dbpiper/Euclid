@@ -4,19 +4,14 @@ export default {
     stock(root, args, context) {
       return context.prisma.stock({ id: args.stockId });
     },
-    stockList(root, args, context) {
-      return context.prisma.stockList({ ticker: args.stockListTicker }).stocks;
+    stocks(root, args, context) {
+      return context.prisma.stocks({ where: { ticker: args.ticker } });
     },
   },
   Mutation: {
     createStock(root, args, context) {
       return context.prisma.createStock(
-        { price: args.price, date: args.date },
-      );
-    },
-    createStockList(root, args, context) {
-      return context.prisma.createStockList(
-        { ticker: args.ticker, stocks: args.stocks },
+        { date: args.date, price: args.price, ticker: args.ticker },
       );
     },
   },

@@ -1,12 +1,47 @@
 import React from 'react';
 import Select from 'react-select';
+import styled from 'styled-components';
 
+const SearchSection = styled.section`
+  margin-top: 1rem;
+  display: flex;
+`;
 
-const customStyles = {
+const SearchButton = styled.button`
+  /* border: none; */
+  background-image: none;
+  background-color: #262a30;
+  outline: 0;
+  border-color: #999999;
+  box-shadow: 0;
+  border-left: 0;
+  border-width: 1px;
+
+  appearance: button,
+`;
+
+const searchCategoryStyles = {
   option: provided => ({
     ...provided,
-    // borderBottom: '20px dotted pink',
-    // color: state.isSelected ? 'red' : 'blue',
+    padding: '20px',
+  }),
+  control: provided => ({
+    ...provided,
+    width: 130,
+  }),
+  singleValue: provided => ({
+    ...provided,
+    opacity: 1,
+  }),
+  indicatorSeparator: () => ({
+    // | separator between box and dropdown indicator
+    opacity: 0,
+  }),
+};
+
+const searchFieldStyles = {
+  option: provided => ({
+    ...provided,
     padding: '20px',
   }),
   control: provided => ({
@@ -17,6 +52,13 @@ const customStyles = {
     ...provided,
     opacity: 1,
   }),
+  indicatorSeparator: () => ({
+    // | separator between box and dropdown indicator
+    opacity: 0,
+  }),
+  dropdownIndicator: () => ({ // chevron by default
+    opacity: 0,
+  }),
 };
 
 const customTheme = theme => ({
@@ -24,15 +66,19 @@ const customTheme = theme => ({
   borderRadius: 0,
   colors: {
     ...theme.colors,
-    primary25: '#262a30', // background color
-    neutral0: '#18181a', // highlight color
+    primary25: '#262a30', // highlight color
+    neutral0: '#18181a', // background color
     neutral80: '#c0beb', // chevron hover color
-    neutral20: '#5d5d5d', // border color
+    neutral20: '#999999', // border color
     neutral50: '#c0bebb', // text color
 
     // neutral30: 'green', // hover border color
   },
 });
+
+const categories = [
+  { value: 'stocks', label: 'Stocks' },
+];
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -44,26 +90,47 @@ class SearchField extends React.Component {
   constructor() {
     super();
     this.state = {
-      selectedOption: null,
+      selectedSearchItem: null,
+      selectedCategory: null,
     };
   }
 
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
-    console.log(`Option selected: ${selectedOption}`);
+  handleChangeCategory = (selectedCategory) => {
+    this.setState({ selectedCategory });
+  };
+
+  handleChangeSearchItem = (selectedSearchItem) => {
+    this.setState({ selectedSearchItem });
   };
 
   render() {
-    const { selectedOption } = this.state;
+    const { selectedSearchItem, selectedCategory } = this.state;
 
     return (
-      <Select
-        styles={customStyles}
-        value={selectedOption}
-        onChange={this.handleChange}
-        options={options}
-        theme={customTheme}
-      />
+      <SearchSection>
+        <Select
+          styles={searchCategoryStyles}
+          value={selectedCategory}
+          onChange={this.handleChangeCategory}
+          options={categories}
+          theme={customTheme}
+          placeholder="All"
+        />
+        <Select
+          styles={searchFieldStyles}
+          value={selectedSearchItem}
+          onChange={this.handleChangeSearchItem}
+          options={options}
+          theme={customTheme}
+          placeholder="Search"
+        />
+        <SearchButton type="button">
+          <span role="img" aria-label="Search">
+            🔍
+          </span>
+        </SearchButton>
+
+      </SearchSection>
     );
   }
 }

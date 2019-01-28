@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
+import 'normalize.css';
+
 import ServerInfo from 'config/ServerInfo-secret';
 import Home from './screens/Home';
 
@@ -19,6 +21,9 @@ const AppStyles = styled.section`
   height: 100%;
 
   position: fixed;
+
+  overflow-x: auto;
+  overflow-y: hidden;
 `;
 
 const App = function App() {

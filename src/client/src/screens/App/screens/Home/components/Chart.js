@@ -86,22 +86,17 @@ class Chart extends React.Component {
     };
   }
 
-
   render() {
     const { timeWindow } = this.props;
     return (
       <Query
         query={gql`
           query {
-            stocks(where: {
-              date_gt: ${getEarliestTime(timeWindow)}
-              ticker: "AAPL"
-            }) {
-                id
-                price
-                date
-                ticker
-              }
+            stocks(ticker: "AAPL", earliestDate: ${getEarliestTime(timeWindow)}) {
+              price
+              date
+              ticker
+            }
           }
         `}
       >

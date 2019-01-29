@@ -1,6 +1,6 @@
 type Stock {
   id: ID! @unique
   price: Float!
-  date: Int! @unique
+  date: Int!
   ticker: String!
 }

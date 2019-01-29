@@ -1,10 +1,7 @@
 type Query {
-  stock(stockId: ID!): Stock
-  stocks(stockListTicker: String!): [String!]!
-}
-
-type Mutation {
-  createStock(date: Int!, price: Float!, ticker: String!): Stock
+  stock(id: ID!): Stock
+  stocks(ticker: String!, earliestDate: Int!): [Stock!]!
+  allStocks: [Stock!]!
 }
 
 type Stock {

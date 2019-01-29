@@ -1,7 +1,7 @@
 query {
-  stocks(where: { ticker: "AAPL" }) {
-  	date
-    price
+  stocks(ticker: "AAPL") {
+		price
+    date
     ticker
-	}
+  }
 }

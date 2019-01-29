@@ -1,20 +1,24 @@
-
 export default {
   Query: {
-    stock(root, args, context) {
-      return context.prisma.stock({ id: args.stockId });
-    },
     stocks(root, args, context) {
-      return context.prisma.stocks({ where: { ticker: args.ticker } });
+      return context.prisma.stocks({
+        where: {
+          date_gt: args.earliestDate,
+          ticker: args.ticker,
+        },
+      });
+    },
+    allStocks(root, args, context) {
+      return context.prisma.stocks();
     },
   },
-  Mutation: {
-    createStock(root, args, context) {
-      return context.prisma.createStock(
-        { date: args.date, price: args.price, ticker: args.ticker },
-      );
-    },
-  },
+  // Mutation: {
+  //   createStock(root, args, context) {
+  //     return context.prisma.createStock(
+  //       { date: args.date, price: args.price, ticker: args.ticker },
+  //     );
+  //   },
+  // },
   // User: {
   //   // posts(root, args, context) {
   //   //   return context.prisma.user({

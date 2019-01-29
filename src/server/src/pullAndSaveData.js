@@ -6,22 +6,19 @@ import fetchStock from './fetchStock';
 import formatStockData from './formatStockData';
 
 const addEach = data => (
-  new Promise(resolve => (
+  new Promise((resolve, reject) => {
     async.eachLimit(data, 50, async (datum, callback) => {
-      const newData = {
-        date: datum.date,
-        price: datum.price,
-        ticker: datum.ticker,
-      };
-      await prisma.createStock(newData);
-      callback(); // signal that we're done
-    }, (error) => {
-      if (error) {
-        console.error(error);
+      try {
+        await prisma.createStock(datum);
+        callback(); // signal that we're done
+      } catch (err) {
+        callback(err);
       }
-      resolve();
-    })
-  ))
+    }, error => (
+      reject(error)
+    ));
+    resolve();
+  })
 );
 
 /**

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import PropTypes from 'prop-types';
 
 const SearchSection = styled.section`
   margin-top: 1rem;
@@ -97,12 +98,13 @@ class SearchField extends React.Component {
   };
 
   handleChangeSearchItem = (selectedSearchItem) => {
+    const { onTickerSelect } = this.props;
     this.setState({ selectedSearchItem });
+    onTickerSelect(selectedSearchItem.value);
   };
 
   render() {
     const { selectedSearchItem, selectedCategory } = this.state;
-
     return (
       <Query
         query={gql`
@@ -118,11 +120,9 @@ class SearchField extends React.Component {
         }) => {
           if (loading && error === false) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
-          console.log(data);
           const tickerOptions = _.map(data.tickers, ticker => (
             { value: ticker, label: ticker }
           ));
-          console.log(tickerOptions);
           return (
             <SearchSection>
               <Select
@@ -156,5 +156,9 @@ class SearchField extends React.Component {
     );
   }
 }
+
+SearchField.propTypes = {
+  onTickerSelect: PropTypes.func.isRequired,
+};
 
 export default SearchField;

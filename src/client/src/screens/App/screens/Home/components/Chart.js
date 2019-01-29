@@ -87,12 +87,12 @@ class Chart extends React.Component {
   }
 
   render() {
-    const { timeWindow } = this.props;
+    const { timeWindow, selectedTicker } = this.props;
     return (
       <Query
         query={gql`
           query {
-            stocks(ticker: "AAPL", earliestDate: ${getEarliestTime(timeWindow)}) {
+            stocks(ticker: "${selectedTicker}", earliestDate: ${getEarliestTime(timeWindow)}) {
               price
               date
               ticker
@@ -105,6 +105,7 @@ class Chart extends React.Component {
           error,
           data,
         }) => {
+          console.log(selectedTicker);
           if (loading && error === false) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
 
@@ -181,10 +182,12 @@ class Chart extends React.Component {
 
 Chart.defaultProps = {
   timeWindow: TimeWindow.ThreeYears,
+  selectedTicker: 'AAPL',
 };
 
 Chart.propTypes = {
   timeWindow: PropTypes.string,
+  selectedTicker: PropTypes.string,
 };
 
 export default Chart;

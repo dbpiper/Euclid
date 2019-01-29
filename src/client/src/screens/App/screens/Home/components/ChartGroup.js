@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Chart from './Chart';
+import SelectedTickerChart from '../containers/SelectedTickerChart';
 
 import TimeWindow from '../shared/TimeWindow';
 
@@ -85,7 +85,7 @@ class ChartGroup extends React.Component {
               </LinkButton>
             </Header>
           </HeaderContainer>
-          <Chart timeWindow={timeWindow} />
+          <SelectedTickerChart timeWindow={timeWindow} />
         </ChartBody>
       </ChartSection>
     );

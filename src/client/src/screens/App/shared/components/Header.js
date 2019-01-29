@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import SearchField from './SearchField';
+import SelectTickerSearchField from '../containers/SelectTickerSearchField';
 
 const Head = styled.section`
   text-align: center;
@@ -29,7 +29,7 @@ const Header = function Header() {
       </Title>
 
       <SearchArea>
-        <SearchField />
+        <SelectTickerSearchField />
       </SearchArea>
     </Head>
   );

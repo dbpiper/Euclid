@@ -1,6 +1,9 @@
 import React from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
+import _ from 'lodash';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
 const SearchSection = styled.section`
   margin-top: 1rem;
@@ -80,12 +83,6 @@ const categories = [
   { value: 'stocks', label: 'Stocks' },
 ];
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
-
 class SearchField extends React.Component {
   constructor() {
     super();
@@ -107,30 +104,55 @@ class SearchField extends React.Component {
     const { selectedSearchItem, selectedCategory } = this.state;
 
     return (
-      <SearchSection>
-        <Select
-          styles={searchCategoryStyles}
-          value={selectedCategory}
-          onChange={this.handleChangeCategory}
-          options={categories}
-          theme={customTheme}
-          placeholder="All"
-        />
-        <Select
-          styles={searchFieldStyles}
-          value={selectedSearchItem}
-          onChange={this.handleChangeSearchItem}
-          options={options}
-          theme={customTheme}
-          placeholder="Search"
-        />
-        <SearchButton type="button">
-          <span role="img" aria-label="Search">
-            🔍
-          </span>
-        </SearchButton>
+      <Query
+        query={gql`
+          query {
+            tickers
+          }
+        `}
+      >
+        {({
+          loading,
+          error,
+          data,
+        }) => {
+          if (loading && error === false) return <p>Loading...</p>;
+          if (error) return <p>Error :(</p>;
+          console.log(data);
+          const tickerOptions = _.map(data.tickers, ticker => (
+            { value: ticker, label: ticker }
+          ));
+          console.log(tickerOptions);
+          return (
+            <SearchSection>
+              <Select
+                styles={searchCategoryStyles}
+                value={selectedCategory}
+                onChange={this.handleChangeCategory}
+                options={categories}
+                theme={customTheme}
+                placeholder="All"
+              />
+              <Select
+                styles={searchFieldStyles}
+                value={selectedSearchItem}
+                onChange={this.handleChangeSearchItem}
+                options={tickerOptions}
+                theme={customTheme}
+                placeholder="Search"
+              />
 
-      </SearchSection>
+              <SearchButton type="button">
+                <span role="img" aria-label="Search">
+                  🔍
+                </span>
+              </SearchButton>
+
+            </SearchSection>
+
+          );
+        }}
+      </Query>
     );
   }
 }

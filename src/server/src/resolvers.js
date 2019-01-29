@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
   Query: {
     stocks(root, args, context) {
@@ -10,6 +12,12 @@ export default {
     },
     allStocks(root, args, context) {
       return context.prisma.stocks();
+    },
+    async tickers(root, args, context) {
+      const stocks = await context.prisma.stocks();
+      const tickers = _.map(stocks, elem => elem.ticker);
+      const uniqueTickers = _.uniq(tickers);
+      return uniqueTickers;
     },
   },
   // Mutation: {

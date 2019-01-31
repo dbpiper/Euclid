@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
+import ErrorBoundary from 'react-error-boundary';
 
 const SearchSection = styled.section`
   margin-top: 1rem;
@@ -84,6 +85,12 @@ const categories = [
   { value: 'stocks', label: 'Stocks' },
 ];
 
+export const GET_TICKERS_QUERY = gql`
+  query {
+    tickers
+  }
+`;
+
 class SearchField extends React.Component {
   constructor() {
     super();
@@ -106,53 +113,53 @@ class SearchField extends React.Component {
   render() {
     const { selectedSearchItem, selectedCategory } = this.state;
     return (
-      <Query
-        query={gql`
-          query {
-            tickers
-          }
-        `}
-      >
-        {({
-          loading,
-          error,
-          data,
-        }) => {
-          if (loading && error === false) return <p>Loading...</p>;
-          if (error) return <p>Error :(</p>;
-          const tickerOptions = _.map(data.tickers, ticker => (
-            { value: ticker, label: ticker }
-          ));
-          return (
-            <SearchSection>
-              <Select
-                styles={searchCategoryStyles}
-                value={selectedCategory}
-                onChange={this.handleChangeCategory}
-                options={categories}
-                theme={customTheme}
-                placeholder="All"
-              />
-              <Select
-                styles={searchFieldStyles}
-                value={selectedSearchItem}
-                onChange={this.handleChangeSearchItem}
-                options={tickerOptions}
-                theme={customTheme}
-                placeholder="Search"
-              />
+      <ErrorBoundary>
+        <Query
+          query={GET_TICKERS_QUERY}
+        >
+          {({
+            loading,
+            error,
+            data,
+          }) => {
+            if (loading && error === false) return <p>Loading...</p>;
+            if (error) return <p>Error :(</p>;
+            const tickerOptions = _.map(data.tickers, ticker => (
+              { value: ticker, label: ticker }
+            ));
+            return (
+              <ErrorBoundary>
+                <SearchSection>
+                  <Select
+                    styles={searchCategoryStyles}
+                    value={selectedCategory}
+                    onChange={this.handleChangeCategory}
+                    options={categories}
+                    theme={customTheme}
+                    placeholder="All"
+                  />
+                  <Select
+                    styles={searchFieldStyles}
+                    value={selectedSearchItem}
+                    onChange={this.handleChangeSearchItem}
+                    options={tickerOptions}
+                    theme={customTheme}
+                    placeholder="Search"
+                  />
 
-              <SearchButton type="button">
-                <span role="img" aria-label="Search">
-                  🔍
-                </span>
-              </SearchButton>
+                  <SearchButton type="button">
+                    <span role="img" aria-label="Search">
+                      🔍
+                    </span>
+                  </SearchButton>
 
-            </SearchSection>
+                </SearchSection>
 
-          );
-        }}
-      </Query>
+              </ErrorBoundary>
+            );
+          }}
+        </Query>
+      </ErrorBoundary>
     );
   }
 }

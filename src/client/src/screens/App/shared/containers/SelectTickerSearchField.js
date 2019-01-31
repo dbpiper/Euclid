@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-
 import { selectTicker } from 'App/shared/actions/tickers';
 import SearchField from '../components/SearchField';
 

@@ -1,6 +1,6 @@
 import React from 'react';
-
 import styled from 'styled-components';
+import ErrorBoundary from 'react-error-boundary';
 
 import SelectTickerSearchField from '../containers/SelectTickerSearchField';
 
@@ -29,7 +29,9 @@ const Header = function Header() {
       </Title>
 
       <SearchArea>
-        <SelectTickerSearchField />
+        <ErrorBoundary>
+          <SelectTickerSearchField />
+        </ErrorBoundary>
       </SearchArea>
     </Head>
   );

@@ -1,8 +1,12 @@
 {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "plugin:jest/recommended"
+  ],
   "env": {
     "browser": true,
-    "mocha": true
+    "es6": true,
+    "jest": true
   },
   "rules": {
     "react/jsx-filename-extension": [
@@ -14,7 +18,11 @@
     ]
   },
   "plugins": [
-    "react", "import", "jsx-a11y", "module-resolver"
+    "react",
+    "import",
+    "jsx-a11y",
+    "module-resolver",
+    "jest"
   ],
   "settings": {
     "import/resolver": {

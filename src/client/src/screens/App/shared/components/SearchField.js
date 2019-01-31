@@ -130,20 +130,14 @@ SearchField.propTypes = {
   })).isRequired,
   handleChangeCategory: PropTypes.func.isRequired,
   handleChangeSearchItem: PropTypes.func.isRequired,
-  selectedCategory: PropTypes.oneOfType([
-    PropTypes.instanceOf(null),
-    PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string,
-    }).isRequired,
-  ]),
-  selectedSearchItem: PropTypes.oneOfType([
-    PropTypes.instanceOf(null),
-    PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string,
-    }).isRequired,
-  ]),
+  selectedCategory: PropTypes.shape({
+    value: PropTypes.string,
+    label: PropTypes.string,
+  }),
+  selectedSearchItem: PropTypes.shape({
+    value: PropTypes.string,
+    label: PropTypes.string,
+  }),
 };
 
 export default SearchField;

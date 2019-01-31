@@ -1,12 +1,19 @@
 {
   "extends": [
     "airbnb",
-    "plugin:jest/recommended"
+    "plugin:jest/recommended",
+    "plugin:unicorn/recommended"
   ],
   "env": {
     "browser": true,
     "es6": true,
     "jest": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "rules": {
     "react/jsx-filename-extension": [
@@ -15,6 +22,9 @@
           ".js", ".jsx"
         ]
       }
+    ],
+    "unicorn/filename-case": [
+      0
     ]
   },
   "plugins": [

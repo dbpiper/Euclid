@@ -105,7 +105,6 @@ class Chart extends React.Component {
           error,
           data,
         }) => {
-          console.log(selectedTicker);
           if (loading && error === false) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
 

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { selectTicker } from 'App/shared/actions/tickers';
-import SearchField from '../components/SearchField';
+import GetTickersSearchField from '../components/GetTickersSearchField';
 
 const mapDispatchToProps = dispatch => ({
   onTickerSelect: ticker => (
@@ -11,6 +11,6 @@ const mapDispatchToProps = dispatch => ({
 const SelectTickerSearchField = connect(
   null,
   mapDispatchToProps,
-)(SearchField);
+)(GetTickersSearchField);
 
 export default SelectTickerSearchField;

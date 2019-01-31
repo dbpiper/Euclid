@@ -1,11 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
-import _ from 'lodash';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import ErrorBoundary from 'react-error-boundary';
 
 const SearchSection = styled.section`
   margin-top: 1rem;
@@ -13,7 +9,6 @@ const SearchSection = styled.section`
 `;
 
 const SearchButton = styled.button`
-  /* border: none; */
   background-image: none;
   background-color: #262a30;
   outline: 0;
@@ -81,91 +76,74 @@ const customTheme = theme => ({
   },
 });
 
-const categories = [
-  { value: 'stocks', label: 'Stocks' },
-];
+const SearchField = (props) => {
+  const {
+    options,
+    categories,
+    handleChangeCategory,
+    handleChangeSearchItem,
+    selectedCategory,
+    selectedSearchItem,
+  } = props;
+  return (
+    <SearchSection>
+      <Select
+        styles={searchCategoryStyles}
+        value={selectedCategory}
+        onChange={handleChangeCategory}
+        options={categories}
+        theme={customTheme}
+        placeholder="All"
+      />
+      <Select
+        styles={searchFieldStyles}
+        value={selectedSearchItem}
+        onChange={handleChangeSearchItem}
+        options={options}
+        theme={customTheme}
+        placeholder="Search"
+      />
 
-export const GET_TICKERS_QUERY = gql`
-  query {
-    tickers
-  }
-`;
+      <SearchButton type="button">
+        <span role="img" aria-label="Search">
+          🔍
+        </span>
+      </SearchButton>
 
-class SearchField extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      selectedSearchItem: null,
-      selectedCategory: null,
-    };
-  }
+    </SearchSection>
+  );
+};
 
-  handleChangeCategory = (selectedCategory) => {
-    this.setState({ selectedCategory });
-  };
-
-  handleChangeSearchItem = (selectedSearchItem) => {
-    const { onTickerSelect } = this.props;
-    this.setState({ selectedSearchItem });
-    onTickerSelect(selectedSearchItem.value);
-  };
-
-  render() {
-    const { selectedSearchItem, selectedCategory } = this.state;
-    return (
-      <ErrorBoundary>
-        <Query
-          query={GET_TICKERS_QUERY}
-        >
-          {({
-            loading,
-            error,
-            data,
-          }) => {
-            if (loading && error === false) return <p>Loading...</p>;
-            if (error) return <p>Error :(</p>;
-            const tickerOptions = _.map(data.tickers, ticker => (
-              { value: ticker, label: ticker }
-            ));
-            return (
-              <ErrorBoundary>
-                <SearchSection>
-                  <Select
-                    styles={searchCategoryStyles}
-                    value={selectedCategory}
-                    onChange={this.handleChangeCategory}
-                    options={categories}
-                    theme={customTheme}
-                    placeholder="All"
-                  />
-                  <Select
-                    styles={searchFieldStyles}
-                    value={selectedSearchItem}
-                    onChange={this.handleChangeSearchItem}
-                    options={tickerOptions}
-                    theme={customTheme}
-                    placeholder="Search"
-                  />
-
-                  <SearchButton type="button">
-                    <span role="img" aria-label="Search">
-                      🔍
-                    </span>
-                  </SearchButton>
-
-                </SearchSection>
-
-              </ErrorBoundary>
-            );
-          }}
-        </Query>
-      </ErrorBoundary>
-    );
-  }
-}
+SearchField.defaultProps = {
+  selectedCategory: null,
+  selectedSearchItem: null,
+};
 
 SearchField.propTypes = {
-  onTickerSelect: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string,
+    label: PropTypes.string,
+  })).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string,
+    label: PropTypes.string,
+  })).isRequired,
+  handleChangeCategory: PropTypes.func.isRequired,
+  handleChangeSearchItem: PropTypes.func.isRequired,
+  selectedCategory: PropTypes.oneOfType([
+    PropTypes.instanceOf(null),
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    }).isRequired,
+  ]),
+  selectedSearchItem: PropTypes.oneOfType([
+    PropTypes.instanceOf(null),
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    }).isRequired,
+  ]),
 };
 
 export default SearchField;

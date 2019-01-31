@@ -1,22 +1,13 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import 'jest-styled-components';
-import { MockedProvider } from 'react-apollo/test-utils';
-import { Provider } from 'react-redux';
-import { createMockStore } from 'redux-test-utils';
-
+import { shallow } from 'enzyme';
+// import { mount } from 'enzyme';
 import Header from '../Header';
 
-
 test('Header has correct title', () => {
-  const component = renderer.create(
-    <MockedProvider>
-      <Provider store={createMockStore()}>
-        <Header />
-      </Provider>
-    </MockedProvider>,
+  const component = shallow(
+    <Header />,
   );
 
-  const tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
+  expect(component.text()).toMatch('Euclid');
+  expect(component).toMatchSnapshot();
 });

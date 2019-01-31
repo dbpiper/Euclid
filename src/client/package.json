@@ -1,7 +1,10 @@
 {
-  "name": "client",
-  "version": "0.1.0",
-  "private": true,
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "dependencies": {
     "@babel/core": "7.1.6",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
@@ -74,51 +77,28 @@
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "3.6.3"
   },
-  "scripts": {
-    "lint": "npx eslint .",
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "testWatch": "node scripts/test.js --watch",
-    "preCommit": "npm run lint && npm run test"
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "babel-jest": "^24.0.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.8.0",
+    "enzyme-to-json": "^3.3.5",
+    "eslint-plugin-jest": "^22.2.1",
+    "eslint-plugin-unicorn": "^7.1.0",
+    "jest": "^24.0.0",
+    "jest-environment-enzyme": "^7.0.1",
+    "jest-enzyme": "^7.0.1",
+    "jest-styled-components": "^6.3.1",
+    "redux-test-utils": "^0.3.0"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts"
     ],
-    "resolver": "jest-pnp-resolver",
-    "setupFiles": [
-      "react-app-polyfill/jsdom"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}"
-    ],
-    "testEnvironment": "jsdom",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
-      "^.+\\.module\\.(css|sass|scss)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
-    },
     "moduleFileExtensions": [
       "web.js",
       "js",
@@ -130,16 +110,50 @@
       "web.jsx",
       "jsx",
       "node"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "^react-native$": "react-native-web"
+    },
+    "resolver": "jest-pnp-resolver",
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupFilesAfterEnv": [
+      "jest-enzyme"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "testEnvironment": "enzyme",
+    "testEnvironmentOptions": {
+      "enzymeAdapter": "react16"
+    },
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}"
+    ],
+    "testURL": "http://localhost",
+    "transform": {
+      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js",
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
     ]
   },
-  "devDependencies": {
-    "babel-eslint": "^9.0.0",
-    "babel-jest": "^24.0.0",
-    "eslint-plugin-jest": "^22.2.1",
-    "eslint-plugin-unicorn": "^7.1.0",
-    "jest": "^24.0.0",
-    "jest-styled-components": "^6.3.1",
-    "react-test-renderer": "^16.7.0",
-    "redux-test-utils": "^0.3.0"
-  }
+  "name": "client",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "lint": "npx eslint .",
+    "preCommit": "npm run lint && npm run testVerify",
+    "start": "node scripts/start.js",
+    "test": "node scripts/test.js --watch",
+    "testVerify": "node scripts/test.js",
+    "testWatch": "node scripts/test.js --watch"
+  },
+  "version": "0.1.0"
 }

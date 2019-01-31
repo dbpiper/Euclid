@@ -10,6 +10,9 @@
   using [Document This](https://marketplace.visualstudio.com/items?itemName=joelday.docthis)
   which is a VS Code extension that will automatically generate JSDoc comments.
   This is optional, however it is very helpful.
+* The JSON files should all be sorted in alphabetical order. I am personally
+  using the VS Code extension [Sort JSON objects](https://marketplace.visualstudio.com/items?itemName=richie5um2.vscode-sort-json)
+  to help with this, but it can be done manually if desired.
 
 The project uses the above style guides in their own relevant domains. However,
 it should be noted that it is *not* following the suggestion from the Airbnb

@@ -1,31 +1,20 @@
 {
-  "extends": [
-    "airbnb",
-    "plugin:jest/recommended",
-    "plugin:unicorn/recommended"
-  ],
   "env": {
     "browser": true,
     "es6": true,
     "jest": true
   },
+  "extends": [
+    "airbnb",
+    "plugin:jest/recommended",
+    "plugin:unicorn/recommended"
+  ],
+  "parser": "babel-eslint",
   "parserOptions": {
-    "ecmaVersion": 2018,
     "ecmaFeatures": {
       "jsx": true
-    }
-  },
-  "rules": {
-    "react/jsx-filename-extension": [
-      1, {
-        "extensions": [
-          ".js", ".jsx"
-        ]
-      }
-    ],
-    "unicorn/filename-case": [
-      0
-    ]
+    },
+    "ecmaVersion": 2018
   },
   "plugins": [
     "react",
@@ -34,16 +23,35 @@
     "module-resolver",
     "jest"
   ],
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "unicorn/filename-case": [
+      0
+    ]
+  },
   "settings": {
     "import/resolver": {
       "babel-module": {
-        "root": ["./src"],
         "alias": {
-          "App": ["./src/screens/App"],
-          "config": ["./src/config"]
-        }
+          "App": [
+            "./src/screens/App"
+          ],
+          "config": [
+            "./src/config"
+          ]
+        },
+        "root": [
+          "./src"
+        ]
       }
     }
-  },
-  "parser": "babel-eslint"
+  }
 }

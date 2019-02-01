@@ -1,4 +1,5 @@
 const TimeWindow = Object.freeze({
+  __proto__: null,
   YTD: 'YTD',
   SixMonths: '6 Months',
   OneYear: '1 Year',

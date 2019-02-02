@@ -1,24 +1,13 @@
 {
-  "name": "euclid",
-  "version": "1.0.0",
-  "description": "A website dedicated to tracking PC part price information.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dbpiper/Euclid.git"
-  },
   "author": "",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dbpiper/Euclid/issues"
   },
-  "homepage": "https://github.com/dbpiper/Euclid#readme",
+  "description": "A website dedicated to tracking PC part price information.",
   "devDependencies": {
     "@commitlint/cli": "^7.3.1",
     "@commitlint/config-conventional": "^7.3.1",
+    "babel-eslint": "^10.0.1",
     "commitlint": "^7.3.1",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -27,9 +16,23 @@
     "eslint-plugin-react": "^7.12.3",
     "husky": "^1.3.1"
   },
+  "homepage": "https://github.com/dbpiper/Euclid#readme",
   "husky": {
     "hooks": {
-      "commit-msg": "npx commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "npx commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "npm run prePush"
     }
-  }
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "name": "euclid",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dbpiper/Euclid.git"
+  },
+  "scripts": {
+    "prePush": "npm run prePushClient",
+    "prePushClient": "cd src/client && npm run prePush && cd ../../"
+  },
+  "version": "1.0.0"
 }

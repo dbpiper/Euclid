@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header has correct title 1`] = `
+<styled.section>
+  <styled.span>
+    Euclid
+  </styled.span>
+  <styled.div>
+    <ErrorBoundary
+      FallbackComponent={[Function]}
+    >
+      <Connect(GetTickersSearchField) />
+    </ErrorBoundary>
+  </styled.div>
+</styled.section>
+`;

@@ -1,60 +1,11 @@
 import { GraphQLServer } from 'graphql-yoga';
+
 import { prisma } from './generated/prisma-client';
 
-const resolvers = {
-  Query: {
-    publishedPosts(root, args, context) {
-      return context.prisma.posts({ where: { published: true } });
-    },
-    post(root, args, context) {
-      return context.prisma.post({ id: args.postId });
-    },
-    postsByUser(root, args, context) {
-      return context.prisma.user({
-        id: args.userId,
-      }).posts();
-    },
-  },
-  Mutation: {
-    createDraft(root, args, context) {
-      return context.prisma.createPost(
-        {
-          title: args.title,
-          author: {
-            connect: { id: args.userId },
-          },
-        },
-      );
-    },
-    publish(root, args, context) {
-      return context.prisma.updatePost(
-        {
-          where: { id: args.postId },
-          data: { published: true },
-        },
-      );
-    },
-    createUser(root, args, context) {
-      return context.prisma.createUser(
-        { name: args.name },
-      );
-    },
-  },
-  User: {
-    posts(root, args, context) {
-      return context.prisma.user({
-        id: root.id,
-      }).posts();
-    },
-  },
-  Post: {
-    author(root, args, context) {
-      return context.prisma.post({
-        id: root.id,
-      }).author();
-    },
-  },
-};
+import resolvers from './src/resolvers';
+// import pullAndSaveData from './src/pullAndSaveData';
+
+import ServerInfo from './config/ServerInfo-secret';
 
 const server = new GraphQLServer({
   typeDefs: './schema.graphql',
@@ -64,4 +15,31 @@ const server = new GraphQLServer({
   },
 });
 
-server.start(() => console.log('Server is running on http://localhost:4000'));
+
+server.start(() => console.log(`Server is running on ${ServerInfo.Node.uri}`));
+
+// const tryAddData = async (ticker) => {
+//   try {
+//     await pullAndSaveData(ticker);
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
+
+(async () => {
+  // await tryAddData('AAPL');
+  // await tryAddData('SPY');
+  // await tryAddData('AMZN');
+  // await tryAddData('GOOG');
+  // await tryAddData('YELP');
+  // await tryAddData('MSFT');
+
+  // await pullAndSaveData('VFIAX'); IEX gives null dates
+  // await pullAndSaveData('LNKD'); IEX give null dates
+
+
+  console.log('done adding data');
+  // const stockList = await prisma
+  //   .stockList({ ticker: 'AAPL' });
+  // console.log(stockList);
+})();

@@ -1,29 +1,38 @@
 import React from 'react';
-import logo from 'logo.svg';
-import './assets/App.css';
+
+import styled from 'styled-components';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+
+import 'normalize.css';
+
+import ServerInfo from 'config/ServerInfo-secret';
+import Home from './screens/Home';
+
+const client = new ApolloClient({
+  uri: ServerInfo.GraphQL.uri,
+});
+
+const AppStyles = styled.section`
+  background-color: #262a30;
+  color: #ffffff;
+
+  width: 100%;
+  height: 100%;
+
+  position: fixed;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+`;
 
 const App = function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          {' '}
-          <code>src/App.js</code>
-          {' '}
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <AppStyles>
+        <Home />
+      </AppStyles>
+    </ApolloProvider>
   );
 };
 

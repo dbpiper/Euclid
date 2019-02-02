@@ -67,7 +67,7 @@ always say that the files are unencrypted :) ).
 * Prisma's `docker-compose.yml` file should have the host set to
   `host.docker.internal`
 and *not* `localhost` due an issue with host redirection of localhost in docker.
-See [Prisma cannot run command "prisma deploy" because prisma in docker cannot run](https://github.com/prisma/prisma/issues/2761)
+See [Prisma cannot run command "prisma deploy" because prisma in docker cannot run](https://github.com/prisma/prisma/issues/2761) and [From inside of a Docker container, how do I connect to the localhost of the machine](https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach)
 
 ## Steps to run
 

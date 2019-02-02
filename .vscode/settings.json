@@ -1,25 +1,73 @@
 {
-  "editor.fontFamily": "InputMono, Consolas, 'Courier New', monospace",
+  "editor.fontFamily": "'Source Code Pro', Consolas, 'Courier New', 'monospace'",
   "editor.tabSize": 2,
   "files.eol": "\n",
   "cSpell.words": [
+    "aapl",
+    "amzn",
     "app",
+    "asyncify",
     "browserslist",
+    "chunkhash",
     "commitlint",
+    "devtool",
+    "dropdown",
+    "enzyme",
     "eslint",
     "fixes",
+    "flexbox",
     "flexbugs",
     "flowtype",
     "gitattributes",
+    "goog",
+    "graphql",
+    "indicator",
+    "inlines",
     "jsdom",
+    "json",
     "linebreak",
     "markdownlint",
+    "minfication",
+    "minified",
     "noopener",
     "noreferrer",
     "plugin",
     "polyfill",
     "postcss",
     "react",
-    "unencrypted"
+    "refetch",
+    "serializer",
+    "serializers",
+    "snapshot",
+    "sourcemap",
+    "stock",
+    "subdomains",
+    "svgr",
+    "to",
+    "unencrypted",
+    "upsert",
+    "viewports",
+    "webpack",
+    "webpack's"
+  ],
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "eslint.workingDirectories": [
+    "./src/client", "./src/server"
+  ],
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "/.babelrc"
+      ],
+      "url": "http://json.schemastore.org/babelrc"
+    },
+    {
+      "fileMatch": [
+        "/.eslintrc"
+      ],
+      "url": "http://json.schemastore.org/eslintrc"
+    }
   ]
 }

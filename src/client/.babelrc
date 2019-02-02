@@ -1,12 +1,32 @@
 {
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "App": [
+            "./src/screens/App"
+          ],
+          "config": [
+            "./src/config"
+          ]
+        },
+        "root": [
+          "./src"
+        ]
+      }
+    ],
+    "recharts",
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "regenerator": true
+      }
+    ],
+    "@babel/plugin-proposal-class-properties"
+  ],
   "presets": [
     "@babel/preset-env",
     "@babel/preset-react"
-  ],
-  "plugins": [
-    ["module-resolver", {
-      "root": ["./src"],
-      "alias": {}
-    }]
   ]
 }

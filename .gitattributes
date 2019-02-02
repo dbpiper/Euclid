@@ -2,8 +2,12 @@
 *-secret* filter=git-crypt diff=git-crypt
 *docker-compose* filter=git-crypt diff=git-crypt
 *prisma.* filter=git-crypt diff=git-crypt
-.gitattributes !filter !diff
+**/generated/prisma-client/** filter=git-crypt diff=git-crypt
+.graphqlconfig filter=git-crypt diff=git-crypt
+.env filter=git-crypt diff=git-crypt
 
+# don't encrypt .gitattributes!
+.gitattributes !filter !diff
 
 # text detection rules for crlf -> lf
 

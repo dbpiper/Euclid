@@ -4,7 +4,9 @@
   "description": "The server for Euclid",
   "main": "index.js",
   "scripts": {
+    "build": "npx @babel/cli src -d dist --source-maps",
     "start": "babel-node index.js",
+    "startNodemon": "nodemon --exec babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "David Piper",
@@ -12,9 +14,23 @@
   "dependencies": {
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
-    "graphql-yoga": "^1.16.9",
-    "prisma": "^1.24.0",
-    "prisma-client-lib": "^1.24.0"
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.3.1",
+    "async": "^2.6.1",
+    "es6-promise": "^4.2.5",
+    "graphql-yoga": "^1.17.0",
+    "iex-api": "0.0.3",
+    "isomorphic-fetch": "^2.2.1",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "nodemon": "^1.18.9",
+    "prisma": "^1.25.3",
+    "prisma-client-lib": "^1.25.3",
+    "ramda": "^0.26.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "babel-register": "^6.26.0",
+    "jsdoc": "^3.5.5"
   }
 }

@@ -4,21 +4,8 @@
     "node": true,
     "mocha": true
   },
-  "rules": {
-    "react/jsx-filename-extension": [
-      1, {
-        "extensions": [
-          ".js", ".jsx"
-        ]
-      }
-    ]
-  },
   "plugins": [
-    "react", "import", "jsx-a11y", "module-resolver"
+    "import"
   ],
-  "settings": {
-    "import/resolver": {
-      "babel-module": {}
-    }
-  }
+  "parser": "babel-eslint"
 }

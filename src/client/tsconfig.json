@@ -1,12 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "jsx": "react",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "noEmit": true,
     "paths": {
       "*": [
         "src/*",
@@ -23,11 +17,10 @@
       ],
       "config/*": [
         "src/config/*"
-      ],
-    },
-    "strict": true,
-    "target": "esnext"
+      ]
+    }
   },
+  "extends": "../../tsconfig-base",
   "include": [
     "src",
     "./src/**/*"

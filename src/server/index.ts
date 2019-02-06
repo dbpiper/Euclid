@@ -7,6 +7,11 @@ import resolvers from './src/resolvers';
 
 import ServerInfo from './config/ServerInfo-secret';
 
+const firstArg = 2;
+const notFound = -1;
+const args = process.argv.slice(firstArg);
+const buildOnly = args.indexOf('--build') !== notFound;
+
 const server = new GraphQLServer({
   resolvers,
   typeDefs: './schema.graphql',
@@ -17,7 +22,14 @@ const server = new GraphQLServer({
 
 
 // tslint:disable-next-line no-console
-server.start(() => console.log(`Server is running on ${ServerInfo.Node.uri}`));
+server.start(() => {
+  console.log(`Server is running on ${ServerInfo.Node.uri}`);
+
+  if (buildOnly) {
+    const noErrors = 0;
+    process.exit(noErrors);
+  }
+});
 
 // const tryAddData = async (ticker) => {
 //   try {

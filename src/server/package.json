@@ -42,11 +42,11 @@
   "main": "index.ts",
   "name": "server",
   "scripts": {
-    "build": "npx @babel/cli --extensions \".ts\" src -d dist --source-maps",
+    "build": "babel-node index.ts --extensions \".ts\" -- --build",
     "check-types": "tsc",
     "lint": "npm run lintTS",
     "lintTS": "npx tslint \"./*.ts?(x)\" \"./src/**/*.ts?(x)\" \"./config/**/*.ts?(x)\" --project tsconfig.json",
-    "preCommit": "npm run staticCheckAndTestVerify",
+    "preCommit": "npm run build && npm run staticCheckAndTestVerify",
     "start": "babel-node index.ts --extensions \".ts\" ",
     "startNodemon": "nodemon --exec babel-node --extensions \".ts\" index.js",
     "staticCheck": "npm run lint && npm run check-types",

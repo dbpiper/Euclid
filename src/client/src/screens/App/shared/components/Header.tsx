@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import ErrorBoundary from 'react-error-boundary';
+import styled from 'styled-components';
 
 import SelectTickerSearchField from '../containers/SelectTickerSearchField';
 
@@ -21,20 +21,18 @@ const SearchArea = styled.div`
   padding-left: 30rem;
 `;
 
-const Header = function Header() {
-  return (
-    <Head>
-      <Title>
-        Euclid
-      </Title>
+const Header = () => (
+  <Head>
+    <Title>
+      Euclid
+    </Title>
 
-      <SearchArea>
-        <ErrorBoundary>
-          <SelectTickerSearchField />
-        </ErrorBoundary>
-      </SearchArea>
-    </Head>
-  );
-};
+    <SearchArea>
+      <ErrorBoundary>
+        <SelectTickerSearchField />
+      </ErrorBoundary>
+    </SearchArea>
+  </Head>
+);
 
 export default Header;

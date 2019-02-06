@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 export default {
   Query: {
-    stocks(root, args, context) {
+    stocks(_root: any, args: any, context: any) {
       return context.prisma.stocks({
         where: {
           date_gt: args.earliestDate,
@@ -10,10 +10,10 @@ export default {
         },
       });
     },
-    allStocks(root, args, context) {
+    allStocks(_root: any, _args: any, context: any) {
       return context.prisma.stocks();
     },
-    async tickers(root, args, context) {
+    async tickers(_root: any, _args: any, context: any) {
       const stocks = await context.prisma.stocks();
       const tickers = _.map(stocks, elem => elem.ticker);
       const uniqueTickers = _.uniq(tickers);

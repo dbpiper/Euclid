@@ -1,9 +1,9 @@
-import { connect } from 'react-redux';
 import { selectTicker } from 'App/shared/actions/tickers';
+import { connect } from 'react-redux';
 import GetTickersSearchField from '../components/GetTickersSearchField';
 
-const mapDispatchToProps = dispatch => ({
-  onTickerSelect: ticker => (
+const mapDispatchToProps = (dispatch: any) => ({
+  onTickerSelect: (ticker: string) => (
     dispatch(selectTicker(ticker))
   ),
 });

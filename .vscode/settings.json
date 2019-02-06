@@ -1,19 +1,20 @@
 {
-  "editor.fontFamily": "'Source Code Pro', Consolas, 'Courier New', 'monospace'",
-  "editor.tabSize": 2,
-  "files.eol": "\n",
   "cSpell.words": [
     "aapl",
     "amzn",
     "app",
     "asyncify",
+    "base",
     "browserslist",
+    "camelcase",
     "chunkhash",
     "commitlint",
     "devtool",
     "dropdown",
     "enzyme",
+    "es",
     "eslint",
+    "esnext",
     "fixes",
     "flexbox",
     "flexbugs",
@@ -23,39 +24,67 @@
     "graphql",
     "indicator",
     "inlines",
+    "interop",
     "jsdom",
     "json",
     "linebreak",
     "markdownlint",
     "minfication",
     "minified",
+    "module",
     "noopener",
     "noreferrer",
+    "npm",
     "plugin",
     "polyfill",
+    "popd",
     "postcss",
+    "pre",
+    "push",
+    "pushd",
     "react",
     "refetch",
+    "run",
     "serializer",
     "serializers",
+    "server",
     "snapshot",
     "sourcemap",
+    "src",
     "stock",
+    "stocks",
     "subdomains",
     "svgr",
     "to",
     "unencrypted",
     "upsert",
     "viewports",
+    "vwap",
     "webpack",
     "webpack's"
   ],
+  "editor.fontFamily": "'Source Code Pro', Consolas, 'Courier New', 'monospace'",
+  "editor.tabSize": 2,
+  "eslint.enable": true,
+  "eslint.run": "onType",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "changeProcessCWD": true,
+      "directory": "./src/client"
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./src/server"
+    }
+  ],
+  "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
-  "eslint.workingDirectories": [
-    "./src/client", "./src/server"
-  ],
   "json.schemas": [
     {
       "fileMatch": [
@@ -65,9 +94,21 @@
     },
     {
       "fileMatch": [
-        "/.eslintrc"
+        "/.eslintrc.json"
       ],
       "url": "http://json.schemastore.org/eslintrc"
+    },
+    {
+      "fileMatch": [
+        "/.tslint.json"
+      ],
+      "url": "http://json.schemastore.org/tslint"
     }
-  ]
+  ],
+  "yaml.schemas": {
+    "http://json.schemastore.org/prettierrc": "/.prettierrc.yml"
+  },
+  "yaml.validate": true,
+  "typescript.extension.sortImports.enableJavascript": true,
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

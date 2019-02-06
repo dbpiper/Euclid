@@ -35,21 +35,28 @@ const {
 } = FileSizeReporter;
 const useYarn = fs.existsSync(paths.yarnLockFile);
 
+const medSize2To9 = 512;
+const lgSize2To10 = 1024;
 // These sizes are pretty large. We'll warn for bundles exceeding them.
-const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
-const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
+const WARN_AFTER_BUNDLE_GZIP_SIZE = medSize2To9 * lgSize2To10;
+const WARN_AFTER_CHUNK_GZIP_SIZE = lgSize2To10 * lgSize2To10;
 
 const isInteractive = process.stdout.isTTY;
+
+const noWarnings = 0;
+const errorExitCode = 1;
+const endSpecial = -1;
+const argsToGet = 2;
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   // eslint-disable-next-line unicorn/no-process-exit
-  process.exit(1);
+  process.exit(errorExitCode);
 }
 
 // Process CLI arguments
-const argv = process.argv.slice(2);
-const writeStatsJson = argv.indexOf('--stats') !== -1;
+const argv = process.argv.slice(argsToGet);
+const writeStatsJson = argv.indexOf('--stats') !== endSpecial;
 
 // Generate configuration
 const config = configFactory('production');
@@ -60,6 +67,7 @@ const copyPublicFolder = () => (
     filter: file => file !== paths.appHtml,
   })
 );
+
 
 // Create the production build and print the deployment instructions.
 const build = (previousFileSizes) => {
@@ -82,19 +90,24 @@ const build = (previousFileSizes) => {
           stats.toJson({ all: false, warnings: true, errors: true }),
         );
       }
-      if (messages.errors.length > 0) {
+      const noErrors = 0;
+
+      if (messages.errors.length > noErrors) {
+        const firstError = 1;
+
         // Only keep the first error. Others are often indicative
         // of the same problem, but confuse the reader with noise.
-        if (messages.errors.length > 1) {
+        if (messages.errors.length > firstError) {
           messages.errors.length = 1;
         }
         return reject(new Error(messages.errors.join('\n\n')));
       }
+
       if (
         process.env.CI
         && (typeof process.env.CI !== 'string'
           || process.env.CI.toLowerCase() !== 'false')
-        && messages.warnings.length > 0
+        && messages.warnings.length > noWarnings
       ) {
         console.log(
           chalk.yellow(
@@ -141,7 +154,7 @@ checkBrowsers(paths.appPath, isInteractive)
   })
   .then(
     ({ stats, previousFileSizes, warnings }) => {
-      if (warnings.length > 0) {
+      if (warnings.length > noWarnings) {
         console.log(chalk.yellow('Compiled with warnings.\n'));
         console.log(warnings.join('\n\n'));
         console.log(
@@ -179,11 +192,11 @@ checkBrowsers(paths.appPath, isInteractive)
         useYarn,
       );
     },
-    (err) => {
+    (error) => {
       console.log(chalk.red('Failed to compile.\n'));
-      printBuildError(err);
+      printBuildError(error);
       // eslint-disable-next-line unicorn/no-process-exit
-      process.exit(1);
+      process.exit(errorExitCode);
     },
   )
   .catch((error) => {
@@ -191,5 +204,5 @@ checkBrowsers(paths.appPath, isInteractive)
       console.log(error.message);
     }
     // eslint-disable-next-line unicorn/no-process-exit
-    process.exit(1);
+    process.exit(errorExitCode);
   });

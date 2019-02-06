@@ -1,10 +1,8 @@
-import React from 'react';
-
-import styled from 'styled-components';
 import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
-
 import 'normalize.css';
+import React from 'react';
+import { ApolloProvider } from 'react-apollo';
+import styled from 'styled-components';
 
 import ServerInfo from 'config/ServerInfo-secret';
 import Home from './screens/Home';
@@ -26,14 +24,12 @@ const AppStyles = styled.section`
   overflow-y: hidden;
 `;
 
-const App = function App() {
-  return (
-    <ApolloProvider client={client}>
-      <AppStyles>
-        <Home />
-      </AppStyles>
-    </ApolloProvider>
-  );
-};
+const App = () => (
+  <ApolloProvider client={client}>
+    <AppStyles>
+      <Home />
+    </AppStyles>
+  </ApolloProvider>
+);
 
 export default App;

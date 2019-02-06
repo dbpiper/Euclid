@@ -1,8 +1,8 @@
-import React from 'react';
-import _ from 'lodash';
-import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { Query } from 'react-apollo';
 import ErrorBoundary from 'react-error-boundary';
 import SearchField from './SearchField';
 
@@ -16,26 +16,28 @@ export const GET_TICKERS_QUERY = gql`
   }
 `;
 
-class GetTickersSearchField extends React.Component {
-  constructor() {
-    super();
+class GetTickersSearchField extends React.Component<any, any> {
+  public static propTypes: any;
+
+  constructor(props: any) {
+    super(props);
     this.state = {
       selectedSearchItem: null,
       selectedCategory: null,
     };
   }
 
-  handleChangeCategory = (selectedCategory) => {
+  public handleChangeCategory = (selectedCategory: any) => {
     this.setState({ selectedCategory });
-  };
+  }
 
-  handleChangeSearchItem = (selectedSearchItem) => {
+  public handleChangeSearchItem = (selectedSearchItem: any) => {
     const { onTickerSelect } = this.props;
     this.setState({ selectedSearchItem });
     onTickerSelect(selectedSearchItem.value);
-  };
+  }
 
-  render() {
+  public render() {
     const { selectedSearchItem, selectedCategory } = this.state;
     return (
       <ErrorBoundary>
@@ -47,7 +49,7 @@ class GetTickersSearchField extends React.Component {
             error,
             data,
           }) => {
-            if (loading && error === false) return <p>Loading...</p>;
+            if (loading && typeof error === 'undefined') return <p>Loading...</p>;
             if (error) return <p>Error :(</p>;
             const tickerOptions = _.map(data.tickers, ticker => (
               { value: ticker, label: ticker }

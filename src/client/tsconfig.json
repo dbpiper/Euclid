@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "*": [
+        "src/*",
+        "src/config/@types/*"
+      ],
+      "App": [
+        "src/screens/App"
+      ],
+      "App/*": [
+        "src/screens/App/*"
+      ],
+      "config": [
+        "src/config"
+      ],
+      "config/*": [
+        "src/config/*"
+      ]
+    }
+  },
+  "extends": "../../tsconfig-base",
+  "include": [
+    "src",
+    "./src/**/*"
+  ],
+  "types": [
+    "jest",
+    "enzyme"
+  ]
+}

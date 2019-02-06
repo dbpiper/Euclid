@@ -5,17 +5,10 @@
     "jest": true
   },
   "extends": [
-    "airbnb",
     "plugin:jest/recommended",
-    "plugin:unicorn/recommended"
+    "plugin:unicorn/recommended",
+    "airbnb"
   ],
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": 2018
-  },
   "plugins": [
     "react",
     "import",
@@ -35,7 +28,8 @@
     ],
     "unicorn/filename-case": [
       0
-    ]
+    ],
+    "no-magic-numbers": "error"
   },
   "settings": {
     "import/resolver": {
@@ -50,6 +44,12 @@
         },
         "root": [
           "./src"
+        ]
+      },
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx"
         ]
       }
     }

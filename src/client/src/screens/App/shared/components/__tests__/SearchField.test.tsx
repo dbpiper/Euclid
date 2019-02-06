@@ -1,6 +1,6 @@
-import React from 'react';
 import { mount } from 'enzyme';
 import 'jest-styled-components';
+import React from 'react';
 import SearchField from '../SearchField';
 
 
@@ -15,17 +15,17 @@ const tickerOptions = [
   { value: 'SPY', label: 'SPY' },
 ];
 
-let selectedCategory = null;
-let selectedSearchItem = null;
+let selectedCategory: any = null;
+let selectedSearchItem: any = null;
 
-let component;
+let component: any;
 
-const handleChangeCategory = (newCategory) => {
+const handleChangeCategory = (newCategory: any) => {
   selectedCategory = newCategory;
   return selectedCategory;
 };
 
-const handleChangeSearchItem = (newSearchItem) => {
+const handleChangeSearchItem = (newSearchItem: any) => {
   selectedSearchItem = newSearchItem;
   return selectedSearchItem;
 };

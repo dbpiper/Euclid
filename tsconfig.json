@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./"
+  },
+  "extends": "tsconfig-base",
+  "include": [
+    "src/client",
+    "src/server"
+  ]
+}

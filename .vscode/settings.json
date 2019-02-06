@@ -109,5 +109,6 @@
     "http://json.schemastore.org/prettierrc": "/.prettierrc.yml"
   },
   "yaml.validate": true,
-  "typescript.extension.sortImports.enableJavascript": true
+  "typescript.extension.sortImports.enableJavascript": true,
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

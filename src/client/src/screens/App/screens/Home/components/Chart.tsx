@@ -204,15 +204,15 @@ class Chart extends React.Component<IChartProps, any> {
               }}
             >
               <CartesianGrid
-                stroke='#3d3d3d'
-                strokeDasharray='3 3'
+                stroke="#3d3d3d"
+                strokeDasharray="3 3"
               />
               <XAxis
-                dataKey='date'
-                scale='time'
-                type='number'
+                dataKey="date"
+                scale="time"
+                type="number"
                 domain={['dataMin', 'dataMax']}
-                interval='preserveEnd'
+                interval="preserveEnd"
                 tick={{ stroke: 'none', fill: '#c0bebb' }}
                 minTickGap={minTickGap}
                 tickFormatter={xTickFormatter}
@@ -229,9 +229,9 @@ class Chart extends React.Component<IChartProps, any> {
               <Legend />
               <Line
                 dot={false}
-                type='monotone'
+                type="monotone"
                 dataKey={Chart.getTicker(stocks)}
-                stroke='#8884d8'
+                stroke="#8884d8"
               />
             </LineChart>
           );

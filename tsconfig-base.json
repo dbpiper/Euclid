@@ -19,6 +19,11 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin"
+      }
+    ],
     "pretty": true,
     "strict": true,
     "strictBindCallApply": true,

@@ -93,7 +93,7 @@ const SearchField = (props: any) => {
         onChange={handleChangeCategory}
         options={categories}
         theme={customTheme}
-        placeholder='All'
+        placeholder="All"
       />
       <Select
         styles={searchFieldStyles}
@@ -101,11 +101,11 @@ const SearchField = (props: any) => {
         onChange={handleChangeSearchItem}
         options={options}
         theme={customTheme}
-        placeholder='Search'
+        placeholder="Search"
       />
 
-      <SearchButton type='button'>
-        <span role='img' aria-label='Search'>
+      <SearchButton type="button">
+        <span role="img" aria-label="Search">
           🔍
         </span>
       </SearchButton>

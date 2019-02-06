@@ -46,13 +46,13 @@
     "check-types": "tsc",
     "lint": "npm run lintTS",
     "lintTS": "npx tslint \"./*.ts?(x)\" \"./src/**/*.ts?(x)\" \"./config/**/*.ts?(x)\" --project tsconfig.json",
-    "staticCheck": "npm run lint && npm run check-types",
-    "staticCheckAndTestVerify": "npm run staticCheck && npm run testVerify",
-    "testVerify": "exit 0",
     "preCommit": "npm run staticCheckAndTestVerify",
     "start": "babel-node index.ts --extensions \".ts\" ",
     "startNodemon": "nodemon --exec babel-node --extensions \".ts\" index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "staticCheck": "npm run lint && npm run check-types",
+    "staticCheckAndTestVerify": "npm run staticCheck && npm run testVerify",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "testVerify": "exit 0"
   },
   "version": "1.0.0"
 }

@@ -170,10 +170,10 @@
     "lint": "npm run lintES && npm run lintTS",
     "lintES": "npx eslint .",
     "lintTS": "npx tslint \"./**/*.ts?(x)\" \"src/**/*.ts?(x)\" --project tsconfig.json",
-    "staticCheck": "npm run lint && npm run check-types",
-    "staticCheckAndTestVerify": "npm run staticCheck && npm run testVerify",
     "preCommit": "npm run staticCheckAndTestVerify",
     "start": "node scripts/start.js",
+    "staticCheck": "npm run lint && npm run check-types",
+    "staticCheckAndTestVerify": "npm run staticCheck && npm run testVerify",
     "test": "node scripts/test.js --watch",
     "testVerify": "node scripts/test.js",
     "testWatch": "node scripts/test.js --watch"

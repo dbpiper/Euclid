@@ -25,7 +25,8 @@
   "husky": {
     "hooks": {
       "commit-msg": "npx commitlint -E HUSKY_GIT_PARAMS",
-      "pre-push": "npm run prePush"
+      "pre-commit": "npm run preCommit",
+      "pre-push": "npm run preCommit"
     }
   },
   "license": "MIT",

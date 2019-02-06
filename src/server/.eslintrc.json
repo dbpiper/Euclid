@@ -1,0 +1,32 @@
+{
+  "env": {
+    "node": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:jest/recommended",
+    "plugin:unicorn/recommended"
+  ],
+  "plugins": [
+    "import"
+  ],
+  "rules": {
+    "import/prefer-default-export": [
+      0
+    ],
+    "unicorn/filename-case": [
+      0
+    ],
+    "no-magic-numbers": "error"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    }
+  }
+}

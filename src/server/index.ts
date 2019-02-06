@@ -8,14 +8,15 @@ import resolvers from './src/resolvers';
 import ServerInfo from './config/ServerInfo-secret';
 
 const server = new GraphQLServer({
-  typeDefs: './schema.graphql',
   resolvers,
+  typeDefs: './schema.graphql',
   context: {
     prisma,
   },
 });
 
 
+// tslint:disable-next-line no-console
 server.start(() => console.log(`Server is running on ${ServerInfo.Node.uri}`));
 
 // const tryAddData = async (ticker) => {
@@ -37,7 +38,7 @@ server.start(() => console.log(`Server is running on ${ServerInfo.Node.uri}`));
   // await pullAndSaveData('VFIAX'); IEX gives null dates
   // await pullAndSaveData('LNKD'); IEX give null dates
 
-
+  // tslint:disable-next-line no-console
   console.log('done adding data');
   // const stockList = await prisma
   //   .stockList({ ticker: 'AAPL' });

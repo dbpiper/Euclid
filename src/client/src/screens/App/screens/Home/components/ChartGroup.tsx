@@ -44,43 +44,49 @@ const LinkButton = styled.button`
   margin: 0.5rem;
 `;
 
-class ChartGroup extends React.Component {
-  constructor() {
-    super();
+interface IChartGroupState {
+  timeWindow: string;
+}
+
+class ChartGroup extends React.Component<any, IChartGroupState> {
+  constructor(props: any) {
+    super(props);
     this.state = {
       timeWindow: TimeWindow.ThreeYears,
     };
   }
 
-  setTimeWindow(newTimeWindow) {
-    this.setState({
-      timeWindow: newTimeWindow,
-    });
+  public funcSetTimeWindow(newTimeWindow: string) {
+    return () => (
+      this.setState({
+        timeWindow: newTimeWindow,
+      })
+    );
   }
 
-  render() {
+  public render() {
     const { timeWindow } = this.state;
     return (
       <ChartSection>
         <ChartBody>
           <HeaderContainer>
             <Header>
-              <LinkButton onClick={() => this.setTimeWindow(TimeWindow.YTD)}>
+              <LinkButton onClick={this.funcSetTimeWindow(TimeWindow.YTD)}>
                 YTD
               </LinkButton>
-              <LinkButton onClick={() => this.setTimeWindow(TimeWindow.SixMonths)}>
+              <LinkButton onClick={this.funcSetTimeWindow(TimeWindow.SixMonths)}>
                 6 Months
               </LinkButton>
-              <LinkButton onClick={() => this.setTimeWindow(TimeWindow.OneYear)}>
+              <LinkButton onClick={this.funcSetTimeWindow(TimeWindow.OneYear)}>
                 1 Year
               </LinkButton>
-              <LinkButton onClick={() => this.setTimeWindow(TimeWindow.ThreeYears)}>
+              <LinkButton onClick={this.funcSetTimeWindow(TimeWindow.ThreeYears)}>
                 3 Years
               </LinkButton>
-              <LinkButton onClick={() => this.setTimeWindow(TimeWindow.FiveYears)}>
+              <LinkButton onClick={this.funcSetTimeWindow(TimeWindow.FiveYears)}>
                 5 Years
               </LinkButton>
-              <LinkButton onClick={() => this.setTimeWindow(TimeWindow.AllTime)}>
+              <LinkButton onClick={this.funcSetTimeWindow(TimeWindow.AllTime)}>
                 All Time
               </LinkButton>
             </Header>

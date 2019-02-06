@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 const SearchSection = styled.section`
   margin-top: 1rem;
@@ -21,15 +21,15 @@ const SearchButton = styled.button`
 `;
 
 const searchCategoryStyles = {
-  option: provided => ({
+  option: (provided: any) => ({
     ...provided,
     padding: '20px',
   }),
-  control: provided => ({
+  control: (provided: any) => ({
     ...provided,
     width: 130,
   }),
-  singleValue: provided => ({
+  singleValue: (provided: any) => ({
     ...provided,
     opacity: 1,
   }),
@@ -40,15 +40,15 @@ const searchCategoryStyles = {
 };
 
 const searchFieldStyles = {
-  option: provided => ({
+  option: (provided: any) => ({
     ...provided,
     padding: '20px',
   }),
-  control: provided => ({
+  control: (provided: any) => ({
     ...provided,
     width: 200,
   }),
-  singleValue: provided => ({
+  singleValue: (provided: any) => ({
     ...provided,
     opacity: 1,
   }),
@@ -61,7 +61,7 @@ const searchFieldStyles = {
   }),
 };
 
-const customTheme = theme => ({
+const customTheme = (theme: any) => ({
   ...theme,
   borderRadius: 0,
   colors: {
@@ -76,7 +76,7 @@ const customTheme = theme => ({
   },
 });
 
-const SearchField = (props) => {
+const SearchField = (props: any) => {
   const {
     options,
     categories,
@@ -93,7 +93,7 @@ const SearchField = (props) => {
         onChange={handleChangeCategory}
         options={categories}
         theme={customTheme}
-        placeholder="All"
+        placeholder='All'
       />
       <Select
         styles={searchFieldStyles}
@@ -101,11 +101,11 @@ const SearchField = (props) => {
         onChange={handleChangeSearchItem}
         options={options}
         theme={customTheme}
-        placeholder="Search"
+        placeholder='Search'
       />
 
-      <SearchButton type="button">
-        <span role="img" aria-label="Search">
+      <SearchButton type='button'>
+        <span role='img' aria-label='Search'>
           🔍
         </span>
       </SearchButton>

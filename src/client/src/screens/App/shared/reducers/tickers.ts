@@ -1,6 +1,6 @@
 import { SELECT_TICKER } from 'App/actionTypes';
 
-export const tickers = (state = {}, action) => {
+export const tickers = (state = {}, action: { type: string, ticker: string}) => {
   switch (action.type) {
     case SELECT_TICKER:
       return {

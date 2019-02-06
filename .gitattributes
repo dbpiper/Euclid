@@ -37,6 +37,9 @@ LICENSE text
 Dockerfile text
 *.sh text
 
+# make line endings LF not CRLF
+eol=lf
+
 # binary files
 *.jpg binary
 *.png binary

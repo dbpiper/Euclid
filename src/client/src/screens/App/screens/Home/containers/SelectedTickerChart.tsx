@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import Chart from '../components/Chart';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: any) => ({
   selectedTicker: state.tickers.ticker,
 });
 

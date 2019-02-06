@@ -1,0 +1,29 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint-config-euclid"
+  ],
+  "jsRules": {},
+  "rules": {
+    "no-implicit-dependencies": [
+      true,
+      "dev",
+      [
+        "App",
+        "config"
+      ]
+    ],
+    "no-submodule-imports": [
+      true,
+      "App",
+      "config"
+    ],
+    "jsx-no-multiline-js": false
+  },
+  "linterOptions": {
+    "exclude": [
+      "**/node_modules/**",
+      "src/config/@types/**"
+    ]
+  }
+}

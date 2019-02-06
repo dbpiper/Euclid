@@ -141,11 +141,9 @@ class Chart extends React.Component<IChartProps, any> {
         `}
       >
         {({
-          loading,
           error,
           data,
         }) => {
-          if (loading && typeof error === 'undefined') return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
 
           let stocksCache = [] as any[];

@@ -32,7 +32,14 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
 // Check if TypeScript is setup
-const useTypeScript = fs.existsSync(paths.appTsConfig);
+let useTypeScript = fs.existsSync(paths.appTsConfig);
+
+// disable TypeScript type checking for our webserver, since it is very
+// slow and we'd rather just throw away the types in babel and do our
+// own type checking separately. This way we can iterate quickly and
+// work on development quickly, and use TSLint and npm to check our
+// code in the editor and before committing.
+useTypeScript = false;
 
 // style files regexes
 const cssRegex = /\.css$/;

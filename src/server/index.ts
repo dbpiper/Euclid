@@ -21,8 +21,8 @@ const server = new GraphQLServer({
 });
 
 
-// tslint:disable-next-line no-console
 server.start(() => {
+  // tslint:disable-next-line no-console
   console.log(`Server is running on ${ServerInfo.Node.uri}`);
 
   if (buildOnly) {

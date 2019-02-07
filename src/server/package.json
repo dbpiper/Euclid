@@ -58,7 +58,7 @@
     "staticCheck": "npm run lint && npm run check-types",
     "staticCheckAndTestVerify": "npm run staticCheck && npm run testVerify",
     "test": "jest",
-    "testVerify": "exit 0"
+    "testVerify": "jest"
   },
   "version": "1.0.0"
 }

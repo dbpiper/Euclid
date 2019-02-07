@@ -13,7 +13,7 @@ import { IFormattedStockData, IStockData } from './types';
 const formatStockData = (stockData: IStockData): IFormattedStockData[] => {
   const dateFormat = 'YYYY-MM-DD';
   const formattedData = R.map((elem) => {
-    const unixTimestamp = moment(elem.date, dateFormat).unix();
+    const unixTimestamp = moment.utc(elem.date, dateFormat).unix();
     return {
       date: unixTimestamp,
       price: elem.vwap as number,

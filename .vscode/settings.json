@@ -3,6 +3,7 @@
     "aapl",
     "amzn",
     "app",
+    "arrow",
     "asyncify",
     "base",
     "browserslist",
@@ -35,11 +36,13 @@
     "noopener",
     "noreferrer",
     "npm",
+    "parens",
     "plugin",
     "polyfill",
     "popd",
     "postcss",
     "pre",
+    "promisify",
     "push",
     "pushd",
     "react",
@@ -105,10 +108,12 @@
       "url": "http://json.schemastore.org/tslint"
     }
   ],
+  "prettier.requireConfig": false,
+  "prettier.tslintIntegration": true,
+  "typescript.extension.sortImports.enableJavascript": true,
+  "typescript.tsdk": "node_modules\\typescript\\lib",
   "yaml.schemas": {
     "http://json.schemastore.org/prettierrc": "/.prettierrc.yml"
   },
-  "yaml.validate": true,
-  "typescript.extension.sortImports.enableJavascript": true,
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  "yaml.validate": true
 }

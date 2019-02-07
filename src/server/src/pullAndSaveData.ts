@@ -12,21 +12,22 @@ import formatStockData from './formatStockData';
  */
 const addEach = (data: any[]): Promise<any> => {
   const addLimit = 50;
-  return (
-    new Promise((resolve, reject) => {
-      async.eachLimit(data, addLimit, async (datum: StockCreateInput, callback) => {
+  return new Promise((resolve, reject) => {
+    async.eachLimit(
+      data,
+      addLimit,
+      async (datum: StockCreateInput, callback) => {
         try {
           await prisma.createStock(datum);
           callback(); // signal that we're done
         } catch (error) {
           callback(error);
         }
-      }, error => (
-        reject(error)
-      ));
-      resolve();
-    })
-  );
+      },
+      error => reject(error),
+    );
+    resolve();
+  });
 };
 
 /**

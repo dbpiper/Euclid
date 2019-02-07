@@ -24,7 +24,9 @@
   "description": "The server for Euclid",
   "devDependencies": {
     "@types/async": "^2.4.0",
+    "@types/fetch-mock": "^7.2.2",
     "@types/isomorphic-fetch": "0.0.34",
+    "@types/jest": "^24.0.0",
     "@types/lodash": "^4.14.120",
     "@types/ramda": "^0.25.48",
     "@types/ws": "^6.0.1",
@@ -34,7 +36,10 @@
     "eslint-plugin-jest": "^22.2.2",
     "eslint-plugin-module-resolver": "^0.8.0",
     "eslint-plugin-unicorn": "^7.1.0",
+    "fetch-mock": "^7.3.0",
+    "jest": "^24.1.0",
     "jsdoc": "^3.5.5",
+    "ts-jest": "^23.10.5",
     "tslint": "^5.12.1",
     "typescript": "^3.3.1"
   },
@@ -44,14 +49,15 @@
   "scripts": {
     "build": "babel-node index.ts --extensions \".ts\" -- --build",
     "check-types": "tsc",
-    "lint": "npm run lintTS",
+    "lint": "npm run lintES && npm run lintTS",
+    "lintES": "npx eslint .",
     "lintTS": "npx tslint \"./*.ts?(x)\" \"./src/**/*.ts?(x)\" \"./config/**/*.ts?(x)\" --project tsconfig.json",
     "preCommit": "npm run build && npm run staticCheckAndTestVerify",
     "start": "babel-node index.ts --extensions \".ts\" ",
     "startNodemon": "nodemon --exec babel-node --extensions \".ts\" index.js",
     "staticCheck": "npm run lint && npm run check-types",
     "staticCheckAndTestVerify": "npm run staticCheck && npm run testVerify",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "testVerify": "exit 0"
   },
   "version": "1.0.0"

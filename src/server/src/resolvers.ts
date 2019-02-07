@@ -20,25 +20,4 @@ export default {
       return uniqueTickers;
     },
   },
-  // Mutation: {
-  //   createStock(root, args, context) {
-  //     return context.prisma.createStock(
-  //       { date: args.date, price: args.price, ticker: args.ticker },
-  //     );
-  //   },
-  // },
-  // User: {
-  //   // posts(root, args, context) {
-  //   //   return context.prisma.user({
-  //   //     id: root.id,
-  //   //   }).posts();
-  //   // },
-  // },
-  // Post: {
-  //   // author(root, args, context) {
-  //   //   return context.prisma.post({
-  //   //     id: root.id,
-  //   //   }).author();
-  //   // },
-  // },
 };

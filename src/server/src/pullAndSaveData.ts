@@ -1,9 +1,6 @@
 import async from 'async';
 
-// import { prisma, StockCreateInput } from '../generated/prisma-client';
-import { prisma } from '../generated/prisma-client';
-
-type StockCreateInput = any;
+import { prisma, StockCreateInput } from '../generated/prisma-client';
 
 import fetchStock from './fetchStock';
 import formatStockData from './formatStockData';

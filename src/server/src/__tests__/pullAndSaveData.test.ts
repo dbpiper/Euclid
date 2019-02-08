@@ -45,7 +45,7 @@ describe('addEach', () => {
     createStockSpy = jest.spyOn(prisma, 'createStock');
   });
 
-  // reset error automatically so that we don't to manually do so
+  // reset error automatically so that we don't have to manually do so
   afterEach(() => {
     error = false;
   });
@@ -109,7 +109,7 @@ describe('pullAndSaveData integration test', () => {
     createStockSpy = jest.spyOn(prisma, 'createStock');
   });
 
-  // reset error automatically so that we don't to manually do so
+  // reset error automatically so that we don't have to manually do so
   afterEach(() => {
     error = false;
   });
@@ -139,7 +139,7 @@ describe('pullAndSaveData integration test', () => {
     const rawAapl = await fetchStock('AAPL', '5y');
     const formattedAapl = formatStockData(rawAapl);
 
-    // we only are expecting the call to happen once since it will
+    // we are only expecting the call to happen once since it will
     // throw an error/reject and exit after the first time
     const firstBatchOfStocks = R.take(batchSize, formattedAapl);
     // prettier-ignore

@@ -4,30 +4,38 @@ import { prisma, StockCreateInput } from '../generated/prisma-client';
 
 import fetchStock from './fetchStock';
 import formatStockData from './formatStockData';
+import { IFormattedStockData } from './types';
+
+/**
+ * The number of stocks to add to the DB in one batch,
+ * this is limited to avoid crashing the DB with tons of
+ * simultaneous requests.
+ */
+const batchSize: number = 50;
 
 /**
  * Add each of the stocks pulled from IEX to the DB
  *
  * @param data - The IEX stock data
  */
-const addEach = (data: any[]): Promise<any> => {
-  const addLimit = 50;
-  return (
-    new Promise((resolve, reject) => {
-      async.eachLimit(data, addLimit, async (datum: StockCreateInput, callback) => {
-        try {
-          await prisma.createStock(datum);
-          callback(); // signal that we're done
-        } catch (error) {
-          callback(error);
+// prettier-ignore
+const addEach = (data: IFormattedStockData[]): Promise<any> => (
+  new Promise((resolve, reject) => {
+    async.eachLimit(
+      data,
+      batchSize,
+      async.asyncify(async (datum: StockCreateInput) =>
+        prisma.createStock(datum),
+      ),
+      (error) => {
+        if (error) {
+          reject(error);
         }
-      }, error => (
-        reject(error)
-      ));
-      resolve();
-    })
-  );
-};
+        resolve();
+      },
+    );
+  })
+);
 
 /**
  *
@@ -36,9 +44,11 @@ const addEach = (data: any[]): Promise<any> => {
  *
  * @param ticker - The ticker of the stock to pull data for
  */
-module.exports = async function pullAndSaveData(ticker: string): Promise<any> {
+export default async function pullAndSaveData(ticker: string): Promise<any> {
   const data = await fetchStock(ticker, '5y');
   const formattedData = formatStockData(data);
 
   return addEach(formattedData);
-};
+}
+
+export { addEach, batchSize, pullAndSaveData };

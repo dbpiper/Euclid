@@ -1,19 +1,14 @@
 // tslint:disable no-magic-numbers
-
 import fetchMock from 'fetch-mock';
-import fs from 'fs';
-import path from 'path';
-import { promisify } from 'util';
 import fetchStock from '../fetchStock';
-
-const readFile = promisify(fs.readFile);
+import { get5yAapl, mockIEX } from './utils/mockIEX';
 
 describe('should be able to get data from iex', () => {
   afterEach(() => {
     fetchMock.restore();
   });
 
-  test('fetch one data point from iex', async () => {
+  test('fetch one data point from iex 5y endpoint', async () => {
     const stockData = [
       {
         date: '2014-02-07',
@@ -47,23 +42,12 @@ describe('should be able to get data from iex', () => {
   });
 
   test('fetch 5y from iex', async () => {
-    const fiveYearAaplJson: string = await readFile(
-      path.join(__dirname, '../mockData/5y.json'),
-      'utf8',
-    );
+    await mockIEX();
+    const aaplData = await get5yAapl();
 
-    // there is a bug in the `iex-api` code that adds an extra '/' after '1.0'
-    fetchMock.get('https://api.iextrading.com/1.0//stock/AAPL/chart/5y', {
-      body: fiveYearAaplJson,
-      headers: {
-        'content-type': 'application/json',
-      },
-    });
-
-    // const data = await fetch('https://api.iextrading.com/1.0/stock/aapl/chart/5y');
     const stockResult = await fetchStock('AAPL', '5y');
     expect(stockResult).toEqual({
-      data: JSON.parse(fiveYearAaplJson),
+      data: aaplData,
       ticker: 'AAPL',
     });
   });

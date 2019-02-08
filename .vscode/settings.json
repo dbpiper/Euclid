@@ -110,6 +110,7 @@
   ],
   "prettier.requireConfig": false,
   "prettier.tslintIntegration": true,
+  "prettier.eslintIntegration": true,
   "typescript.extension.sortImports.enableJavascript": true,
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "yaml.schemas": {

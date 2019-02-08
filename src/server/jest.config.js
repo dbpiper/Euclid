@@ -2,27 +2,21 @@
 // https://jestjs.io/docs/en/configuration.html
 
 module.exports = {
-  // All imported modules in your tests should be mocked automatically
-  // automock: false,
 
   // Stop running tests after `n` failures
-  // bail: 0,
-
-  // Respect "browser" field in package.json when resolving modules
-  // browser: false,
-
-  // The directory where Jest should store its cached dependency information
-  // cacheDirectory: "/tmp/jest_rs",
+  bail: 10,
 
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
-  // collectCoverage: false,
+  collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage
   // information should be collected
-  // collectCoverageFrom: null,
+  collectCoverageFrom: [
+    'src/*.ts',
+  ],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
@@ -49,7 +43,7 @@ module.exports = {
   // Make calling deprecated APIs throw helpful error messages
   // errorOnDeprecated: false,
 
-  // Force coverage collection from ignored files usin a array of glob patterns
+  // Force coverage collection from ignored files using a array of glob patterns
   // forceCoverageMatch: [],
 
   // A path to a module which exports an async function that is triggered once
@@ -148,16 +142,18 @@ module.exports = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  // testMatch: [
-  //   "**/__tests__/**/*.[jt]s?(x)",
-  //   "**/?(*.)+(spec|test).[tj]s?(x)"
-  // ],
+  testMatch: [
+    '**/__tests__/**/*.[jt]s?(x)',
+    '**/?(*.)+(spec|test).[tj]s?(x)',
+  ],
 
   // An array of regexp pattern strings that are matched against all test paths,
   //  matched tests are skipped
-  // testPathIgnorePatterns: [
-  //   "/node_modules/"
-  // ],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/utils/',
+    '/mockData/',
+  ],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
   // testRegex: [],

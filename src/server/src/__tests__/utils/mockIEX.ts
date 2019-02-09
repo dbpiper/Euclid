@@ -2,11 +2,11 @@ import fetchMock from 'fetch-mock';
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
-import { IStockData } from '../../types';
+import { IRawStockData } from '../../types';
 
 const readFile = promisify(fs.readFile);
 
-let aaplData: IStockData[];
+let aaplData: IRawStockData[];
 let aaplDataJson: string;
 
 /**
@@ -15,7 +15,7 @@ let aaplDataJson: string;
  *
  * @return The AAPL stock data from our local cache
  */
-const get5yAaplJson = async () => {
+const get5yAaplJson = async (): Promise<string> => {
   if (typeof aaplDataJson === 'undefined') {
     aaplDataJson = await readFile(
       path.join(__dirname, '../mockData/5y.json'),
@@ -23,16 +23,16 @@ const get5yAaplJson = async () => {
     );
   }
 
-  return JSON.parse(aaplDataJson);
+  return aaplDataJson;
 };
 
 /**
  * Gets the local 5y AAPL. Reads the local file if needed or
  * from a variable if it can.
  */
-const get5yAapl = async (): Promise<IStockData[]> => {
+const get5yAapl = async (): Promise<IRawStockData[]> => {
   if (typeof aaplData === 'undefined') {
-    aaplData = await get5yAaplJson();
+    aaplData = JSON.parse(await get5yAaplJson()) as IRawStockData[];
   }
 
   return aaplData;
@@ -46,7 +46,7 @@ const get5yAapl = async (): Promise<IStockData[]> => {
  *
  */
 const mockIEX = async () => {
-  const fiveYearAaplJson = await get5yAapl();
+  const fiveYearAaplJson = await get5yAaplJson();
 
   // there is a bug in the `iex-api` code that adds an extra '/' after '1.0'
   fetchMock.get('https://api.iextrading.com/1.0//stock/AAPL/chart/5y', {

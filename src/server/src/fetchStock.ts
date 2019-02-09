@@ -2,7 +2,7 @@ import { IEXClient } from 'iex-api';
 // tslint:disable-next-line: no-var-requires
 require('isomorphic-fetch');
 
-import { IStockData } from './types';
+import { IRawStockData, IStockData } from './types';
 
 /**
  *
@@ -17,7 +17,7 @@ const fetchStock = async (
   time: string,
 ): Promise<IStockData> => {
   const iex = new IEXClient(fetch);
-  const data = await iex.stockChart(ticker, time);
+  const data = (await iex.stockChart(ticker, time)) as IRawStockData[];
   return {
     ticker,
     data,

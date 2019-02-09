@@ -102,7 +102,7 @@ describe('addEach', () => {
 });
 
 describe('pullAndSaveData integration test', () => {
-  let createStockSpy: any;
+  let createStockSpy: jest.SpyInstance;
   jest.setTimeout(10 * 1000);
 
   beforeEach(() => {

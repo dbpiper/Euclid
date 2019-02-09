@@ -1,6 +1,11 @@
+export interface IRawStockData {
+  date: string;
+  vwap: number;
+}
+
 export interface IStockData {
   ticker: string;
-  data: any[];
+  data: IRawStockData[];
 }
 
 export interface IFormattedStockData {

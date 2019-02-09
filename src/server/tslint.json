@@ -5,5 +5,7 @@
   ],
   "jsRules": {},
   "rules": {
+    "no-angle-bracket-type-assertion": true,
+    "no-unsafe-any": true
   }
 }

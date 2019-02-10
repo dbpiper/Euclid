@@ -1,12 +1,12 @@
 import { mount } from 'enzyme';
 import 'jest-styled-components';
 import React from 'react';
-import SearchField from '../SearchField';
+import SearchField, {
+  HandleChangeSelectFunction,
+  ISelectElement,
+} from '../SearchField';
 
-
-const categories = [
-  { value: 'stocks', label: 'Stocks' },
-];
+const categories = [{ value: 'stocks', label: 'Stocks' }];
 
 const tickerOptions = [
   { value: 'GOOG', label: 'GOOG' },
@@ -15,19 +15,23 @@ const tickerOptions = [
   { value: 'SPY', label: 'SPY' },
 ];
 
-let selectedCategory: any = null;
-let selectedSearchItem: any = null;
+type NullableSelectElement = ISelectElement | undefined;
+
+let selectedCategory: NullableSelectElement;
+let selectedSearchItem: NullableSelectElement;
 
 let component: any;
 
-const handleChangeCategory = (newCategory: any) => {
-  selectedCategory = newCategory;
-  return selectedCategory;
+const handleChangeCategory: HandleChangeSelectFunction = (
+  selected?: ISelectElement | ISelectElement[] | null,
+) => {
+  selectedCategory = selected as NullableSelectElement;
 };
 
-const handleChangeSearchItem = (newSearchItem: any) => {
-  selectedSearchItem = newSearchItem;
-  return selectedSearchItem;
+const handleChangeSearchItem: HandleChangeSelectFunction = (
+  selected?: ISelectElement | ISelectElement[] | null,
+) => {
+  selectedSearchItem = selected as NullableSelectElement;
 };
 
 beforeEach(() => {

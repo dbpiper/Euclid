@@ -29,7 +29,11 @@ const Header = () => (
 
     <SearchArea>
       <ErrorBoundary>
-        <SelectTickerSearchField />
+        {
+          // disabling because the react-redux types are broken
+          // tslint:disable-next-line no-unsafe-any
+          <SelectTickerSearchField />
+        }
       </ErrorBoundary>
     </SearchArea>
   </Head>

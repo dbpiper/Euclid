@@ -17,9 +17,9 @@ exports[`SearchField basic 1`] = `
   box-shadow: 0;
   border-left: 0;
   border-width: 1px;
-  -webkit-appearance: button,;
-  -moz-appearance: button,;
-  appearance: button,;
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
 }
 
 <SearchField
@@ -2588,7 +2588,7 @@ exports[`SearchField basic 1`] = `
   border-left: 0;
   border-width: 1px;
 
-  appearance: button,
+  appearance: button;
 ",
                   ],
                 },

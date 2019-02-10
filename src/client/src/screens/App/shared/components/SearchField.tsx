@@ -3,6 +3,8 @@ import React from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
 
+import { ITheme } from 'config/types/react-select';
+
 const SearchSection = styled.section`
   margin-top: 1rem;
   display: flex;
@@ -17,7 +19,7 @@ const SearchButton = styled.button`
   border-left: 0;
   border-width: 1px;
 
-  appearance: button,
+  appearance: button;
 `;
 
 const searchCategoryStyles = {
@@ -56,12 +58,13 @@ const searchFieldStyles = {
     // | separator between box and dropdown indicator
     opacity: 0,
   }),
-  dropdownIndicator: () => ({ // chevron by default
+  dropdownIndicator: () => ({
+    // chevron by default
     opacity: 0,
   }),
 };
 
-const customTheme = (theme: any) => ({
+const customTheme = (theme: ITheme) => ({
   ...theme,
   borderRadius: 0,
   colors: {
@@ -76,7 +79,25 @@ const customTheme = (theme: any) => ({
   },
 });
 
-const SearchField = (props: any) => {
+export interface ISelectElement {
+  value: string;
+  label: string;
+}
+
+export type HandleChangeSelectFunction = (
+  selected?: ISelectElement | ISelectElement[] | null,
+) => void;
+
+interface ISearchFieldProps {
+  options: ISelectElement[];
+  categories: ISelectElement[];
+  handleChangeCategory: HandleChangeSelectFunction;
+  handleChangeSearchItem: HandleChangeSelectFunction;
+  selectedCategory: ISelectElement;
+  selectedSearchItem: ISelectElement;
+}
+
+const SearchField = (props: ISearchFieldProps) => {
   const {
     options,
     categories,
@@ -109,7 +130,6 @@ const SearchField = (props: any) => {
           🔍
         </span>
       </SearchButton>
-
     </SearchSection>
   );
 };
@@ -120,14 +140,18 @@ SearchField.defaultProps = {
 };
 
 SearchField.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.string,
-  })).isRequired,
-  categories: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.string,
-  })).isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    }),
+  ).isRequired,
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    }),
+  ).isRequired,
   handleChangeCategory: PropTypes.func.isRequired,
   handleChangeSearchItem: PropTypes.func.isRequired,
   selectedCategory: PropTypes.shape({

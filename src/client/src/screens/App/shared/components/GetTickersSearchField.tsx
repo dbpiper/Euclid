@@ -1,37 +1,52 @@
-import gql from 'graphql-tag';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Query } from 'react-apollo';
 import ErrorBoundary from 'react-error-boundary';
-import SearchField from './SearchField';
 
-const categories = [
-  { value: 'stocks', label: 'Stocks' },
-];
+import { OnTickerSelectFunction } from 'App/shared/containers/SelectTickerSearchField';
+import getTickersQuery from './queries/getTickersQuery';
+import { Tickers } from './queries/types/Tickers';
+import SearchField, { ISelectElement } from './SearchField';
 
-export const GET_TICKERS_QUERY = gql`
-  query {
-    tickers
-  }
-`;
+class TickersQuery extends Query<Tickers, any> {}
 
-class GetTickersSearchField extends React.Component<any, any> {
+const categories: ISelectElement[] = [{ value: 'stocks', label: 'Stocks' }];
+
+interface IGetTickersSearchFieldProps {
+  onTickerSelect: OnTickerSelectFunction;
+}
+
+interface IGetTickersSearchFieldState {
+  selectedSearchItem: ISelectElement | undefined;
+  selectedCategory: ISelectElement | undefined;
+}
+
+class GetTickersSearchField extends React.Component<
+  IGetTickersSearchFieldProps,
+  IGetTickersSearchFieldState
+> {
   public static propTypes: any;
 
-  constructor(props: any) {
+  constructor(props: IGetTickersSearchFieldProps) {
     super(props);
     this.state = {
-      selectedSearchItem: null,
-      selectedCategory: null,
+      selectedSearchItem: undefined,
+      selectedCategory: undefined,
     };
   }
 
-  public handleChangeCategory = (selectedCategory: any) => {
+  public handleChangeCategory = (
+    selected?: ISelectElement | ISelectElement[] | null,
+  ) => {
+    const selectedCategory = selected as ISelectElement;
     this.setState({ selectedCategory });
   }
 
-  public handleChangeSearchItem = (selectedSearchItem: any) => {
+  public handleChangeSearchItem = (
+    selected?: ISelectElement | ISelectElement[] | null,
+  ) => {
+    const selectedSearchItem = selected as ISelectElement;
     const { onTickerSelect } = this.props;
     this.setState({ selectedSearchItem });
     onTickerSelect(selectedSearchItem.value);
@@ -41,19 +56,20 @@ class GetTickersSearchField extends React.Component<any, any> {
     const { selectedSearchItem, selectedCategory } = this.state;
     return (
       <ErrorBoundary>
-        <Query
-          query={GET_TICKERS_QUERY}
-        >
-          {({
-            loading,
-            error,
-            data,
-          }) => {
-            if (loading && typeof error === 'undefined') return <p>Loading...</p>;
+        <TickersQuery query={getTickersQuery}>
+          {({ loading, error, data }): JSX.Element => {
+            if (loading && typeof error === 'undefined') {
+              return <p>Loading...</p>;
+            }
             if (error) return <p>Error :(</p>;
-            const tickerOptions = _.map(data.tickers, ticker => (
-              { value: ticker, label: ticker }
-            ));
+            const queryData = data as Tickers;
+            const tickerOptions: ISelectElement[] = _.map(
+              queryData.tickers,
+              ticker => ({
+                value: ticker,
+                label: ticker,
+              }),
+            );
             return (
               <ErrorBoundary>
                 <SearchField
@@ -67,7 +83,7 @@ class GetTickersSearchField extends React.Component<any, any> {
               </ErrorBoundary>
             );
           }}
-        </Query>
+        </TickersQuery>
       </ErrorBoundary>
     );
   }

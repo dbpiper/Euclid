@@ -4,7 +4,19 @@
     "tslint-config-euclid"
   ],
   "jsRules": {},
+  "linterOptions": {
+    "exclude": [
+      "**/node_modules/**",
+      "src/config/@types/**"
+    ]
+  },
   "rules": {
+    "jsx-no-multiline-js": false,
+    "no-angle-bracket-type-assertion": true,
+    "no-any": {
+      "severity": "warning"
+    },
+    "prefer-conditional-expression": false,
     "no-implicit-dependencies": [
       true,
       "dev",
@@ -18,12 +30,8 @@
       "App",
       "config"
     ],
-    "jsx-no-multiline-js": false
-  },
-  "linterOptions": {
-    "exclude": [
-      "**/node_modules/**",
-      "src/config/@types/**"
-    ]
+    "no-unsafe-any": {
+      "severity": "error"
+    }
   }
 }

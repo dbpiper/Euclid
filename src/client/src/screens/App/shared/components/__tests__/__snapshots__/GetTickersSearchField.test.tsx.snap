@@ -37,7 +37,7 @@ exports[`GetTickersSearchField basic 1`] = `
         ],
         "kind": "Document",
         "loc": Object {
-          "end": 34,
+          "end": 35,
           "start": 0,
         },
       }

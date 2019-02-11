@@ -2,25 +2,25 @@
 process.env.BABEL_ENV = 'node';
 
 import {
-  exec,
-} from 'promisify-child-process';
+  spawn,
+} from 'child_process';
 import ServerInfo from '../config/ServerInfo-secret';
-
 
 const main = async () => {
   try {
-    const {
-      stdout,
-      stderr,
-    } = await exec(`npx apollo schema:download \
-      --endpoint=${ServerInfo.Node.uri} graphql-schema.json`, {
-      encoding: 'utf-8',
+    const apolloGenerate = spawn('npx', ['apollo', 'schema:download',
+      `--endpoint=${ServerInfo.Node.uri}`, 'graphql-schema.json',
+    ]);
+
+    apolloGenerate.stdout.on('data', (data) => {
+      // eslint-disable-next-line no-console
+      console.log(data.toString());
     });
 
-    // eslint-disable-next-line no-console
-    console.log(stdout);
-    // eslint-disable-next-line no-console
-    console.error(stderr);
+    apolloGenerate.stderr.on('data', (data) => {
+      // eslint-disable-next-line no-console
+      console.error(data.toString());
+    });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);

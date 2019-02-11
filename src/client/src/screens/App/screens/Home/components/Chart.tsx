@@ -1,4 +1,3 @@
-import gql from 'graphql-tag';
 import _ from 'lodash';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -15,7 +14,11 @@ import {
   YAxis,
 } from 'recharts';
 
+import getStocksQuery from '../queries/getStocksQuery';
+import { Stocks, StocksVariables } from '../queries/types/Stocks';
 import TimeWindow from '../shared/TimeWindow';
+
+class StocksQuery extends Query<Stocks, StocksVariables> {}
 
 interface ITickerData {
   [key: string]: number;
@@ -38,12 +41,12 @@ interface IChartProps {
 }
 
 // cSpell:disable
+// Requireable is misspelled! Should be Requirable.
 interface IChartPropTypes {
   timeWindow: PropTypes.Requireable<string>;
   selectedTicker: PropTypes.Requireable<string>;
 }
 // cSpell:enable
-
 
 const darkTooltipContentStyle = {
   backgroundColor: '#18181a',
@@ -187,19 +190,9 @@ class Chart extends React.Component<IChartProps, void> {
   public render() {
     const { timeWindow, selectedTicker } = this.props;
     return (
-      <Query
-        // tslint:disable-next-line no-unsafe-any
-        query={gql`
-          query {
-            stocks(ticker: "${selectedTicker}", earliestDate: ${getEarliestTime(
-              timeWindow,
-        )}) {
-              price
-              date
-              ticker
-            }
-          }
-        `}
+      <StocksQuery
+        query={getStocksQuery}
+        variables={{ ticker: selectedTicker, earliestDate: getEarliestTime(timeWindow) }}
       >
         {({ error, data }) => {
           if (error) return <p>Error :(</p>;
@@ -322,7 +315,7 @@ class Chart extends React.Component<IChartProps, void> {
             </LineChart>
           );
         }}
-      </Query>
+      </StocksQuery>
     );
   }
 }

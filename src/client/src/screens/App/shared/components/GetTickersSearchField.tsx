@@ -5,11 +5,11 @@ import { Query } from 'react-apollo';
 import ErrorBoundary from 'react-error-boundary';
 
 import { OnTickerSelectFunction } from 'App/shared/containers/SelectTickerSearchField';
-import getTickersQuery from './queries/getTickersQuery';
-import { Tickers } from './queries/types/Tickers';
+import getTickersQuery from '../queries/getTickersQuery';
+import { Tickers } from '../queries/types/Tickers';
 import SearchField, { ISelectElement } from './SearchField';
 
-class TickersQuery extends Query<Tickers, any> {}
+class TickersQuery extends Query<Tickers, void> {}
 
 const categories: ISelectElement[] = [{ value: 'stocks', label: 'Stocks' }];
 

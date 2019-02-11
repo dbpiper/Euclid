@@ -109,9 +109,9 @@
       "url": "http://json.schemastore.org/tslint"
     }
   ],
-  "prettier.requireConfig": false,
-  "prettier.tslintIntegration": true,
   "prettier.eslintIntegration": true,
+  "prettier.requireConfig": true,
+  "prettier.tslintIntegration": true,
   "typescript.extension.sortImports.enableJavascript": true,
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "yaml.schemas": {

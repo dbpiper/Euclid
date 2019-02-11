@@ -43,5 +43,5 @@
     "preCommitClient": "cd src/client && npm run preCommit && cd ../../",
     "preCommitServer": "cd src/server && npm run preCommit && cd ../../"
   },
-  "version": "1.0.0"
+  "version": "0.0.0"
 }

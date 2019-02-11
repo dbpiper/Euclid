@@ -1,29 +1,33 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "paths": {
       "*": [
-        "src/*",
-        "src/config/@types/*"
+        "*",
+        "config/@types/*"
       ],
       "App": [
-        "src/screens/App"
+        "screens/App"
       ],
       "App/*": [
-        "src/screens/App/*"
+        "screens/App/*"
       ],
       "config": [
-        "src/config"
+        "config"
       ],
       "config/*": [
-        "src/config/*"
+        "config/*"
+      ],
+      "shared/*": [
+        "screens/App/shared/*",
+        "screens/App/screens/Home/shared/*"
       ]
     }
   },
   "extends": "../../tsconfig-base",
   "include": [
     "src",
-    "./src/**/*"
+    "./src/**/*",
   ],
   "types": [
     "jest",

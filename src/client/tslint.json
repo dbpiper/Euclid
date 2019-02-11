@@ -22,13 +22,17 @@
       "dev",
       [
         "App",
-        "config"
+        "config",
+        "shared",
+        "src"
       ]
     ],
     "no-submodule-imports": [
       true,
       "App",
-      "config"
+      "config",
+      "shared",
+      "src"
     ],
     "no-unsafe-any": {
       "severity": "error"

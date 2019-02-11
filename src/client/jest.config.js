@@ -1,7 +1,14 @@
 module.exports = {
+  bail: 10,
+  clearMocks: true,
+  collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.d.ts',
+  ],
+  coverageDirectory: 'coverage',
+  coveragePathIgnorePatterns: [
+    '.*types/.*(ts$|tsx$)',
   ],
   moduleFileExtensions: [
     'web.js',
@@ -47,4 +54,10 @@ module.exports = {
     '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
     '^.+\\.module\\.(css|sass|scss)$',
   ],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/utils/',
+    '/mockData/',
+  ],
+
 };

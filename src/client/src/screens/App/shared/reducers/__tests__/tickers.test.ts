@@ -33,4 +33,18 @@ describe('tickers reducer', () => {
       ticker: '',
     });
   });
+
+  test('should select the default ticker:\'AAPL\' if called without one', () => {
+    expect(
+      tickers(
+        undefined,
+        {
+          type: 'the quick brown fox jumps over the lazy dog',
+          ticker: 'abc123',
+        },
+      ),
+    ).toEqual({
+      ticker: 'AAPL',
+    });
+  });
 });

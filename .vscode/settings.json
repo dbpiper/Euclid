@@ -112,19 +112,19 @@
   "prettier.eslintIntegration": true,
   "prettier.requireConfig": true,
   "prettier.tslintIntegration": true,
-  "typescript.extension.sortImports.enableJavascript": true,
-  "typescript.tsdk": "node_modules\\typescript\\lib",
-  "yaml.schemas": {
-    "http://json.schemastore.org/prettierrc": "/.prettierrc.yml"
-  },
-  "yaml.validate": true,
-  "spellright.language": [
-    "en"
-  ],
   "spellright.documentTypes": [
     "markdown",
     "latex",
     "plaintext",
     "typescriptreact"
-  ]
+  ],
+  "spellright.language": [
+    "en"
+  ],
+  "typescript.extension.sortImports.enableJavascript": true,
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "yaml.schemas": {
+    "http://json.schemastore.org/prettierrc": "/.prettierrc.yml"
+  },
+  "yaml.validate": true
 }

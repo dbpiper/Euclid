@@ -12,22 +12,20 @@
       "App/*": [
         "screens/App/*"
       ],
-      "config": [
-        "config"
-      ],
-      "config/*": [
-        "config/*"
+      "shared": [
+        "screens/App/shared",
+        "screens/App/screens/Home/shared"
       ],
       "shared/*": [
         "screens/App/shared/*",
         "screens/App/screens/Home/shared/*"
-      ]
+      ],
     }
   },
   "extends": "../../tsconfig-base",
   "include": [
     "src",
-    "./src/**/*",
+    "./src/**/*"
   ],
   "types": [
     "jest",

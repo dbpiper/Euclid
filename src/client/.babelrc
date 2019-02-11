@@ -23,6 +23,13 @@
           ],
           "config": [
             "./src/config"
+          ],
+          "shared": [
+            "./src/screens/App/shared",
+            "./src/screens/App/screens/Home/shared"
+          ],
+          "util": [
+            "./src/util"
           ]
         },
         "root": [
@@ -50,5 +57,6 @@
         "jsxPragma": "React"
       }
     ]
-  ]
+  ],
+  "sourceMaps": "inline"
 }

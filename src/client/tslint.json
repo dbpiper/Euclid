@@ -16,7 +16,6 @@
     "no-any": {
       "severity": "warning"
     },
-    "prefer-conditional-expression": false,
     "no-implicit-dependencies": [
       true,
       "dev",
@@ -24,7 +23,9 @@
         "App",
         "config",
         "shared",
-        "src"
+        "src",
+        "actions",
+        "util"
       ]
     ],
     "no-submodule-imports": [
@@ -32,10 +33,13 @@
       "App",
       "config",
       "shared",
-      "src"
+      "src",
+      "actions",
+      "util"
     ],
     "no-unsafe-any": {
       "severity": "error"
-    }
+    },
+    "prefer-conditional-expression": false
   }
 }

@@ -7,6 +7,7 @@
   ],
   "dependencies": {
     "@babel/core": "7.1.6",
+    "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.3.2",
     "@babel/plugin-transform-runtime": "^7.2.0",
@@ -85,6 +86,7 @@
     "@types/graphql": "^14.0.5",
     "@types/jest": "^24.0.0",
     "@types/lodash": "^4.14.120",
+    "@types/node": "^10.12.24",
     "@types/ramda": "^0.25.48",
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.0",
@@ -165,6 +167,8 @@
   "name": "client",
   "private": true,
   "scripts": {
+    "generate:graphql-types": "babel-node scripts/generateGraphQLTypes.js",
+    "schema:download": "babel-node scripts/downloadSchema.js",
     "build": "node scripts/build.js",
     "check-types": "tsc",
     "lint": "npm run lintES && npm run lintTS",

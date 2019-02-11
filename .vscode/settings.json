@@ -37,6 +37,7 @@
     "noreferrer",
     "npm",
     "parens",
+    "pathinfo",
     "plugin",
     "polyfill",
     "popd",
@@ -116,5 +117,14 @@
   "yaml.schemas": {
     "http://json.schemastore.org/prettierrc": "/.prettierrc.yml"
   },
-  "yaml.validate": true
+  "yaml.validate": true,
+  "spellright.language": [
+    "en"
+  ],
+  "spellright.documentTypes": [
+    "markdown",
+    "latex",
+    "plaintext",
+    "typescriptreact"
+  ]
 }

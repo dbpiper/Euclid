@@ -39,7 +39,7 @@
     "url": "git+https://github.com/dbpiper/Euclid.git"
   },
   "scripts": {
-    "preCommit": "npm run preCommitClient && npm run preCommitServer",
+    "preCommit": "npx git status && npm run preCommitClient && npm run preCommitServer",
     "preCommitClient": "cd src/client && npm run preCommit && cd ../../",
     "preCommitServer": "cd src/server && npm run preCommit && cd ../../"
   },

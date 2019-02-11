@@ -1,9 +1,8 @@
-import gql from 'graphql-tag';
 import _ from 'lodash';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import React from 'react';
+import React, { ReactText } from 'react';
 import { Query } from 'react-apollo';
 import {
   CartesianGrid,
@@ -15,10 +14,19 @@ import {
   YAxis,
 } from 'recharts';
 
+import getStocksQuery from '../queries/getStocksQuery';
+import { Stocks, StocksVariables } from '../queries/types/Stocks';
 import TimeWindow from '../shared/TimeWindow';
+
+class StocksQuery extends Query<Stocks, StocksVariables> {}
 
 interface ITickerData {
   [key: string]: number;
+  date: number;
+}
+
+interface IStockQueryData {
+  stocks: IStock[];
 }
 
 interface IStock {
@@ -32,17 +40,20 @@ interface IChartProps {
   selectedTicker: string;
 }
 
+// cSpell:disable
+// Requireable is misspelled! Should be Requirable.
 interface IChartPropTypes {
   timeWindow: PropTypes.Requireable<string>;
   selectedTicker: PropTypes.Requireable<string>;
 }
+// cSpell:enable
 
 const darkTooltipContentStyle = {
   backgroundColor: '#18181a',
   borderColor: '#5d5d5d',
 };
 
-const getEarliestTime = (timeWindow: any) => {
+const getEarliestTime = (timeWindow: string) => {
   const sixMonths = 6;
   const oneYear = 1;
   const threeYears = 3;
@@ -52,55 +63,84 @@ const getEarliestTime = (timeWindow: any) => {
     case TimeWindow.AllTime:
       return 0;
     case TimeWindow.YTD:
-      return moment(`01/01/${moment().year()}`, 'MM/DD/YYYY').unix();
+      return moment.utc(`01/01/${moment.utc().year()}`, 'MM/DD/YYYY').unix();
     case TimeWindow.SixMonths:
-      return moment().subtract(sixMonths, 'months').unix();
+      return moment
+        .utc()
+        .subtract(sixMonths, 'months')
+        .unix();
     case TimeWindow.OneYear:
-      return moment().subtract(oneYear, 'year').unix();
+      return moment
+        .utc()
+        .subtract(oneYear, 'year')
+        .unix();
     case TimeWindow.ThreeYears:
-      return moment().subtract(threeYears, 'years').unix();
+      return moment
+        .utc()
+        .subtract(threeYears, 'years')
+        .unix();
     case TimeWindow.FiveYears:
-      return moment().subtract(fiveYears, 'years').unix();
+      return moment
+        .utc()
+        .subtract(fiveYears, 'years')
+        .unix();
     default:
       return 0;
   }
 };
 
-class Chart extends React.Component<IChartProps, any> {
+class Chart extends React.Component<IChartProps, void> {
   public static defaultProps: IChartProps;
   public static propTypes: IChartPropTypes;
 
   public static monthFormat(unixTime: number) {
     const longestShortMonthName = 6;
-    const month = moment.unix(unixTime).format('MMMM');
+    const month = moment
+      .unix(unixTime)
+      .utc()
+      .format('MMMM');
 
     if (month.length < longestShortMonthName) {
       return month;
     }
 
-    return moment.unix(unixTime).format('MMM.');
+    return moment
+      .unix(unixTime)
+      .utc()
+      .format('MMM.');
   }
 
   public static dayMonthFormat(unixTime: number) {
     const longestShortMonthName = 6;
-    const month = moment.unix(unixTime).format('MMMM D');
+    const month = moment
+      .unix(unixTime)
+      .utc()
+      .format('MMMM D');
 
     if (month.length < longestShortMonthName) {
       return month;
     }
 
-    return moment.unix(unixTime).format('MMM. D');
+    return moment
+      .unix(unixTime)
+      .utc()
+      .format('MMM. D');
   }
 
   public static longDayMonthFormat(unixTime: number) {
-    const month = moment.unix(unixTime).format('MMMM D');
+    const month = moment
+      .unix(unixTime)
+      .utc()
+      .format('MMMM D');
     return month;
   }
 
   public static formatXAxis(unixTime: number, firstDate: number) {
     const longestLongMonthTime = 3;
     const longestMedMonthTime = 7;
-    const elapsedMonths = moment().diff(moment.unix(firstDate), 'months');
+    const elapsedMonths = moment
+      .utc()
+      .diff(moment.unix(firstDate).utc(), 'months');
 
     if (elapsedMonths < longestLongMonthTime) {
       return Chart.longDayMonthFormat(unixTime);
@@ -120,33 +160,44 @@ class Chart extends React.Component<IChartProps, any> {
     return first.ticker;
   }
 
+  /**
+   * Gets the earliest date in a list of stocks.
+   *
+   * @static
+   * @param {IStock[]} stocks - The list of stocks to get the earliest date of
+   * @returns {number} - The earliest date from the list of stocks
+   * @memberof Chart
+   */
+  public static getFirstDate(stocks: ITickerData[]): number {
+    let sortedStocks = _.sortBy(stocks, ['date']);
+    // we have to do this to keep TypeScript from complaining about undefined
+    // type
+    if (typeof sortedStocks === 'undefined') {
+      sortedStocks = stocks;
+    }
+    let firstStock = _.first(sortedStocks);
+    if (typeof firstStock === 'undefined') {
+      firstStock = sortedStocks[0];
+    }
+
+    return firstStock.date;
+  }
+
   constructor(props: IChartProps) {
     super(props);
-    this.state = {
-    };
   }
 
   public render() {
     const { timeWindow, selectedTicker } = this.props;
     return (
-      <Query
-        query={gql`
-          query {
-            stocks(ticker: "${selectedTicker}", earliestDate: ${getEarliestTime(timeWindow)}) {
-              price
-              date
-              ticker
-            }
-          }
-        `}
+      <StocksQuery
+        query={getStocksQuery}
+        variables={{ ticker: selectedTicker, earliestDate: getEarliestTime(timeWindow) }}
       >
-        {({
-          error,
-          data,
-        }) => {
+        {({ error, data }) => {
           if (error) return <p>Error :(</p>;
 
-          let stocksCache = [] as any[];
+          let stocksCache = [] as ITickerData[];
           const baseStocks: IStock[] = [
             {
               ticker: '',
@@ -155,17 +206,18 @@ class Chart extends React.Component<IChartProps, any> {
             },
           ];
           let stocks = baseStocks;
-          // stocks = data.stocks;
-          ({ stocks } = data);
+          ({ stocks } = data as IStockQueryData);
 
           if (typeof stocks === 'undefined') {
             stocks = baseStocks;
           }
 
-          let firstDate = moment(`01/01/${moment().year()}`, 'MM/DD/YYYY')
+          let firstDate: number = moment
+            .utc(`01/01/${moment.utc().year()}`, 'MM/DD/YYYY')
             .unix();
 
           if (stocks && stocks.length > 0) {
+            // prettier-ignore
             stocksCache = R.map((stockElem) => {
               const tickerObj: ITickerData = {
                 date: stockElem.date,
@@ -175,7 +227,7 @@ class Chart extends React.Component<IChartProps, any> {
               return tickerObj;
             }, stocks);
 
-            firstDate = _.first(_.sortBy(stocksCache, ['date'])).date;
+            firstDate = Chart.getFirstDate(stocksCache);
           }
 
           const xTickFormatter = (unixTime: number) => {
@@ -184,11 +236,38 @@ class Chart extends React.Component<IChartProps, any> {
           const yTickFormatter = (tick: string) => {
             return `$${tick}`;
           };
-          const tooltipFormatter = (value: any) => {
-            return `$${value}`;
+          const tooltipFormatter = (price: ReactText | ReactText[]) => {
+            let priceTextArray: ReactText[];
+            let priceReactText: ReactText;
+            let priceNumber: number;
+            if (typeof price !== 'string' && price.hasOwnProperty('length')) {
+              priceTextArray = price as ReactText[];
+              priceReactText = priceTextArray[0];
+            } else {
+              priceReactText = price as ReactText;
+            }
+
+            if (
+              (typeof price === 'string' || typeof price === 'object') &&
+              typeof priceReactText !== 'number'
+            ) {
+              priceNumber = Number.parseFloat(priceReactText);
+            } else {
+              priceNumber = price as number;
+            }
+            return `$${priceNumber}`;
           };
-          const tooltipLabelFormatter = (date: any) => {
-            return moment.unix(date).format('MMMM D, YYYY');
+          const tooltipLabelFormatter = (date: ReactText): string => {
+            let _date: number;
+            if (typeof date === 'string' || typeof date === 'object') {
+              _date = Number.parseFloat(date);
+            } else {
+              _date = date;
+            }
+            return moment
+              .unix(_date)
+              .utc()
+              .format('MMMM D, YYYY');
           };
           const width = 730;
           const height = 250;
@@ -200,13 +279,13 @@ class Chart extends React.Component<IChartProps, any> {
               height={height}
               data={stocksCache}
               margin={{
-                top: 5, right: 30, left: 20, bottom: 5,
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
               }}
             >
-              <CartesianGrid
-                stroke="#3d3d3d"
-                strokeDasharray="3 3"
-              />
+              <CartesianGrid stroke="#3d3d3d" strokeDasharray="3 3" />
               <XAxis
                 dataKey="date"
                 scale="time"
@@ -236,11 +315,10 @@ class Chart extends React.Component<IChartProps, any> {
             </LineChart>
           );
         }}
-      </Query>
+      </StocksQuery>
     );
   }
 }
-
 
 Chart.defaultProps = {
   timeWindow: TimeWindow.ThreeYears,

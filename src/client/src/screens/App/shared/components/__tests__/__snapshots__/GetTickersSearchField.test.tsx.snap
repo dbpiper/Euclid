@@ -4,14 +4,17 @@ exports[`GetTickersSearchField basic 1`] = `
 <ErrorBoundary
   FallbackComponent={[Function]}
 >
-  <Query
+  <TickersQuery
     query={
       Object {
         "definitions": Array [
           Object {
             "directives": Array [],
             "kind": "OperationDefinition",
-            "name": undefined,
+            "name": Object {
+              "kind": "Name",
+              "value": "Tickers",
+            },
             "operation": "query",
             "selectionSet": Object {
               "kind": "SelectionSet",
@@ -34,13 +37,13 @@ exports[`GetTickersSearchField basic 1`] = `
         ],
         "kind": "Document",
         "loc": Object {
-          "end": 27,
+          "end": 35,
           "start": 0,
         },
       }
     }
   >
     <Component />
-  </Query>
+  </TickersQuery>
 </ErrorBoundary>
 `;

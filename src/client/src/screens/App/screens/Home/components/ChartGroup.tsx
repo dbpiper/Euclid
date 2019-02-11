@@ -66,6 +66,9 @@ class ChartGroup extends React.Component<any, IChartGroupState> {
 
   public render() {
     const { timeWindow } = this.state;
+    // tslint:disable no-unsafe-any
+    // disabling because we don't have a working typing for
+    // connect from react-redux which breaks SelectedTickerChart
     return (
       <ChartSection>
         <ChartBody>
@@ -95,6 +98,7 @@ class ChartGroup extends React.Component<any, IChartGroupState> {
         </ChartBody>
       </ChartSection>
     );
+    // tslint:enable no-unsafe-any
   }
 }
 

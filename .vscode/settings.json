@@ -68,6 +68,9 @@
     "webpack's"
   ],
   "editor.fontFamily": "'Source Code Pro', Consolas, 'Courier New', 'monospace'",
+  "editor.rulers": [
+    80
+  ],
   "editor.tabSize": 2,
   "eslint.enable": true,
   "eslint.run": "onType",
@@ -89,6 +92,10 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
+  "jest.enableInlineErrorMessages": true,
+  "jest.pathToJest": "npm run test --",
+  "jest.rootPath": "./src/client",
+  "jest.showCoverageOnLoad": true,
   "json.schemas": [
     {
       "fileMatch": [
@@ -112,17 +119,14 @@
   "prettier.eslintIntegration": true,
   "prettier.requireConfig": true,
   "prettier.tslintIntegration": true,
-  "spellright.documentTypes": [
-    "markdown",
-    "latex",
-    "plaintext",
-    "typescriptreact"
-  ],
-  "spellright.language": [
-    "en"
-  ],
   "typescript.extension.sortImports.enableJavascript": true,
   "typescript.tsdk": "node_modules\\typescript\\lib",
+  "vim.overrideCopy": true,
+  "vim.useCtrlKeys": false,
+  "vim.useSystemClipboard": true,
+  "workbench.colorCustomizations": {
+    "editorRuler.foreground": "#8642f4"
+  },
   "yaml.schemas": {
     "http://json.schemastore.org/prettierrc": "/.prettierrc.yml"
   },

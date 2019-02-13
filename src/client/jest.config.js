@@ -9,6 +9,7 @@ module.exports = {
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: [
     '.*types/.*(ts$|tsx$)',
+    '.*Query.ts',
   ],
   moduleFileExtensions: [
     'web.js',

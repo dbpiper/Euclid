@@ -1,5 +1,6 @@
 {
   "cSpell.words": [
+    "MSFT",
     "aapl",
     "amzn",
     "app",
@@ -67,11 +68,25 @@
     "webpack",
     "webpack's"
   ],
-  "editor.fontFamily": "'Source Code Pro', Consolas, 'Courier New', 'monospace'",
+  "dayNightThemeSwitcher.dayTheme": "Material Theme Lighter High Contrast",
+  "dayNightThemeSwitcher.nightTheme": "Night Owl",
+  "editor.fontFamily": "'LigaSrc Pro', 'Fira Code', 'Source Code Pro', Consolas, 'Courier New', 'monospace'",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 16,
   "editor.rulers": [
     80
   ],
   "editor.tabSize": 2,
+  "emojisense.emojiDecoratorsEnabled": true,
+  "emojisense.languages": {
+    "git-commit": true,
+    "javascript": true,
+    "javascriptreact": true,
+    "markdown": true,
+    "typescript": true,
+    "typescriptreact": true
+  },
+  "emojisense.unicodeCompletionsEnabled": true,
   "eslint.enable": true,
   "eslint.run": "onType",
   "eslint.validate": [
@@ -125,7 +140,9 @@
   "vim.useCtrlKeys": false,
   "vim.useSystemClipboard": true,
   "workbench.colorCustomizations": {
-    "editorRuler.foreground": "#8642f4"
+    "editorRuler.foreground": "#8642f4",
+    "statusBar.background": "#c19ff8",
+    "statusBar.foreground": "#284101"
   },
   "yaml.schemas": {
     "http://json.schemastore.org/prettierrc": "/.prettierrc.yml"

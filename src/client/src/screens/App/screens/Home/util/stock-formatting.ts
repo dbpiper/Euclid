@@ -10,10 +10,10 @@ import { IStock, ITickerData } from '../types/StockInterfaces';
  * It always gets the ticker of the first stock (for speed reasons),
  * since this is an O(1) operation.
  *
- * @param {IStock[]} stocks - The stock array to get the ticker from
- * @returns {string} ticker - The ticker of the stock array
+ * @param {IStock[]} stocks The stock array to get the ticker from
+ * @returns {string} ticker The ticker of the stock array
  */
-export const getTickerFromStocks = (stocks: IStock[]): string => {
+const getTickerFromStocks = (stocks: IStock[]): string => {
   let first = _.first(stocks);
   if (typeof first === 'undefined') {
     if (stocks.length > 0) {
@@ -34,11 +34,11 @@ export const getTickerFromStocks = (stocks: IStock[]): string => {
  * This is done so that it can be used by Recharts, as it requires that the
  * data be in this format.
  *
- * @param {IStock[]} stocks - The stocks data to convert
- * @returns {ITickerData[]} - The Recharts formatted data that was converted
+ * @param {IStock[]} stocks The stocks data to convert
+ * @returns {ITickerData[]} The Recharts formatted data that was converted
  */
 // prettier-ignore
-export const convertStocksToKeyedStocks = (stocks: IStock[]): ITickerData[] => {
+const convertStocksToKeyedStocks = (stocks: IStock[]): ITickerData[] => {
   if (stocks && stocks.length > 0) {
     // prettier-ignore
     return R.map((stockElem) => {
@@ -53,4 +53,9 @@ export const convertStocksToKeyedStocks = (stocks: IStock[]): ITickerData[] => {
   }
 
   return [] as ITickerData[];
+};
+
+export {
+  getTickerFromStocks,
+  convertStocksToKeyedStocks,
 };

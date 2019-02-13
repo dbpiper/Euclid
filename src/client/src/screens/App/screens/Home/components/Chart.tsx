@@ -18,14 +18,14 @@ import { IStock, IStockQueryData } from '../types/StockInterfaces';
 import {
   getDateFormat,
   getEarliestDate,
-  getFirstDateInStocks,
+  getEarliestDateInStocks,
   reactTextToNumber,
   unixTimeToDate,
-} from '../util/dateFormatting';
+} from '../util/date-formatting';
 import {
   convertStocksToKeyedStocks,
   getTickerFromStocks,
-} from '../util/stockFormatting';
+} from '../util/stock-formatting';
 
 class StocksQuery extends Query<Stocks, StocksVariables> {}
 
@@ -50,8 +50,8 @@ class Chart extends React.Component<IChartProps, void> {
     selectedTicker: PropTypes.string,
   };
 
-  public static formatXAxis(unixTime: number, firstDate: number) {
-    return getDateFormat(unixTime, firstDate);
+  public static formatXAxis(unixTime: number, earliestDate: number) {
+    return getDateFormat(unixTime, earliestDate);
   }
 
   constructor(props: IChartProps) {
@@ -88,8 +88,8 @@ class Chart extends React.Component<IChartProps, void> {
           }
 
           const xTickFormatter = (unixTime: number) => {
-            const firstDate = getFirstDateInStocks(stocks);
-            return Chart.formatXAxis(unixTime, firstDate);
+            const earliestDate = getEarliestDateInStocks(stocks);
+            return Chart.formatXAxis(unixTime, earliestDate);
           };
 
           const yTickFormatter = (tick: string) => {

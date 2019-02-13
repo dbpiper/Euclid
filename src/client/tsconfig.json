@@ -4,22 +4,16 @@
     "paths": {
       "*": [
         "*",
-        "config/@types/*"
+        "config/@types/*",
+        "screens/App/shared/*",
+        "screens/App/screens/Home/shared/*"
       ],
       "App": [
         "screens/App"
       ],
       "App/*": [
         "screens/App/*"
-      ],
-      "shared": [
-        "screens/App/shared",
-        "screens/App/screens/Home/shared"
-      ],
-      "shared/*": [
-        "screens/App/shared/*",
-        "screens/App/screens/Home/shared/*"
-      ],
+      ]
     }
   },
   "extends": "../../tsconfig-base",

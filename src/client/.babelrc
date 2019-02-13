@@ -18,22 +18,13 @@
       "module-resolver",
       {
         "alias": {
-          "App": [
-            "./src/screens/App"
-          ],
-          "config": [
-            "./src/config"
-          ],
-          "shared": [
-            "./src/screens/App/shared",
-            "./src/screens/App/screens/Home/shared"
-          ],
-          "util": [
-            "./src/util"
-          ]
+          "App": "./src/screens/App",
+          "config": "./src/config",
+          "util": "./src/util"
         },
         "root": [
-          "./src"
+          "./src",
+          "./src/../shared"
         ]
       }
     ],

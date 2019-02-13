@@ -11,11 +11,17 @@ import TimeWindow from '../shared/TimeWindow';
  * data-points that are within a specific range of time. For example:
  * within the last 6 months.
  *
- * @param {string} timeWindow - The range of time we are using
- * @returns {number} date - The date as a unix timestamp which is the
+ * @param {string} timeWindow The range of time we are using
+ * @param {number} startingDate The date to start measuring from,
+ * defaults to the current date
+ * @returns {number} The date as a unix timestamp which is the
  * earliest possible date that fits in our time slice, based on the time window.
  */
-export const getEarliestDate = (timeWindow: string): number => {
+const getEarliestDate = (
+  timeWindow: string,
+  startingDate: number = moment.utc().unix(),
+): number => {
+  const startingDateMoment = moment.unix(startingDate).utc();
   const sixMonths = 6;
   const oneYear = 1;
   const threeYears = 3;
@@ -25,27 +31,17 @@ export const getEarliestDate = (timeWindow: string): number => {
     case TimeWindow.AllTime:
       return 0;
     case TimeWindow.YTD:
-      return moment.utc(`01/01/${moment.utc().year()}`, 'MM/DD/YYYY').unix();
+      return moment
+        .utc(`01/01/${startingDateMoment.year()}`, 'MM/DD/YYYY')
+        .unix();
     case TimeWindow.SixMonths:
-      return moment
-        .utc()
-        .subtract(sixMonths, 'months')
-        .unix();
+      return startingDateMoment.subtract(sixMonths, 'months').unix();
     case TimeWindow.OneYear:
-      return moment
-        .utc()
-        .subtract(oneYear, 'year')
-        .unix();
+      return startingDateMoment.subtract(oneYear, 'year').unix();
     case TimeWindow.ThreeYears:
-      return moment
-        .utc()
-        .subtract(threeYears, 'years')
-        .unix();
+      return startingDateMoment.subtract(threeYears, 'years').unix();
     case TimeWindow.FiveYears:
-      return moment
-        .utc()
-        .subtract(fiveYears, 'years')
-        .unix();
+      return startingDateMoment.subtract(fiveYears, 'years').unix();
     default:
       return 0;
   }
@@ -134,15 +130,21 @@ const longDayMonthFormat = (unixTime: number): string => {
  * @param {number} unixTime The date as a unix timestamp
  * @param {number} mostDistantDate The date that will be used to decide how long
  * of a time range we are working with here.
+ * @param {number} timestampToMeasureFrom The date as a unix timestamp from
+ * which to measure the distance, usually the current timestamp.
  * @returns {string} The date formatted appropriately based on the range of time.
  */
-export const getDateFormat = (
+const getDateFormat = (
   unixTime: number,
   mostDistantDate: number,
+  // we'll just assume that the user wants to measure from right now
+  // unless told otherwise
+  timestampToMeasureFrom: number = moment.utc().unix(),
 ): string => {
   const longestLongMonthTime = 3;
   const longestMedMonthTime = 7;
   const elapsedMonths = moment
+    .unix(timestampToMeasureFrom)
     .utc()
     .diff(moment.unix(mostDistantDate).utc(), 'months');
 
@@ -163,7 +165,7 @@ export const getDateFormat = (
  * @param {IStock[]} stocks The list of stocks to get the earliest date from
  * @returns {number} The earliest date from the list of stocks in unix time
  */
-export const getFirstDateInStocks = (stocks: IStock[]): number => {
+const getEarliestDateInStocks = (stocks: IStock[]): number => {
   const sortedStocks = _.sortBy(stocks, ['date']);
   const firstStock = _.first(sortedStocks);
   if (typeof firstStock === 'undefined') {
@@ -180,7 +182,7 @@ export const getFirstDateInStocks = (stocks: IStock[]): number => {
  * @returns {string} The date formatted as: MMMM D, YYYY
  */
 // prettier-ignore
-export const unixTimeToDate = (unixTime: number): string => (
+const unixTimeToDate = (unixTime: number): string => (
   moment
     .unix(unixTime)
     .utc()
@@ -196,9 +198,7 @@ export const unixTimeToDate = (unixTime: number): string => (
  * is some sort of ReactText object or array of them
  * @returns {number} The number which we got from the text
  */
-export const reactTextToNumber = (
-  maybeText: ReactText | ReactText[],
-): number => {
+const reactTextToNumber = (maybeText: ReactText | ReactText[]): number => {
   let textArray: ReactText[];
   let text: ReactText;
   let num: number;
@@ -219,4 +219,12 @@ export const reactTextToNumber = (
   }
 
   return num;
+};
+
+export {
+  getEarliestDate,
+  getDateFormat,
+  getEarliestDateInStocks,
+  unixTimeToDate,
+  reactTextToNumber,
 };

@@ -60,5 +60,10 @@ module.exports = {
     '/utils/',
     '/mockData/',
   ],
-
+  watchPathIgnorePatterns: [
+    '/node_modules/',
+    '/utils/',
+    '/mockData/',
+    '/build/',
+  ],
 };

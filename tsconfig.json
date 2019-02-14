@@ -2,6 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./"
   },
+  "exclude": [
+    "node_modules"
+  ],
   "extends": "tsconfig-base",
   "include": [
     "src/client",

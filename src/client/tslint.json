@@ -16,22 +16,29 @@
     "no-any": {
       "severity": "warning"
     },
-    "prefer-conditional-expression": false,
     "no-implicit-dependencies": [
       true,
       "dev",
       [
         "App",
-        "config"
+        "config",
+        "src",
+        "actions",
+        "util"
       ]
     ],
     "no-submodule-imports": [
       true,
       "App",
-      "config"
+      "config",
+      "src",
+      "actions",
+      "util"
     ],
     "no-unsafe-any": {
       "severity": "error"
-    }
+    },
+    "only-arrow-functions": true,
+    "prefer-conditional-expression": false
   }
 }

@@ -21,8 +21,8 @@ process.on('unhandledRejection', (error) => {
 });
 
 
-const argsToGet = 2;
-const argv = process.argv.slice(argsToGet);
+const argsToRemove = 2;
+const argv = process.argv.slice(argsToRemove);
 
 // function isInGitRepository() {
 //   try {

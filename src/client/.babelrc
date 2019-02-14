@@ -18,15 +18,13 @@
       "module-resolver",
       {
         "alias": {
-          "App": [
-            "./src/screens/App"
-          ],
-          "config": [
-            "./src/config"
-          ]
+          "App": "./src/screens/App",
+          "config": "./src/config",
+          "util": "./src/util"
         },
         "root": [
-          "./src"
+          "./src",
+          "./src/../shared"
         ]
       }
     ],
@@ -50,5 +48,6 @@
         "jsxPragma": "React"
       }
     ]
-  ]
+  ],
+  "sourceMaps": "inline"
 }

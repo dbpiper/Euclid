@@ -2,10 +2,14 @@ import { GraphQLServer } from 'graphql-yoga';
 
 import { prisma } from './generated/prisma-client';
 
+import pullAndSaveData from './src/pullAndSaveData';
 import resolvers from './src/resolvers';
-// import pullAndSaveData from './src/pullAndSaveData';
 
 import ServerInfo from './config/ServerInfo-secret';
+
+const featureFlags = {
+  downloadData: false,
+};
 
 const firstArg = 2;
 const notFound = -1;
@@ -20,7 +24,6 @@ const server = new GraphQLServer({
   },
 });
 
-
 server.start(() => {
   // tslint:disable-next-line no-console
   console.log(`Server is running on ${ServerInfo.Node.uri}`);
@@ -31,28 +34,26 @@ server.start(() => {
   }
 });
 
-// const tryAddData = async (ticker) => {
-//   try {
-//     await pullAndSaveData(ticker);
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
+// prettier-ignore-next
+const tryAddData = async (ticker: string) => {
+  try {
+    await pullAndSaveData(ticker);
+  } catch (err) {
+    // tslint:disable-next-line: no-console
+    console.error(err);
+  }
+};
 
 (async () => {
-  // await tryAddData('AAPL');
-  // await tryAddData('SPY');
-  // await tryAddData('AMZN');
-  // await tryAddData('GOOG');
-  // await tryAddData('YELP');
-  // await tryAddData('MSFT');
-
-  // await pullAndSaveData('VFIAX'); IEX gives null dates
-  // await pullAndSaveData('LNKD'); IEX give null dates
+  if (featureFlags.downloadData) {
+    await tryAddData('AAPL');
+    await tryAddData('SPY');
+    await tryAddData('AMZN');
+    await tryAddData('GOOG');
+    await tryAddData('YELP');
+    await tryAddData('MSFT');
+  }
 
   // tslint:disable-next-line no-console
   console.log('done adding data');
-  // const stockList = await prisma
-  //   .stockList({ ticker: 'AAPL' });
-  // console.log(stockList);
 })();

@@ -44,7 +44,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 
 // Tools like Cloud9 rely on this.
-const fallbackPort = 3000;
+const fallbackPort = 5000;
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || fallbackPort;
 const HOST = process.env.HOST || '0.0.0.0';
 

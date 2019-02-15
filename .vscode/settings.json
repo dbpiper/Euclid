@@ -102,6 +102,10 @@
       "changeProcessCWD": true,
       "directory": "./src/server"
     }
+    {
+      "changeProcessCWD": true,
+      "directory": "./src/client/cypress"
+    }
   ],
   "files.eol": "\n",
   "files.insertFinalNewline": true,

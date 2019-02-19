@@ -1,6 +1,7 @@
 {
   "author": "David Piper",
   "dependencies": {
+    "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
@@ -49,13 +50,14 @@
   "main": "index.ts",
   "name": "server",
   "scripts": {
-    "build": "babel-node index.ts --extensions \".ts\" -- --build",
+    "build": "npm run start -- --build",
     "check-types": "tsc",
     "lint": "npm run lintES && npm run lintTS",
     "lintES": "npx eslint .",
     "lintTS": "npx tslint \"./*.ts?(x)\" \"./src/**/*.ts?(x)\" \"./config/**/*.ts?(x)\" --project tsconfig.json",
     "preCommit": "npm run build && npm run staticCheckAndTest",
-    "start": "babel-node index.ts --extensions \".ts\" ",
+    "start": "npx babel-node index.ts --extensions \".ts\" ",
+    "start:download-data": "npm run start -- --download-data",
     "startNodemon": "nodemon --exec babel-node --extensions \".ts\" index.js",
     "staticCheck": "npm run lint && npm run check-types",
     "staticCheckAndTest": "npm run staticCheck && npm run test",

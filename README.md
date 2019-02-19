@@ -63,14 +63,68 @@ always say that the files are unencrypted :) ).
 
 ## Development Setup
 
-* PostgreSQL service must be started by running `sudo service postgresql start`.
 * Prisma's `docker-compose.yml` file should have the host set to
   `host.docker.internal`
 and *not* `localhost` due an issue with host redirection of localhost in docker.
 See [Prisma cannot run command "prisma deploy" because prisma in docker cannot run](https://github.com/prisma/prisma/issues/2761) and [From inside of a Docker container, how do I connect to the localhost of the machine](https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach)
 
+## Development Environments on Windows
+
+### 1. WSL with `docker-machine`
+
+WSL combined with a terminal emulator such as ConEmu is used for development.
+This approach uses as few VMs as possible, and relies heavily on X Servers
+running on Windows, specifically MobaXterm.
+
+Actual code is written in the editor of choice such as VS Code, or even
+NeoVim.
+
+**Pros**:
+
+* Doesn't use any VMs
+* Is fast
+
+**Cons**:
+
+* Requires fighting with WSL and Windows constantly, i.e. unimplemented
+features, X11 GUI application problems, etc.
+* Complicated to configure due to a ton of different applications running
+
+#### Workflow
+
+* WSL terminals running in ConEmu are used for accessing git, and running various
+npm scripts.
+* Powershell is used to deploy the Prisma server using `docker-compose up -d`
+from the `src/client` directory and is used to manage the `docker-host`
+VM created by `docker-machine` with the Docker Toolbox.
+* MobaXterm is used to run Cypress tests, since the
+alternative of using WSL terminal and launching an X11 window
+which connects to VcXsrv doesn't work correctly, specifically when this approach is used the Cypress windows breaks when anything is changed in the test cases.
+
+### 2. Linux VM
+
+This approach is very flexible and capable as it interacts with Windows
+as little as possible! WSL is only used as a wrapper to SSH into the Linux
+VM. Then everything is done in the terminal emulator such as ConEmu, just as with WSL in #1, however in this case there is almost no fighting with Windows or WSL!
+
+**Pros**:
+
+* No fighting with Windows or WSL!
+* The power and flexibility of a full Linux environment!
+
+**Cons**:
+
+* Slightly slower due to virtualization
+* Does require some fighting with VirtualBox, such as:
+  * sharing the host directories and/or drives
+  * [enabling Symlinks in shared directories](https://stackoverflow.com/questions/23936458/correct-way-to-setup-virtualbox-4-3-to-use-symlinks-on-guest-for-meteor)
+  * getting good performance from the VM
+  * optionally getting access to the Linux guest using
+  something like Samba
+
+I am personally using #2 now as I have been struggling with #1 for awhile and have concluded that it is not worth the problems, since #2 exists.
+
 ## Steps to run
 
-1. PostgreSQL service must be started by running `sudo service postgresql start`.
-2. Start the Prisma container by running `docker-compose up -d`.
-3. Deploy the Prisma API by running `prisma deploy`.
+1. Start the Prisma container by running `docker-compose up -d`.
+2. Deploy the Prisma API by running `prisma deploy`.

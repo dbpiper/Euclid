@@ -16,5 +16,5 @@ before_install:
 - git-crypt unlock travis-key
 install:
 - npm install
-- npm run install
+- npm run installSubmodules
 script: npm run preCommit

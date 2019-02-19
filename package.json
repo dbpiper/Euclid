@@ -43,12 +43,12 @@
     "url": "git+https://github.com/dbpiper/Euclid.git"
   },
   "scripts": {
-    "install": "npm run installClient && npm run installServer",
-    "installClient": "cd src/client && npm install && cd ../../",
-    "installServer": "cd src/server && npm install && cd ../../",
+    "installClient": "cd src/client && npm install",
+    "installServer": "cd src/server && npm install",
+    "installSubmodules": "npm run installClient && npm run installServer",
     "preCommit": "npx git status && npm run preCommitClient && npm run preCommitServer",
-    "preCommitClient": "cd src/client && npm run preCommit && cd ../../",
-    "preCommitServer": "cd src/server && npm run preCommit && cd ../../"
+    "preCommitClient": "cd src/client && npm run preCommit",
+    "preCommitServer": "cd src/server && npm run preCommit"
   },
   "version": "0.0.0"
 }

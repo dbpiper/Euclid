@@ -7,14 +7,17 @@ import resolvers from './src/resolvers';
 
 import ServerInfo from './config/ServerInfo-secret';
 
-const featureFlags = {
-  downloadData: false,
-};
 
 const firstArg = 2;
 const notFound = -1;
 const args = process.argv.slice(firstArg);
 const buildOnly = args.indexOf('--build') !== notFound;
+const downloadDataArg = args.indexOf('--download-data') !== notFound;
+
+const featureFlags = Object.freeze({
+  __proto__: null,
+  downloadData: downloadDataArg,
+});
 
 const server = new GraphQLServer({
   resolvers,

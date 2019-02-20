@@ -4,6 +4,8 @@
     "url": "https://github.com/dbpiper/Euclid/issues"
   },
   "dependencies": {
+    "acorn": "^6.1.0",
+    "acorn-jsx": "^5.0.1",
     "jest-cli": "^24.1.0"
   },
   "description": "A website dedicated to tracking PC part price information.",
@@ -45,7 +47,7 @@
   "scripts": {
     "installClient": "cd src/client && npm install",
     "installServer": "cd src/server && npm install",
-    "installSubmodules": "npm run installClient && npm run installServer",
+    "postinstall": "npm run installClient && npm run installServer",
     "preCommit": "npx git status && npm run preCommitClient && npm run preCommitServer",
     "preCommitClient": "cd src/client && npm run preCommit",
     "preCommitServer": "cd src/server && npm run preCommit"

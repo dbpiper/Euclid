@@ -46,7 +46,7 @@ const isInteractive = process.stdout.isTTY;
 const noWarnings = 0;
 const errorExitCode = 1;
 const endSpecial = -1;
-const argsToGet = 2;
+const argsToSkip = 2;
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -55,7 +55,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 
 // Process CLI arguments
-const argv = process.argv.slice(argsToGet);
+const argv = process.argv.slice(argsToSkip);
 const writeStatsJson = argv.indexOf('--stats') !== endSpecial;
 
 // Generate configuration

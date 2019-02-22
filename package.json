@@ -46,8 +46,13 @@
   },
   "scripts": {
     "installClient": "cd src/client && npm install",
+    "installClientFromLock": "cd src/client && npm ci",
+    "installFromLock": "npm ci && npm run postinstallFromLock",
     "installServer": "cd src/server && npm install",
-    "postinstall": "npm run installClient && npm run installServer",
+    "installServerFromLock": "cd src/server && npm ci",
+    "installStandard": "npm install && npm run postinstallStandard",
+    "postinstallFromLock": "npm run installClientFromLock && npm run installServerFromLock",
+    "postinstallStandard": "npm run installClient && npm run installServer",
     "preCommit": "npx git status && npm run preCommitClient && npm run preCommitServer",
     "preCommitClient": "cd src/client && npm run preCommit",
     "preCommitServer": "cd src/server && npm run preCommit"

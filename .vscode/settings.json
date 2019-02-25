@@ -70,7 +70,7 @@
   ],
   "dayNightThemeSwitcher.dayTheme": "Material Theme Lighter High Contrast",
   "dayNightThemeSwitcher.nightTheme": "Night Owl",
-  "editor.fontFamily": "'LigaSrc Pro', 'Fira Code', 'Source Code Pro', Consolas, 'Courier New', 'monospace'",
+  "editor.fontFamily": "'LigSarc Pro', 'Fira Code', 'Source Code Pro', Consolas, 'Courier New', 'monospace'",
   "editor.fontLigatures": true,
   "editor.fontSize": 16,
   "editor.rulers": [
@@ -101,7 +101,7 @@
     {
       "changeProcessCWD": true,
       "directory": "./src/server"
-    }
+    },
     {
       "changeProcessCWD": true,
       "directory": "./src/client/cypress"

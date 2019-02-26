@@ -1,17 +1,18 @@
-import { GraphQLServer } from 'graphql-yoga';
+import cors from 'cors';
+import { GraphQLServer, Options } from 'graphql-yoga';
+import HttpStatus from 'http-status-codes';
 
 import { prisma } from './generated/prisma-client';
 
 import pullAndSaveData from './src/pullAndSaveData';
 import resolvers from './src/resolvers';
-
 import ServerInfo from './config/ServerInfo-secret';
-
 
 const firstArg = 2;
 const notFound = -1;
 const args = process.argv.slice(firstArg);
 const buildOnly = args.indexOf('--build') !== notFound;
+const production: boolean = args.indexOf('--production') !== notFound;
 const downloadDataArg = args.indexOf('--download-data') !== notFound;
 
 const featureFlags = Object.freeze({
@@ -19,15 +20,21 @@ const featureFlags = Object.freeze({
   downloadData: downloadDataArg,
 });
 
+const playgroundUrl: string | false = production ? '/' : false;
+
 const server = new GraphQLServer({
   resolvers,
   typeDefs: './schema.graphql',
-  context: {
-    prisma,
-  },
+  context: prisma,
 });
 
-server.start(() => {
+server.express.use(cors());
+
+const options: Options = {
+  playground: playgroundUrl,
+};
+
+server.start(options, () => {
   // tslint:disable-next-line no-console
   console.log(`Server is running on ${ServerInfo.Node.uri}`);
 

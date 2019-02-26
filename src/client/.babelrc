@@ -28,6 +28,7 @@
         ]
       }
     ],
+    "babel-plugin-styled-components",
     "recharts",
     [
       "@babel/plugin-transform-runtime",

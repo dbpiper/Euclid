@@ -112,3 +112,8 @@ chrome-user-data
 .vscode
 *.swp
 *.swo
+
+# Cypress
+
+**/cypress/videos
+**/cypress/screenshots

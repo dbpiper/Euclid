@@ -6,7 +6,9 @@
   "dependencies": {
     "acorn": "^6.1.0",
     "acorn-jsx": "^5.0.1",
-    "jest-cli": "^24.1.0"
+    "jest-cli": "^24.1.0",
+    "start-server-and-test": "^1.7.11",
+    "wait-on": "^3.2.0"
   },
   "description": "A website dedicated to tracking PC part price information.",
   "devDependencies": {
@@ -15,6 +17,7 @@
     "@types/jest": "^24.0.0",
     "babel-eslint": "^10.0.1",
     "commitlint": "^7.5.0",
+    "cypress": "^3.1.5",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.16.0",
@@ -55,7 +58,11 @@
     "postinstallStandard": "npm run installClient && npm run installServer",
     "preCommit": "npx git status && npm run preCommitClient && npm run preCommitServer",
     "preCommitClient": "cd src/client && npm run preCommit",
-    "preCommitServer": "cd src/server && npm run preCommit"
+    "preCommitServer": "cd src/server && npm run preCommit",
+    "startClient": "cd src/client && npm run start",
+    "startEuclidTest": "wait-on startServer localhost:4000 startTestClient",
+    "startServer": "cd src/server && npm run start -- production",
+    "startTestClient": "start-server-and-test startClient localhost:5000 npx cypress run"
   },
   "version": "0.0.0"
 }

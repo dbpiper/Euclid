@@ -19,7 +19,6 @@ const fs = require('fs');
 const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const {
   choosePort,
@@ -27,7 +26,6 @@ const {
   prepareProxy,
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
-const openBrowser = require('react-dev-utils/openBrowser');
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
 const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
@@ -44,7 +42,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 
 // Tools like Cloud9 rely on this.
-const fallbackPort = 3000;
+const fallbackPort = 5000;
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || fallbackPort;
 const HOST = process.env.HOST || '0.0.0.0';
 
@@ -101,11 +99,7 @@ checkBrowsers(paths.appPath, isInteractive)
       if (err) {
         return console.log(err);
       }
-      if (isInteractive) {
-        clearConsole();
-      }
-      console.log(chalk.cyan('Starting the development server...\n'));
-      return openBrowser(urls.localUrlForBrowser);
+      return console.log(chalk.cyan('Starting the development server...\n'));
     });
 
     ['SIGINT', 'SIGTERM'].forEach((sig) => {

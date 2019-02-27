@@ -8,7 +8,7 @@ import ServerInfo from 'config/ServerInfo-secret';
 import Home from './screens/Home';
 
 const client = new ApolloClient({
-  uri: ServerInfo.GraphQL.uri,
+  uri: ServerInfo.Node.uri,
 });
 
 const AppStyles = styled.section`

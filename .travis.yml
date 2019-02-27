@@ -4,10 +4,9 @@ language: node_js
 node_js:
 - '11'
 cache:
+  # cache for ci, since it deletes node_modules
   directories:
-  - node_modules
-  - src/client/node_modules
-  - src/server/node_modules
+  - "$HOME/.npm"
 before_install:
 - openssl aes-256-cbc -K $encrypted_163f8f7b49e8_key -iv $encrypted_163f8f7b49e8_iv
   -in travis-key.enc -out travis-key -d
@@ -15,6 +14,10 @@ before_install:
 - sudo apt-get install git-crypt
 - git-crypt unlock travis-key
 install:
-- npm install
-- npm run install
-script: npm run preCommit
+- npm run installFromLock
+# we are running a separate script from preCommmit for the
+# moment because we don't yet support installation and configuration
+# of prisma and DB on Travis.
+# so instead we are still just running the old preCommit script, but
+# with a different name sice we **do** support e2e on developer pre-commit
+script: npm run ci-lint-and-test

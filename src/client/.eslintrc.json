@@ -14,9 +14,20 @@
     "import",
     "jsx-a11y",
     "module-resolver",
-    "jest"
+    "jest",
+    "cypress"
   ],
   "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": false,
+        "optionalDependencies": false,
+        "peerDependencies": false,
+        "packageDir": "./"
+      }
+    ],
+    "no-magic-numbers": "error",
     "react/jsx-filename-extension": [
       1,
       {
@@ -28,8 +39,7 @@
     ],
     "unicorn/filename-case": [
       0
-    ],
-    "no-magic-numbers": "error"
+    ]
   },
   "settings": {
     "import/resolver": {

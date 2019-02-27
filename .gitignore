@@ -6,6 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 travis-key
 
+# Linux XDG Directories
+**/.xdg-dir/
+
 # Runtime data
  pids
  *.pid
@@ -109,3 +112,8 @@ chrome-user-data
 .vscode
 *.swp
 *.swo
+
+# Cypress
+
+**/cypress/videos
+**/cypress/screenshots

@@ -1,0 +1,7 @@
+{
+  "darkMediaQuery": true,
+  "baseUrl": "http://localhost:5000",
+  "watchForFileChanges": true,
+  "viewportWidth": 1600,
+  "viewportHeight": 500
+}

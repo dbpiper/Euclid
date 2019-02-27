@@ -56,27 +56,24 @@ exports[`SearchField basic 1`] = `
   selectedCategory={null}
   selectedSearchItem={null}
 >
-  <styled.section>
+  <SearchField__SearchSection>
     <StyledComponent
       forwardedComponent={
         Object {
           "$$typeof": Symbol(react.forward_ref),
           "attrs": Array [],
           "componentStyle": ComponentStyle {
-            "componentId": "sc-bdVaJa",
+            "componentId": "SearchField__SearchSection-sc-10z7pyc-0",
             "isStatic": true,
             "lastClassName": "c0",
             "rules": Array [
-              "
-  margin-top: 1rem;
-  display: flex;
-",
+              "margin-top:1rem;display:flex;",
             ],
           },
-          "displayName": "styled.section",
+          "displayName": "SearchField__SearchSection",
           "foldedComponentIds": Array [],
           "render": [Function],
-          "styledComponentId": "sc-bdVaJa",
+          "styledComponentId": "SearchField__SearchSection-sc-10z7pyc-0",
           "target": "section",
           "toString": [Function],
           "warnTooManyClasses": [Function],
@@ -121,9 +118,6 @@ exports[`SearchField basic 1`] = `
             closeMenuOnSelect={true}
             components={Object {}}
             controlShouldRenderValue={true}
-            defaultInputValue=""
-            defaultMenuIsOpen={false}
-            defaultValue={null}
             escapeClearsValue={false}
             filterOption={[Function]}
             formatGroupLabel={[Function]}
@@ -209,9 +203,6 @@ exports[`SearchField basic 1`] = `
                   "closeMenuOnSelect": true,
                   "components": Object {},
                   "controlShouldRenderValue": true,
-                  "defaultInputValue": "",
-                  "defaultMenuIsOpen": false,
-                  "defaultValue": null,
                   "escapeClearsValue": false,
                   "filterOption": [Function],
                   "formatGroupLabel": [Function],
@@ -331,9 +322,6 @@ exports[`SearchField basic 1`] = `
                       "closeMenuOnSelect": true,
                       "components": Object {},
                       "controlShouldRenderValue": true,
-                      "defaultInputValue": "",
-                      "defaultMenuIsOpen": false,
-                      "defaultValue": null,
                       "escapeClearsValue": false,
                       "filterOption": [Function],
                       "formatGroupLabel": [Function],
@@ -445,9 +433,6 @@ exports[`SearchField basic 1`] = `
                           "closeMenuOnSelect": true,
                           "components": Object {},
                           "controlShouldRenderValue": true,
-                          "defaultInputValue": "",
-                          "defaultMenuIsOpen": false,
-                          "defaultValue": null,
                           "escapeClearsValue": false,
                           "filterOption": [Function],
                           "formatGroupLabel": [Function],
@@ -559,9 +544,6 @@ exports[`SearchField basic 1`] = `
                               "closeMenuOnSelect": true,
                               "components": Object {},
                               "controlShouldRenderValue": true,
-                              "defaultInputValue": "",
-                              "defaultMenuIsOpen": false,
-                              "defaultValue": null,
                               "escapeClearsValue": false,
                               "filterOption": [Function],
                               "formatGroupLabel": [Function],
@@ -670,9 +652,6 @@ exports[`SearchField basic 1`] = `
                               "closeMenuOnSelect": true,
                               "components": Object {},
                               "controlShouldRenderValue": true,
-                              "defaultInputValue": "",
-                              "defaultMenuIsOpen": false,
-                              "defaultValue": null,
                               "escapeClearsValue": false,
                               "filterOption": [Function],
                               "formatGroupLabel": [Function],
@@ -870,9 +849,6 @@ exports[`SearchField basic 1`] = `
                           "closeMenuOnSelect": true,
                           "components": Object {},
                           "controlShouldRenderValue": true,
-                          "defaultInputValue": "",
-                          "defaultMenuIsOpen": false,
-                          "defaultValue": null,
                           "escapeClearsValue": false,
                           "filterOption": [Function],
                           "formatGroupLabel": [Function],
@@ -983,9 +959,6 @@ exports[`SearchField basic 1`] = `
                               "closeMenuOnSelect": true,
                               "components": Object {},
                               "controlShouldRenderValue": true,
-                              "defaultInputValue": "",
-                              "defaultMenuIsOpen": false,
-                              "defaultValue": null,
                               "escapeClearsValue": false,
                               "filterOption": [Function],
                               "formatGroupLabel": [Function],
@@ -1104,9 +1077,6 @@ exports[`SearchField basic 1`] = `
                               "closeMenuOnSelect": true,
                               "components": Object {},
                               "controlShouldRenderValue": true,
-                              "defaultInputValue": "",
-                              "defaultMenuIsOpen": false,
-                              "defaultValue": null,
                               "escapeClearsValue": false,
                               "filterOption": [Function],
                               "formatGroupLabel": [Function],
@@ -1266,9 +1236,6 @@ exports[`SearchField basic 1`] = `
             closeMenuOnSelect={true}
             components={Object {}}
             controlShouldRenderValue={true}
-            defaultInputValue=""
-            defaultMenuIsOpen={false}
-            defaultValue={null}
             escapeClearsValue={false}
             filterOption={[Function]}
             formatGroupLabel={[Function]}
@@ -1379,9 +1346,6 @@ exports[`SearchField basic 1`] = `
                   "closeMenuOnSelect": true,
                   "components": Object {},
                   "controlShouldRenderValue": true,
-                  "defaultInputValue": "",
-                  "defaultMenuIsOpen": false,
-                  "defaultValue": null,
                   "escapeClearsValue": false,
                   "filterOption": [Function],
                   "formatGroupLabel": [Function],
@@ -1526,9 +1490,6 @@ exports[`SearchField basic 1`] = `
                       "closeMenuOnSelect": true,
                       "components": Object {},
                       "controlShouldRenderValue": true,
-                      "defaultInputValue": "",
-                      "defaultMenuIsOpen": false,
-                      "defaultValue": null,
                       "escapeClearsValue": false,
                       "filterOption": [Function],
                       "formatGroupLabel": [Function],
@@ -1665,9 +1626,6 @@ exports[`SearchField basic 1`] = `
                           "closeMenuOnSelect": true,
                           "components": Object {},
                           "controlShouldRenderValue": true,
-                          "defaultInputValue": "",
-                          "defaultMenuIsOpen": false,
-                          "defaultValue": null,
                           "escapeClearsValue": false,
                           "filterOption": [Function],
                           "formatGroupLabel": [Function],
@@ -1804,9 +1762,6 @@ exports[`SearchField basic 1`] = `
                               "closeMenuOnSelect": true,
                               "components": Object {},
                               "controlShouldRenderValue": true,
-                              "defaultInputValue": "",
-                              "defaultMenuIsOpen": false,
-                              "defaultValue": null,
                               "escapeClearsValue": false,
                               "filterOption": [Function],
                               "formatGroupLabel": [Function],
@@ -1928,9 +1883,6 @@ exports[`SearchField basic 1`] = `
                               "closeMenuOnSelect": true,
                               "components": Object {},
                               "controlShouldRenderValue": true,
-                              "defaultInputValue": "",
-                              "defaultMenuIsOpen": false,
-                              "defaultValue": null,
                               "escapeClearsValue": false,
                               "filterOption": [Function],
                               "formatGroupLabel": [Function],
@@ -2153,9 +2105,6 @@ exports[`SearchField basic 1`] = `
                           "closeMenuOnSelect": true,
                           "components": Object {},
                           "controlShouldRenderValue": true,
-                          "defaultInputValue": "",
-                          "defaultMenuIsOpen": false,
-                          "defaultValue": null,
                           "escapeClearsValue": false,
                           "filterOption": [Function],
                           "formatGroupLabel": [Function],
@@ -2291,9 +2240,6 @@ exports[`SearchField basic 1`] = `
                               "closeMenuOnSelect": true,
                               "components": Object {},
                               "controlShouldRenderValue": true,
-                              "defaultInputValue": "",
-                              "defaultMenuIsOpen": false,
-                              "defaultValue": null,
                               "escapeClearsValue": false,
                               "filterOption": [Function],
                               "formatGroupLabel": [Function],
@@ -2437,9 +2383,6 @@ exports[`SearchField basic 1`] = `
                               "closeMenuOnSelect": true,
                               "components": Object {},
                               "controlShouldRenderValue": true,
-                              "defaultInputValue": "",
-                              "defaultMenuIsOpen": false,
-                              "defaultValue": null,
                               "escapeClearsValue": false,
                               "filterOption": [Function],
                               "formatGroupLabel": [Function],
@@ -2566,7 +2509,7 @@ exports[`SearchField basic 1`] = `
             </SelectContainer>
           </Select>
         </StateManager>
-        <styled.button
+        <SearchField__SearchButton
           type="button"
         >
           <StyledComponent
@@ -2575,27 +2518,17 @@ exports[`SearchField basic 1`] = `
                 "$$typeof": Symbol(react.forward_ref),
                 "attrs": Array [],
                 "componentStyle": ComponentStyle {
-                  "componentId": "sc-bwzfXH",
+                  "componentId": "SearchField__SearchButton-sc-10z7pyc-1",
                   "isStatic": true,
                   "lastClassName": "c1",
                   "rules": Array [
-                    "
-  background-image: none;
-  background-color: #262a30;
-  outline: 0;
-  border-color: #999999;
-  box-shadow: 0;
-  border-left: 0;
-  border-width: 1px;
-
-  appearance: button;
-",
+                    "background-image:none;background-color:#262a30;outline:0;border-color:#999999;box-shadow:0;border-left:0;border-width:1px;appearance:button;",
                   ],
                 },
-                "displayName": "styled.button",
+                "displayName": "SearchField__SearchButton",
                 "foldedComponentIds": Array [],
                 "render": [Function],
-                "styledComponentId": "sc-bwzfXH",
+                "styledComponentId": "SearchField__SearchButton-sc-10z7pyc-1",
                 "target": "button",
                 "toString": [Function],
                 "warnTooManyClasses": [Function],
@@ -2617,9 +2550,9 @@ exports[`SearchField basic 1`] = `
               </span>
             </button>
           </StyledComponent>
-        </styled.button>
+        </SearchField__SearchButton>
       </section>
     </StyledComponent>
-  </styled.section>
+  </SearchField__SearchSection>
 </SearchField>
 `;

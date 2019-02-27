@@ -31,6 +31,7 @@
     "json",
     "linebreak",
     "markdownlint",
+    "middlewares",
     "minfication",
     "minified",
     "module",
@@ -72,7 +73,7 @@
   "dayNightThemeSwitcher.nightTheme": "Night Owl",
   "editor.fontFamily": "'LigaSrc Pro', 'Fira Code', 'Source Code Pro', Consolas, 'Courier New', 'monospace'",
   "editor.fontLigatures": true,
-  "editor.fontSize": 16,
+  "editor.fontSize": 17,
   "editor.rulers": [
     80
   ],
@@ -101,6 +102,10 @@
     {
       "changeProcessCWD": true,
       "directory": "./src/server"
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./src/client/cypress"
     }
   ],
   "files.eol": "\n",
@@ -129,6 +134,18 @@
         "/.tslint.json"
       ],
       "url": "http://json.schemastore.org/tslint"
+    },
+    {
+      "fileMatch": [
+        "/.cypress.json"
+      ],
+      "url": "https://raw.githubusercontent.com/cypress-io/cypress/develop/cli/schema/cypress.schema.json"
+    },
+    {
+      "fileMatch": [
+        "tsconfig.json"
+      ],
+      "url": "http://json.schemastore.org/tsconfig"
     }
   ],
   "prettier.eslintIntegration": true,
@@ -138,6 +155,8 @@
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "vim.overrideCopy": true,
   "vim.useCtrlKeys": false,
+  "vim.enableNeovim": true,
+  "vim.neovimPath": "/usr/bin/nvim",
   "vim.useSystemClipboard": true,
   "workbench.colorCustomizations": {
     "editorRuler.foreground": "#8642f4",

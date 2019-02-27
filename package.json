@@ -4,7 +4,10 @@
     "url": "https://github.com/dbpiper/Euclid/issues"
   },
   "dependencies": {
-    "jest-cli": "^24.1.0"
+    "acorn": "^6.1.0",
+    "acorn-jsx": "^5.0.1",
+    "jest-cli": "^24.1.0",
+    "start-server-and-test": "^1.7.11"
   },
   "description": "A website dedicated to tracking PC part price information.",
   "devDependencies": {
@@ -13,6 +16,7 @@
     "@types/jest": "^24.0.0",
     "babel-eslint": "^10.0.1",
     "commitlint": "^7.5.0",
+    "cypress": "^3.1.5",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.16.0",
@@ -43,12 +47,23 @@
     "url": "git+https://github.com/dbpiper/Euclid.git"
   },
   "scripts": {
-    "install": "npm run installClient && npm run installServer",
-    "installClient": "cd src/client && npm install && cd ../../",
-    "installServer": "cd src/server && npm install && cd ../../",
-    "preCommit": "npx git status && npm run preCommitClient && npm run preCommitServer",
-    "preCommitClient": "cd src/client && npm run preCommit && cd ../../",
-    "preCommitServer": "cd src/server && npm run preCommit && cd ../../"
+    "installClient": "cd src/client && npm install",
+    "installClientFromLock": "cd src/client && npm ci",
+    "installFromLock": "npm ci && npm run postinstallFromLock",
+    "installServer": "cd src/server && npm install",
+    "installServerFromLock": "cd src/server && npm ci",
+    "installStandard": "npm install && npm run postinstallStandard",
+    "postinstallFromLock": "npm run installClientFromLock && npm run installServerFromLock",
+    "postinstallStandard": "npm run installClient && npm run installServer",
+    "preCommit": "npm run ci-lint-and-test && npm run euclid-test-e2e",
+    "ci-lint-and-test": "npx git status && npm run preCommitClient && npm run preCommitServer",
+    "preCommitClient": "cd src/client && npm run preCommit",
+    "preCommitServer": "cd src/server && npm run preCommit",
+    "startClient": "cd src/client && npm run start",
+    "euclid-test-e2e": "server-test startServer http://localhost:4000 startClientTest",
+    "startServer": "cd src/server && npm run start -- production",
+    "clientTestCypress": "cd src/client && npx cypress run",
+    "startClientTest": "server-test startClient http://localhost:5000 clientTestCypress"
   },
   "version": "0.0.0"
 }

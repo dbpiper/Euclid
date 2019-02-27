@@ -7,8 +7,7 @@
     "acorn": "^6.1.0",
     "acorn-jsx": "^5.0.1",
     "jest-cli": "^24.1.0",
-    "start-server-and-test": "^1.7.11",
-    "wait-on": "^3.2.0"
+    "start-server-and-test": "^1.7.11"
   },
   "description": "A website dedicated to tracking PC part price information.",
   "devDependencies": {
@@ -56,13 +55,15 @@
     "installStandard": "npm install && npm run postinstallStandard",
     "postinstallFromLock": "npm run installClientFromLock && npm run installServerFromLock",
     "postinstallStandard": "npm run installClient && npm run installServer",
-    "preCommit": "npx git status && npm run preCommitClient && npm run preCommitServer",
+    "preCommit": "npm run ci-lint-and-test && npm run euclid-test-e2e",
+    "ci-lint-and-test": "npx git status && npm run preCommitClient && npm run preCommitServer",
     "preCommitClient": "cd src/client && npm run preCommit",
     "preCommitServer": "cd src/server && npm run preCommit",
     "startClient": "cd src/client && npm run start",
-    "startEuclidTest": "wait-on startServer localhost:4000 startTestClient",
+    "euclid-test-e2e": "server-test startServer http://localhost:4000 startClientTest",
     "startServer": "cd src/server && npm run start -- production",
-    "startTestClient": "start-server-and-test startClient localhost:5000 npx cypress run"
+    "clientTestCypress": "cd src/client && npx cypress run",
+    "startClientTest": "server-test startClient http://localhost:5000 clientTestCypress"
   },
   "version": "0.0.0"
 }

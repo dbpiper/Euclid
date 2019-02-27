@@ -15,4 +15,9 @@ before_install:
 - git-crypt unlock travis-key
 install:
 - npm run installFromLock
-script: npm run preCommit
+# we are running a separate script from preCommmit for the
+# moment because we don't yet support installation and configuration
+# of prisma and DB on Travis.
+# so instead we are still just running the old preCommit script, but
+# with a different name sice we **do** support e2e on developer pre-commit
+script: npm run ci-lint-and-test

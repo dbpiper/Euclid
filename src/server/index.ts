@@ -4,9 +4,9 @@ import HttpStatus from 'http-status-codes';
 
 import { prisma } from './generated/prisma-client';
 
+import ServerInfo from './config/ServerInfo-secret';
 import pullAndSaveData from './src/pullAndSaveData';
 import resolvers from './src/resolvers';
-import ServerInfo from './config/ServerInfo-secret';
 
 const firstArg = 2;
 const notFound = -1;
@@ -29,6 +29,11 @@ const server = new GraphQLServer({
 });
 
 server.express.use(cors());
+
+// send HTTP 200 -- OK so that npm scripts know the server is running
+server.express.head('/', (req, res) => {
+  res.sendStatus(HttpStatus.OK);
+});
 
 const options: Options = {
   playground: playgroundUrl,

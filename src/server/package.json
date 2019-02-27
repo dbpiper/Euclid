@@ -65,7 +65,8 @@
     "staticCheck": "npm run lint && npm run check-types",
     "staticCheckAndTest": "npm run staticCheck && npm run test",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "debug": "npm run start -- --inspect"
   },
   "version": "0.0.0"
 }

@@ -2,22 +2,44 @@ os: linux
 dist: xenial
 language: node_js
 node_js:
-- '11'
+  - '11'
 cache:
   # cache for ci, since it deletes node_modules
   directories:
-  - "$HOME/.npm"
+    - "$HOME/.npm"
+addons:
+  apt:
+    sources:
+      - deadsnakes
+    packages:
+      - python3.7
+      - python3-pip
+services:
+  - docker
 before_install:
-- openssl aes-256-cbc -K $encrypted_163f8f7b49e8_key -iv $encrypted_163f8f7b49e8_iv
-  -in travis-key.enc -out travis-key -d
-- sudo apt-get update
-- sudo apt-get install git-crypt
-- git-crypt unlock travis-key
+  - openssl aes-256-cbc -K $encrypted_163f8f7b49e8_key -iv $encrypted_163f8f7b49e8_iv
+    -in travis-key.enc -out travis-key -d
+  - sudo apt-get update
+  - sudo apt-get install git-crypt
+  - git-crypt unlock travis-key
+  - sudo pip3 install setuptools
+  - sudo -H pip3 install docker-compose-wait --ignore-installed PyYAML
 install:
-- npm run installFromLock
-# we are running a separate script from preCommmit for the
-# moment because we don't yet support installation and configuration
-# of prisma and DB on Travis.
-# so instead we are still just running the old preCommit script, but
-# with a different name sice we **do** support e2e on developer pre-commit
-script: npm run ci-lint-and-test
+  # start docker services now so that it can have some time to come up before
+  # we need it to speed up the build
+  - cd src/server && docker-compose up -d && cd ../../
+  # need libgconf for Cypress/Electron
+  - sudo apt-get install libgconf-2-4
+  # install our packages from lockfile
+  - npm run installFromLock
+before_script:
+  # go the server directory since all of our prisma stuff is there
+  - cd src/server
+  # ensure that docker services are up before we try to use them
+  - docker-compose-wait
+  # use prisma from lockfile so that we have reproducible builds
+  - npx prisma deploy
+  - npm run download-data
+  # go back to main directory
+  - cd ../../
+script: npm run preCommit

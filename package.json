@@ -47,23 +47,23 @@
     "url": "git+https://github.com/dbpiper/Euclid.git"
   },
   "scripts": {
+    "clientTestCypress": "cd src/client && npx cypress run",
+    "euclid-test-e2e": "server-test startServer http://localhost:4000 startClientTest",
     "installClient": "cd src/client && npm install",
     "installClientFromLock": "cd src/client && npm ci",
     "installFromLock": "npm ci && npm run postinstallFromLock",
     "installServer": "cd src/server && npm install",
     "installServerFromLock": "cd src/server && npm ci",
     "installStandard": "npm install && npm run postinstallStandard",
+    "lint-and-unit-test": "npx git status && npm run preCommitClient && npm run preCommitServer",
     "postinstallFromLock": "npm run installClientFromLock && npm run installServerFromLock",
     "postinstallStandard": "npm run installClient && npm run installServer",
-    "preCommit": "npm run ci-lint-and-test && npm run euclid-test-e2e",
-    "ci-lint-and-test": "npx git status && npm run preCommitClient && npm run preCommitServer",
+    "preCommit": "npm run lint-and-unit-test && npm run euclid-test-e2e",
     "preCommitClient": "cd src/client && npm run preCommit",
     "preCommitServer": "cd src/server && npm run preCommit",
     "startClient": "cd src/client && npm run start",
-    "euclid-test-e2e": "server-test startServer http://localhost:4000 startClientTest",
-    "startServer": "cd src/server && npm run start -- production",
-    "clientTestCypress": "cd src/client && npx cypress run",
-    "startClientTest": "server-test startClient http://localhost:5000 clientTestCypress"
+    "startClientTest": "server-test startClient http://localhost:5000 clientTestCypress",
+    "startServer": "cd src/server && npm run start -- production"
   },
   "version": "0.0.0"
 }

@@ -1,5 +1,35 @@
 # Development Configuration
 
+## Table of Contents
+
+* [General Overview](#general-overview)
+* [git-crypt](#git-crypt)
+* [Prisma](#prisma)
+  * [Steps to Run](#steps-to-run)
+* [Development Environments on Windows](#development-environments-on-windows)
+
+## General Overview
+
+The [CI script](https://github.com/dbpiper/Euclid/.travis.yml) is a great
+introduction to everything that is needed to build and run Euclid.
+In general you need:
+
+* [git-crypt](https://github.com/AGWA/git-crypt)
+* [NodeJS 11](https://nodejs.org)
+* [Prisma](http://prisma.io/) - Though this is used from the package.json
+via `npx` for example: `npx prisma deploy`.
+* An editor such as [VS Code](https://code.visualstudio.com/)
+* Knowledge of how to use [`git rebase`](https://git-scm.com/docs/git-rebase) for
+[squashing CI commits](https://blog.carbonfive.com/2017/08/28/always-squash-and-rebase-your-git-commits/)
+and how to [**safely** push the changes to an issue branch](https://www.jvt.me/posts/2018/09/18/safely-force-git-push/).
+* Ideally a good terminal-based editor such as [NeoVim](https://github.com/neovim/neovim/)
+for writing Git commit messages.
+
+It is strongly recommended to use Linux for development as many of these tools
+work **much** better on it than Windows. In fact, even on Windows I personally
+used WSL rather than just raw `cmd.exe` as it is way better. I personally am
+using Linux in a VirtualBox VM on Windows as I am not currently doing a dual-boot.
+
 ## git-crypt
 
 This project encrypts secret information such as: API keys, usernames, and
@@ -32,12 +62,17 @@ encryption to actually happen with `git-crypt`. Thus  you would need
 to do this *before* you run the verification step (otherwise it would just
 always say that the files are unencrypted :) ).
 
-## Development Setup
+## Prisma
 
 * Prisma's `docker-compose.yml` file should have the host set to
   `host.docker.internal`
 and *not* `localhost` due an issue with host redirection of localhost in docker.
 See [Prisma cannot run command "prisma deploy" because prisma in docker cannot run](https://github.com/prisma/prisma/issues/2761) and [From inside of a Docker container, how do I connect to the localhost of the machine](https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach)
+
+### Steps to Run
+
+1. Start the Prisma container by running `docker-compose up -d`.
+2. Deploy the Prisma API by running `prisma deploy`.
 
 ## Development Environments on Windows
 
@@ -103,3 +138,5 @@ guest VM and development can happen in VS Code on the Windows host. Any changes
 in either one will be sent over to the other and the two copies kept in sync.
 
 This requires that the time be synchronized between the two!
+In addition, there seems to be a bug with `mirror` and VS Code, so both must
+be stopped in order to run `npm install` which makes this workflow very annoying.

@@ -13,11 +13,26 @@ In addition, I have found myself very disappointed with the analytic capabilitie
 
 However, upon reflection it seems that (at least upon first glance to me) the exact same mechanism that can be used to track *all* types of consumer goods. So things like Smartphone prices or Food prices can theoretically also be tracked which could prove interesting as well.
 
-## [Style Guidelines](docs/style-guide.md)
+**[Contributing](docs/CONTRIBUTING.md)**
 
-## [Development Configuration](docs/development-configuration.md)
+**[Development Configuration](docs/development-configuration.md)**
 
 ## Steps to run
 
-1. Start the Prisma container by running `docker-compose up -d`.
-2. Deploy the Prisma API by running `prisma deploy`.
+See [Development Configuration](docs/development-configuration.md) for
+information on what is needed to work on the project. Especially see, the
+[CI script](https://github.com/dbpiper/Euclid/.travis.yml) as it provides
+consistent up-to-date information on exactly what is needed.
+
+**Essentially you need to:**
+
+1. Get permission to access the project as we use [`git-crypt`](https://github.com/AGWA/git-crypt)
+to encrypt sensitive files. Then we have to add your GPG key to the project.
+2. Clone the repository and unlock the encrypted files with `git-crypt unlock`.
+3. run `npm run installStandard` to install the packages, or `npm run installFromLock`
+if you want to use the `package-lock.json` files instead.
+4. Setup the docker containers as detailed in the files above.
+5. Pull the data into the server by running the following inside
+the `src/server` directory: `npm run download-data`.
+6. Then run `npm run start` from inside both the client and server directories.
+7. The site will be running on `localhost:5000`.

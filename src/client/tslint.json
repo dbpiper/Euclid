@@ -1,0 +1,44 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint-config-euclid"
+  ],
+  "jsRules": {},
+  "linterOptions": {
+    "exclude": [
+      "**/node_modules/**",
+      "src/config/@types/**"
+    ]
+  },
+  "rules": {
+    "jsx-no-multiline-js": false,
+    "no-angle-bracket-type-assertion": true,
+    "no-any": {
+      "severity": "warning"
+    },
+    "no-implicit-dependencies": [
+      true,
+      "dev",
+      [
+        "App",
+        "config",
+        "src",
+        "actions",
+        "util"
+      ]
+    ],
+    "no-submodule-imports": [
+      true,
+      "App",
+      "config",
+      "src",
+      "actions",
+      "util"
+    ],
+    "no-unsafe-any": {
+      "severity": "error"
+    },
+    "only-arrow-functions": true,
+    "prefer-conditional-expression": false
+  }
+}

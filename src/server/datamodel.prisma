@@ -1,0 +1,6 @@
+type Stock {
+  id: ID! @unique
+  price: Float!
+  date: Int!
+  ticker: String!
+}

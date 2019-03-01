@@ -1,0 +1,67 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "extends": [
+    "plugin:jest/recommended",
+    "plugin:unicorn/recommended",
+    "airbnb"
+  ],
+  "plugins": [
+    "react",
+    "import",
+    "jsx-a11y",
+    "module-resolver",
+    "jest",
+    "cypress"
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": false,
+        "optionalDependencies": false,
+        "peerDependencies": false,
+        "packageDir": "./"
+      }
+    ],
+    "no-magic-numbers": "error",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "unicorn/filename-case": [
+      0
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {
+        "alias": {
+          "App": [
+            "./src/screens/App"
+          ],
+          "config": [
+            "./src/config"
+          ]
+        },
+        "root": [
+          "./src"
+        ]
+      },
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    }
+  }
+}

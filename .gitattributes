@@ -1,0 +1,53 @@
+# git-crypt encryption rules
+*-secret* filter=git-crypt diff=git-crypt
+*docker-compose* filter=git-crypt diff=git-crypt
+*prisma.* filter=git-crypt diff=git-crypt
+**/generated/prisma-client/** filter=git-crypt diff=git-crypt
+.graphqlconfig filter=git-crypt diff=git-crypt
+.env filter=git-crypt diff=git-crypt
+
+# don't encrypt .gitattributes!
+.gitattributes !filter !diff
+
+# text detection rules for crlf -> lf
+
+# autodetect text
+* text=auto
+
+# text files
+*.txt text
+*.js text
+*.jsx text
+*.py text
+*.sql text
+*.yaml text
+*.yml text
+*.md text
+*.json text
+*.prisma text
+*.babelrc text
+*.gitignore text
+*.firebaserc text
+*.ts text
+*.tern-project text
+LICENSE text
+*.css text
+*.scss text
+*.html text
+Dockerfile text
+*.sh text
+
+# make line endings LF not CRLF
+eol=lf
+
+# binary files
+*.jpg binary
+*.png binary
+*.jpeg binary
+
+# make diff viewers treat as binary file so it is collapsed in diffs
+# see: https://www.reddit.com/r/javascript/comments/ad6zoj/npm_vs_yarn_which_one_and_why/edezpiy
+# and also: https://git-scm.com/docs/gitattributes
+# under "Marking files as binary"
+package-lock.json -diff
+**/generated/prisma-client/** -diff

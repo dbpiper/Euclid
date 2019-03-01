@@ -1,0 +1,13 @@
+type Query {
+  stock(id: ID!): Stock
+  stocks(ticker: String!, earliestDate: Int!): [Stock!]!
+  allStocks: [Stock!]!
+  tickers: [String!]!
+}
+
+type Stock {
+  id: ID!
+  price: Float!
+  date: Int!
+  ticker: String!
+}

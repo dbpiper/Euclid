@@ -1,0 +1,170 @@
+{
+  "cSpell.words": [
+    "MSFT",
+    "aapl",
+    "amzn",
+    "app",
+    "arrow",
+    "asyncify",
+    "base",
+    "browserslist",
+    "camelcase",
+    "chunkhash",
+    "commitlint",
+    "devtool",
+    "dropdown",
+    "enzyme",
+    "es",
+    "eslint",
+    "esnext",
+    "fixes",
+    "flexbox",
+    "flexbugs",
+    "flowtype",
+    "gitattributes",
+    "goog",
+    "graphql",
+    "indicator",
+    "inlines",
+    "interop",
+    "jsdom",
+    "json",
+    "linebreak",
+    "markdownlint",
+    "middlewares",
+    "minfication",
+    "minified",
+    "module",
+    "noopener",
+    "noreferrer",
+    "npm",
+    "parens",
+    "pathinfo",
+    "plugin",
+    "polyfill",
+    "popd",
+    "postcss",
+    "pre",
+    "promisify",
+    "push",
+    "pushd",
+    "react",
+    "refetch",
+    "run",
+    "serializer",
+    "serializers",
+    "server",
+    "snapshot",
+    "sourcemap",
+    "src",
+    "stock",
+    "stocks",
+    "subdomains",
+    "svgr",
+    "to",
+    "unencrypted",
+    "upsert",
+    "viewports",
+    "vwap",
+    "webpack",
+    "webpack's"
+  ],
+  "dayNightThemeSwitcher.dayTheme": "Material Theme Lighter High Contrast",
+  "dayNightThemeSwitcher.nightTheme": "Night Owl",
+  "editor.fontFamily": "'LigaSrc Pro', 'Fira Code', 'Source Code Pro', Consolas, 'Courier New', 'monospace'",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 17,
+  "editor.rulers": [
+    80
+  ],
+  "editor.tabSize": 2,
+  "emojisense.emojiDecoratorsEnabled": true,
+  "emojisense.languages": {
+    "git-commit": true,
+    "javascript": true,
+    "javascriptreact": true,
+    "markdown": true,
+    "typescript": true,
+    "typescriptreact": true
+  },
+  "emojisense.unicodeCompletionsEnabled": true,
+  "eslint.enable": true,
+  "eslint.run": "onType",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "changeProcessCWD": true,
+      "directory": "./src/client"
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./src/server"
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./src/client/cypress"
+    }
+  ],
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "jest.enableInlineErrorMessages": true,
+  "jest.pathToJest": "npm run test --",
+  "jest.rootPath": "./src/client",
+  "jest.showCoverageOnLoad": true,
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "/.babelrc"
+      ],
+      "url": "http://json.schemastore.org/babelrc"
+    },
+    {
+      "fileMatch": [
+        "/.eslintrc.json"
+      ],
+      "url": "http://json.schemastore.org/eslintrc"
+    },
+    {
+      "fileMatch": [
+        "/.tslint.json"
+      ],
+      "url": "http://json.schemastore.org/tslint"
+    },
+    {
+      "fileMatch": [
+        "/.cypress.json"
+      ],
+      "url": "https://raw.githubusercontent.com/cypress-io/cypress/develop/cli/schema/cypress.schema.json"
+    },
+    {
+      "fileMatch": [
+        "tsconfig.json"
+      ],
+      "url": "http://json.schemastore.org/tsconfig"
+    }
+  ],
+  "prettier.eslintIntegration": true,
+  "prettier.requireConfig": true,
+  "prettier.tslintIntegration": true,
+  "typescript.extension.sortImports.enableJavascript": true,
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "vim.overrideCopy": true,
+  "vim.useCtrlKeys": false,
+  "vim.enableNeovim": true,
+  "vim.neovimPath": "/usr/bin/nvim",
+  "vim.useSystemClipboard": true,
+  "workbench.colorCustomizations": {
+    "editorRuler.foreground": "#8642f4",
+    "statusBar.background": "#c19ff8",
+    "statusBar.foreground": "#284101"
+  },
+  "yaml.schemas": {
+    "http://json.schemastore.org/prettierrc": "/.prettierrc.yml"
+  },
+  "yaml.validate": true
+}

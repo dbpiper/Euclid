@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "*": [
+        "*",
+        "config/@types/*",
+        "screens/App/shared/*",
+        "screens/App/screens/Home/shared/*"
+      ],
+      "App": [
+        "screens/App"
+      ],
+      "App/*": [
+        "screens/App/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "extends": "../../tsconfig-base",
+  "include": [
+    "src",
+    "./src/**/*"
+  ],
+  "types": [
+    "jest",
+    "enzyme"
+  ]
+}

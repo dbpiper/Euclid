@@ -1,0 +1,54 @@
+{
+  "env": {
+    "node": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "node": "current"
+            }
+          }
+        ]
+      ]
+    }
+  },
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "App": "./src/screens/App",
+          "config": "./src/config",
+          "util": "./src/util"
+        },
+        "root": [
+          "./src",
+          "./src/../shared"
+        ]
+      }
+    ],
+    "babel-plugin-styled-components",
+    "recharts",
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "regenerator": true
+      }
+    ],
+    "@babel/plugin-proposal-class-properties"
+  ],
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react",
+    [
+      "@babel/preset-typescript",
+      {
+        "allExtensions": true,
+        "isTSX": true,
+        "jsxPragma": "React"
+      }
+    ]
+  ],
+  "sourceMaps": "inline"
+}

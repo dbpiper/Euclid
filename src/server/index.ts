@@ -35,20 +35,6 @@ server.express.head('/', (req, res) => {
   res.sendStatus(HttpStatus.OK);
 });
 
-const options: Options = {
-  playground: playgroundUrl,
-};
-
-server.start(options, () => {
-  // tslint:disable-next-line no-console
-  console.log(`Server is running on ${ServerInfo.Node.uri}`);
-
-  if (buildOnly) {
-    const noErrors = 0;
-    process.exit(noErrors);
-  }
-});
-
 // prettier-ignore-next
 const tryAddData = async (ticker: string) => {
   try {
@@ -60,6 +46,20 @@ const tryAddData = async (ticker: string) => {
 };
 
 (async () => {
+  const options: Options = {
+    playground: playgroundUrl,
+  };
+
+  const httpServer = await server.start(options, () => {
+    // tslint:disable-next-line no-console
+    console.log(`Server is running on ${ServerInfo.Node.uri}`);
+
+    if (buildOnly) {
+      const noErrors = 0;
+      process.exit(noErrors);
+    }
+  });
+
   if (featureFlags.downloadData) {
     await tryAddData('AAPL');
     await tryAddData('SPY');
@@ -67,8 +67,10 @@ const tryAddData = async (ticker: string) => {
     await tryAddData('GOOG');
     await tryAddData('YELP');
     await tryAddData('MSFT');
-  }
 
-  // tslint:disable-next-line no-console
-  console.log('done adding data');
+    // tslint:disable-next-line no-console
+    console.log('done adding data');
+
+    httpServer.close();
+  }
 })();

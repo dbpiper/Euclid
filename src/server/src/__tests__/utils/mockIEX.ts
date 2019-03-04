@@ -18,7 +18,7 @@ let aaplDataJson: string;
 const get5yAaplJson = async (): Promise<string> => {
   if (typeof aaplDataJson === 'undefined') {
     aaplDataJson = await readFile(
-      path.join(__dirname, '../mockData/5y.json'),
+      path.join(__dirname, '../mock-data/5y.json'),
       'utf8',
     );
   }

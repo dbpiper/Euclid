@@ -1,3 +1,4 @@
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { ReactText } from 'react';
 import { Query } from 'react-apollo';
@@ -32,6 +33,10 @@ class StocksQuery extends Query<Stocks, StocksVariables> {}
 interface IChartProps {
   timeWindow: string;
   selectedTicker: string;
+  // we pass in a function to tell us the date
+  // as a unix timestamp
+  // normally it will just return the current datetime
+  getDateTime: () => number;
 }
 
 const darkTooltipContentStyle = {
@@ -43,6 +48,7 @@ class Chart extends React.Component<IChartProps, void> {
   public static defaultProps = {
     timeWindow: TimeWindow.ThreeYears,
     selectedTicker: 'AAPL',
+    getDateTime: () => moment.utc().unix(),
   };
 
   public static propTypes = {
@@ -59,16 +65,16 @@ class Chart extends React.Component<IChartProps, void> {
   }
 
   public render() {
-    const { timeWindow, selectedTicker } = this.props;
+    const { timeWindow, selectedTicker, getDateTime } = this.props;
     return (
       <StocksQuery
         query={getStocksQuery}
         variables={{
           ticker: selectedTicker,
-          earliestDate: getEarliestDate(timeWindow),
+          earliestDate: getEarliestDate(timeWindow, getDateTime()),
         }}
       >
-        {({ error, data }) => {
+        {({ loading, error, data }) => {
           if (error) return <p>Error :(</p>;
 
           const baseStocks: IStock[] = [
@@ -80,11 +86,13 @@ class Chart extends React.Component<IChartProps, void> {
           ];
           let stocks = baseStocks;
 
-          if (
-            typeof data !== 'undefined' &&
-            typeof data.stocks !== 'undefined'
-          ) {
-            ({ stocks } = data as IStockQueryData);
+          if (!loading) {
+            if (
+              typeof data !== 'undefined' &&
+              typeof data.stocks !== 'undefined'
+            ) {
+              ({ stocks } = data as IStockQueryData);
+            }
           }
 
           const xTickFormatter = (unixTime: number) => {

@@ -7,6 +7,7 @@ exports[`SearchField basic 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  color: #ffffff;
 }
 
 .c1 {
@@ -68,6 +69,7 @@ exports[`SearchField basic 1`] = `
             "lastClassName": "c0",
             "rules": Array [
               "margin-top:1rem;display:flex;",
+              "color:#ffffff;",
             ],
           },
           "displayName": "SearchField__SearchSection",

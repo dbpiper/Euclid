@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
 import { rootReducer } from 'App/reducer';
-import Header from 'App/shared/components/Header';
 import getTickersQuery from 'App/shared/queries/getTickersQuery';
+import SelectTickerSearchField from '../SelectTickerSearchField';
 
 const store = createStore(rootReducer);
 
@@ -23,10 +23,17 @@ const apolloMocks = [
   },
 ];
 
-storiesOf('App/shared/components/Header', module).addWithJSX('Header', () => (
-  <MockedProvider mocks={apolloMocks}>
-    <Provider store={store}>
-      <Header />
-    </Provider>
-  </MockedProvider>
-));
+storiesOf('App/shared/containers/SelectTickerSearchField', module).addWithJSX(
+  'SelectTickerSearchField',
+  () => (
+    <MockedProvider mocks={apolloMocks}>
+      <Provider store={store}>
+        {
+          // disabling because the react-redux types are broken
+          // tslint:disable-next-line no-unsafe-any
+          <SelectTickerSearchField />
+        }
+      </Provider>
+    </MockedProvider>
+  ),
+);

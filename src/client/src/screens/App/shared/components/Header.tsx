@@ -2,12 +2,14 @@ import React from 'react';
 import ErrorBoundary from 'react-error-boundary';
 import styled from 'styled-components';
 
+import textColor from 'App/shared/styles/text-color';
 import SelectTickerSearchField from '../containers/SelectTickerSearchField';
 
 const Head = styled.section`
   text-align: center;
   background: #000000;
   padding-bottom: 1rem;
+  ${textColor}
 `;
 
 const Title = styled.span`

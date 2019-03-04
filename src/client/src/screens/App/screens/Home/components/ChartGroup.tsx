@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import textColor from 'App/shared/styles/text-color';
 import SelectedTickerChart from '../containers/SelectedTickerChart';
-
 import TimeWindow from '../shared/TimeWindow';
-
 
 const ChartSection = styled.section`
   background-color: #111111;
@@ -28,6 +27,7 @@ const HeaderContainer = styled.section`
 
 const Header = styled.span`
   margin-right: 1.9rem;
+  ${textColor}
 `;
 
 const LinkButton = styled.button`
@@ -65,6 +65,7 @@ class ChartGroup extends React.Component<any, IChartGroupState> {
   }
 
   public render() {
+    const { getDateTime } = this.props;
     const { timeWindow } = this.state;
     // tslint:disable no-unsafe-any
     // disabling because we don't have a working typing for
@@ -77,16 +78,22 @@ class ChartGroup extends React.Component<any, IChartGroupState> {
               <LinkButton onClick={this.funcSetTimeWindow(TimeWindow.YTD)}>
                 YTD
               </LinkButton>
-              <LinkButton onClick={this.funcSetTimeWindow(TimeWindow.SixMonths)}>
+              <LinkButton
+                onClick={this.funcSetTimeWindow(TimeWindow.SixMonths)}
+              >
                 6 Months
               </LinkButton>
               <LinkButton onClick={this.funcSetTimeWindow(TimeWindow.OneYear)}>
                 1 Year
               </LinkButton>
-              <LinkButton onClick={this.funcSetTimeWindow(TimeWindow.ThreeYears)}>
+              <LinkButton
+                onClick={this.funcSetTimeWindow(TimeWindow.ThreeYears)}
+              >
                 3 Years
               </LinkButton>
-              <LinkButton onClick={this.funcSetTimeWindow(TimeWindow.FiveYears)}>
+              <LinkButton
+                onClick={this.funcSetTimeWindow(TimeWindow.FiveYears)}
+              >
                 5 Years
               </LinkButton>
               <LinkButton onClick={this.funcSetTimeWindow(TimeWindow.AllTime)}>
@@ -94,7 +101,10 @@ class ChartGroup extends React.Component<any, IChartGroupState> {
               </LinkButton>
             </Header>
           </HeaderContainer>
-          <SelectedTickerChart timeWindow={timeWindow} />
+          <SelectedTickerChart
+            timeWindow={timeWindow}
+            getDateTime={getDateTime}
+          />
         </ChartBody>
       </ChartSection>
     );

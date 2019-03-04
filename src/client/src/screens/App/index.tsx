@@ -4,6 +4,7 @@ import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import styled from 'styled-components';
 
+import textColor from 'App/shared/styles/text-color';
 import ServerInfo from 'config/ServerInfo-secret';
 import Home from './screens/Home';
 
@@ -13,7 +14,7 @@ const client = new ApolloClient({
 
 const AppStyles = styled.section`
   background-color: #262a30;
-  color: #ffffff;
+  ${textColor};
 
   width: 100%;
   height: 100%;

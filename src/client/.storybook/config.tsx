@@ -6,7 +6,11 @@ addDecorator(withKnobs);
 setAddon(JSXAddon);
 
 // automatically import all files ending in *.stories.js
-const req = require.context('../src', true, /.*\/__stories__\/.*|.*.stories.tsx$/);
+const req = require.context(
+  '../src',
+  true,
+  /^(?=.*\/__stories__\/.*)(?=.*.stories.tsx).*$/,
+);
 
 const loadStories = () => {
   // we have to disable because we don't know the type

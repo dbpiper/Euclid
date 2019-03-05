@@ -3,11 +3,13 @@ import React from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
 
+import textColor from 'App/shared/styles/text-color';
 import { ITheme } from 'config/types/react-select';
 
 const SearchSection = styled.section`
   margin-top: 1rem;
   display: flex;
+  ${textColor}
 `;
 
 const SearchButton = styled.button`

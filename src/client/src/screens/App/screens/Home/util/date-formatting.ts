@@ -12,14 +12,13 @@ import TimeWindow from '../shared/TimeWindow';
  * within the last 6 months.
  *
  * @param {string} timeWindow The range of time we are using
- * @param {number} startingDate The date to start measuring from,
- * defaults to the current date
+ * @param {number} startingDate The date to start measuring from
  * @returns {number} The date as a unix timestamp which is the
  * earliest possible date that fits in our time slice, based on the time window.
  */
 const getEarliestDate = (
   timeWindow: string,
-  startingDate: number = moment.utc().unix(),
+  startingDate: number,
 ): number => {
   const startingDateMoment = moment.unix(startingDate).utc();
   const sixMonths = 6;

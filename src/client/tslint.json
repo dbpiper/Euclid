@@ -28,12 +28,7 @@
       ]
     ],
     "no-submodule-imports": [
-      true,
-      "App",
-      "config",
-      "src",
-      "actions",
-      "util"
+      false
     ],
     "no-unsafe-any": {
       "severity": "error"

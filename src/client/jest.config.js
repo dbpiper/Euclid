@@ -10,6 +10,7 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '.*types/.*(ts$|tsx$)',
     '.*Query.ts',
+    '.*__stories__/mock-data/.*(ts$)',
   ],
   moduleFileExtensions: [
     'web.js',

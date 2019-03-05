@@ -22,8 +22,7 @@
   "extends": "../../tsconfig-base",
   "include": [
     "src",
-    "./src/**/*",
-    "src/screens/App/shared/components/__stories__/.tsx"
+    "./src/**/*"
   ],
   "types": [
     "jest",

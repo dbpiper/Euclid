@@ -1,5 +1,18 @@
 {
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": true
+  },
   "cSpell.words": [
+    "Chainable",
     "Docgen",
     "MSFT",
     "aapl",
@@ -75,6 +88,7 @@
   "editor.fontFamily": "'LigaSrc Pro', 'Fira Code', 'Source Code Pro', Consolas, 'Courier New', 'monospace'",
   "editor.fontLigatures": true,
   "editor.fontSize": 17,
+  "editor.formatOnSave": false,
   "editor.rulers": [
     80
   ],

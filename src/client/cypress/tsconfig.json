@@ -2,7 +2,7 @@
   "extends": "../tsconfig",
   "compilerOptions": {
     "baseUrl": "../node_modules",
-    "target": "es5",
+    "target": "esnext",
     "types": ["cypress"],
     "noEmit": false
   },

@@ -33,7 +33,7 @@ const apolloMocks = [
 ];
 
 storiesOf('App/screens/Home/containers/SelectedTickerChart', module).addWithJSX(
-  'Header',
+  'SelectedTickerChart',
   () => (
       <MockedProvider mocks={apolloMocks} addTypename={false}>
         <Provider store={store}>

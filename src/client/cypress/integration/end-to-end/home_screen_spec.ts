@@ -1,24 +1,32 @@
 // tslint:disable: no-magic-numbers
 
+const url = 'http://localhost:5000';
+
 const getSearchArea = () =>
-  /* prettier:ignore */ cy.get('div').filter((_index, element) => {
-    const filteredElement = element.className.match('Header.{2}SearchArea.*');
-    if (!filteredElement) {
-      return false;
-    }
-    return true;
-  });
+  cy
+    .get('div#root')
+    .find('div')
+    .filter((_index, element) => {
+      const filteredElement = element.className.match('Header.{2}SearchArea.*');
+      if (!filteredElement) {
+        return false;
+      }
+      return true;
+    });
 
 const getReactSelectOption = () =>
-  cy.get('div').filter((_index, element) => {
-    const filteredElement = element.id.match(
-      'react-select-[0-9]*-option-[0-9]*',
-    );
-    if (!filteredElement) {
-      return false;
-    }
-    return true;
-  });
+  cy
+    .get('div#root')
+    .find('div')
+    .filter((_index, element) => {
+      const filteredElement = element.id.match(
+        'react-select-[0-9]*-option-[0-9]*',
+      );
+      if (!filteredElement) {
+        return false;
+      }
+      return true;
+    });
 
 const getReactSelectOptionWithIndex = (placeholder: string, index: number) =>
   getSearchArea()
@@ -40,7 +48,7 @@ const getReactSelectOptionWithIndex = (placeholder: string, index: number) =>
 
 describe('Home screen', () => {
   specify('successfully loads', () => {
-    cy.visit('/');
+    cy.visit(url);
   });
 
   describe('header tests', () => {
@@ -69,7 +77,7 @@ describe('Home screen', () => {
               .contains('Stocks')
               .should('be.visible')
               .trigger('mouseover')
-              .click()
+              .click();
           });
       });
 
@@ -107,7 +115,7 @@ describe('Home screen', () => {
             .contains('AAPL')
             .should('be.visible')
             .trigger('mouseover')
-            .click()
+            .click();
         });
     });
   });

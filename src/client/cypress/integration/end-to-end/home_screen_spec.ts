@@ -1,54 +1,14 @@
-// tslint:disable: no-magic-numbers
+import { getSearchArea } from '../../util/euclid';
+import {
+  getReactSelectOption,
+  getReactSelectOptionWithIndex,
+} from '../../util/react-select';
 
-const url = 'http://localhost:5000';
-
-const getSearchArea = () =>
-  cy
-    .get('div#root')
-    .find('div')
-    .filter((_index, element) => {
-      const filteredElement = element.className.match('Header.{2}SearchArea.*');
-      if (!filteredElement) {
-        return false;
-      }
-      return true;
-    });
-
-const getReactSelectOption = () =>
-  cy
-    .get('div#root')
-    .find('div')
-    .filter((_index, element) => {
-      const filteredElement = element.id.match(
-        'react-select-[0-9]*-option-[0-9]*',
-      );
-      if (!filteredElement) {
-        return false;
-      }
-      return true;
-    });
-
-const getReactSelectOptionWithIndex = (placeholder: string, index: number) =>
-  getSearchArea()
-    .contains(placeholder)
-    .click()
-    .parent()
-    .parent()
-    .parent()
-    .find('div')
-    .filter((_index, element) => {
-      const filteredElement = element.id.match(
-        `react-select-[0-9]*-option-${index}`,
-      );
-      if (!filteredElement) {
-        return false;
-      }
-      return true;
-    });
+const euclidUrl = 'http://localhost:5000';
 
 describe('Home screen', () => {
   specify('successfully loads', () => {
-    cy.visit(url);
+    cy.visit(euclidUrl);
   });
 
   describe('header tests', () => {
@@ -99,7 +59,7 @@ describe('Home screen', () => {
 
       specify('the search selector works for MSFT', () => {
         cy.reload();
-        getReactSelectOptionWithIndex('Search', 1);
+        getReactSelectOptionWithIndex(getSearchArea, 'Search', 1);
       });
     });
 
@@ -120,4 +80,5 @@ describe('Home screen', () => {
     });
   });
 });
+
 export {};

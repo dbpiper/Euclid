@@ -1,16 +1,4 @@
 {
-  "[javascript]": {
-    "editor.formatOnSave": true
-  },
-  "[javascriptreact]": {
-    "editor.formatOnSave": true
-  },
-  "[typescript]": {
-    "editor.formatOnSave": true
-  },
-  "[typescriptreact]": {
-    "editor.formatOnSave": true
-  },
   "cSpell.words": [
     "Chainable",
     "Docgen",
@@ -88,7 +76,7 @@
   "editor.fontFamily": "'LigaSrc Pro', 'Fira Code', 'Source Code Pro', Consolas, 'Courier New', 'monospace'",
   "editor.fontLigatures": true,
   "editor.fontSize": 17,
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "editor.rulers": [
     80
   ],
@@ -109,8 +97,7 @@
     "javascript",
     "javascriptreact"
   ],
-  "eslint.workingDirectories": [
-    {
+  "eslint.workingDirectories": [{
       "changeProcessCWD": true,
       "directory": "./src/client"
     },
@@ -132,8 +119,7 @@
   "jest.pathToJest": "npm run test --",
   "jest.rootPath": "./src/client",
   "jest.showCoverageOnLoad": true,
-  "json.schemas": [
-    {
+  "json.schemas": [{
       "fileMatch": [
         "/.babelrc"
       ],

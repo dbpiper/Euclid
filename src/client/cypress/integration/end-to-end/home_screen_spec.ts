@@ -1,4 +1,4 @@
-import { getSearchArea } from '../../util/euclid';
+import { findSearchArea } from '../../util/euclid';
 import {
   getReactSelectOption,
   getReactSelectOptionWithIndex,
@@ -27,7 +27,7 @@ describe('Home screen', () => {
     describe('the dropdown works', () => {
       specify('the topic selector works', () => {
         cy.reload();
-        getSearchArea()
+        findSearchArea()
           .contains('All')
           .parent()
           .trigger('mouseover')
@@ -43,7 +43,7 @@ describe('Home screen', () => {
 
       specify('the search selector works for SPY', () => {
         cy.reload();
-        getSearchArea()
+        findSearchArea()
           .contains('Search')
           .parent()
           .trigger('mouseover')
@@ -59,13 +59,13 @@ describe('Home screen', () => {
 
       specify('the search selector works for MSFT', () => {
         cy.reload();
-        getReactSelectOptionWithIndex(getSearchArea, 'Search', 1);
+        getReactSelectOptionWithIndex(findSearchArea, 'Search', 1);
       });
     });
 
     specify('the search selector works for AAPL', () => {
       cy.reload();
-      getSearchArea()
+      findSearchArea()
         .contains('Search')
         .parent()
         .trigger('mouseover')

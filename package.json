@@ -29,6 +29,7 @@
     "prettier": "^1.16.4",
     "tslint": "^5.13.1",
     "tslint-config-euclid": "0.0.8",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3333"
   },
   "homepage": "https://github.com/dbpiper/Euclid#readme",

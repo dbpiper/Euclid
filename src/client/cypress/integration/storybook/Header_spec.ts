@@ -14,7 +14,7 @@ describe('Header', () => {
 
   describe('header tests', () => {
     specify('the title is correct', () => {
-      cy.reload();
+      cy.reload(true);
       cy.get('span')
         .filter((_index, element) => {
           const filteredElement = element.className.match('Header.{2}Title.*');
@@ -28,7 +28,7 @@ describe('Header', () => {
 
     describe('the dropdown works', () => {
       specify('the topic selector works', () => {
-        cy.reload();
+        cy.reload(true);
         findSearchArea()
           .contains('All')
           .parent()
@@ -44,7 +44,7 @@ describe('Header', () => {
       });
 
       specify('the search selector works for SPY', () => {
-        cy.reload();
+        cy.reload(true);
         findSearchArea()
           .contains('Search')
           .parent()
@@ -60,13 +60,13 @@ describe('Header', () => {
       });
 
       specify('the search selector works for MSFT', () => {
-        cy.reload();
+        cy.reload(true);
         getReactSelectOptionWithIndex(findSearchArea, 'Search', 1);
       });
     });
 
     specify('the search selector works for AAPL', () => {
-      cy.reload();
+      cy.reload(true);
       findSearchArea()
         .contains('Search')
         .parent()

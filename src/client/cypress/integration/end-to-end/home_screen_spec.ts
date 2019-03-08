@@ -26,7 +26,7 @@ describe('Home screen', () => {
 
     describe('the dropdown works', () => {
       specify('the topic selector works', () => {
-        cy.reload();
+        cy.reload(true);
         findSearchArea()
           .contains('All')
           .parent()
@@ -42,7 +42,7 @@ describe('Home screen', () => {
       });
 
       specify('the search selector works for SPY', () => {
-        cy.reload();
+        cy.reload(true);
         findSearchArea()
           .contains('Search')
           .parent()
@@ -58,13 +58,13 @@ describe('Home screen', () => {
       });
 
       specify('the search selector works for MSFT', () => {
-        cy.reload();
+        cy.reload(true);
         getReactSelectOptionWithIndex(findSearchArea, 'Search', 1);
       });
     });
 
     specify('the search selector works for AAPL', () => {
-      cy.reload();
+      cy.reload(true);
       findSearchArea()
         .contains('Search')
         .parent()

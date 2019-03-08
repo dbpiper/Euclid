@@ -13,7 +13,7 @@ describe('SelectTickerSearchField tests', () => {
   });
 
   specify('the topic selector works', () => {
-    cy.reload();
+    cy.reload(true);
     findSearchSection()
       .contains('All')
       .parent()
@@ -29,7 +29,7 @@ describe('SelectTickerSearchField tests', () => {
   });
 
   specify('the search selector works for SPY', () => {
-    cy.reload();
+    cy.reload(true);
     findSearchSection()
       .contains('Search')
       .parent()
@@ -45,12 +45,12 @@ describe('SelectTickerSearchField tests', () => {
   });
 
   specify('the search selector works for MSFT', () => {
-    cy.reload();
+    cy.reload(true);
     getReactSelectOptionWithIndex(findSearchSection, 'Search', 1);
   });
 
   specify('the search selector works for AAPL', () => {
-    cy.reload();
+    cy.reload(true);
     findSearchSection()
       .contains('Search')
       .parent()

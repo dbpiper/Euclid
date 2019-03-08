@@ -1,7 +1,8 @@
 {
   "defaultSeverity": "error",
   "extends": [
-    "tslint-config-euclid"
+    "tslint-config-euclid",
+    "tslint-config-prettier"
   ],
   "jsRules": {},
   "linterOptions": {

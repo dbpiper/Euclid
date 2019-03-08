@@ -129,6 +129,7 @@
     "redux-test-utils": "^0.3.0",
     "storybook-addon-jsx": "^6.0.0",
     "tslint": "^5.13.1",
+    "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-cypress": "^1.0.4",
     "typescript": "^3.3.3333"
   },

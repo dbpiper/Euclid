@@ -15,7 +15,6 @@ process.on('unhandledRejection', (err) => {
 require('../config/env');
 
 
-const fs = require('fs');
 const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -26,14 +25,18 @@ const {
   prepareProxy,
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
-const { checkBrowsers } = require('react-dev-utils/browsersHelper');
+const {
+  checkBrowsers,
+} = require('react-dev-utils/browsersHelper');
 const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
-const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 const errorExitCode = 1;
+// this was added in `react-dev-utils` 8.0
+// disabling for now, but we may want to enable it later
+const useTypeScript = false;
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -83,7 +86,13 @@ checkBrowsers(paths.appPath, isInteractive)
     const appName = require(paths.appPackageJson).name;
     const urls = prepareUrls(protocol, HOST, port);
     // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler(webpack, config, appName, urls, useYarn);
+    const compiler = createCompiler({
+      appName,
+      config,
+      urls,
+      useTypeScript,
+      webpack,
+    });
     // Load proxy config
     // eslint-disable-next-line global-require, import/no-dynamic-require
     const proxySetting = require(paths.appPackageJson).proxy;

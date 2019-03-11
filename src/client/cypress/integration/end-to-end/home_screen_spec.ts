@@ -1,46 +1,14 @@
-// tslint:disable: no-magic-numbers
+import { findSearchArea } from '../../util/euclid';
+import {
+  getReactSelectOption,
+  getReactSelectOptionWithIndex,
+} from '../../util/react-select';
 
-const getSearchArea = () =>
-  /* prettier:ignore */ cy.get('div').filter((_index, element) => {
-    const filteredElement = element.className.match('Header.{2}SearchArea.*');
-    if (!filteredElement) {
-      return false;
-    }
-    return true;
-  });
-
-const getReactSelectOption = () =>
-  cy.get('div').filter((_index, element) => {
-    const filteredElement = element.id.match(
-      'react-select-[0-9]*-option-[0-9]*',
-    );
-    if (!filteredElement) {
-      return false;
-    }
-    return true;
-  });
-
-const getReactSelectOptionWithIndex = (placeholder: string, index: number) =>
-  getSearchArea()
-    .contains(placeholder)
-    .click()
-    .parent()
-    .parent()
-    .parent()
-    .find('div')
-    .filter((_index, element) => {
-      const filteredElement = element.id.match(
-        `react-select-[0-9]*-option-${index}`,
-      );
-      if (!filteredElement) {
-        return false;
-      }
-      return true;
-    });
+const euclidUrl = 'http://localhost:5000';
 
 describe('Home screen', () => {
   specify('successfully loads', () => {
-    cy.visit('/');
+    cy.visit(euclidUrl);
   });
 
   describe('header tests', () => {
@@ -58,8 +26,8 @@ describe('Home screen', () => {
 
     describe('the dropdown works', () => {
       specify('the topic selector works', () => {
-        cy.reload();
-        getSearchArea()
+        cy.reload(true);
+        findSearchArea()
           .contains('All')
           .parent()
           .trigger('mouseover')
@@ -69,13 +37,13 @@ describe('Home screen', () => {
               .contains('Stocks')
               .should('be.visible')
               .trigger('mouseover')
-              .click()
+              .click();
           });
       });
 
       specify('the search selector works for SPY', () => {
-        cy.reload();
-        getSearchArea()
+        cy.reload(true);
+        findSearchArea()
           .contains('Search')
           .parent()
           .trigger('mouseover')
@@ -90,14 +58,14 @@ describe('Home screen', () => {
       });
 
       specify('the search selector works for MSFT', () => {
-        cy.reload();
-        getReactSelectOptionWithIndex('Search', 1);
+        cy.reload(true);
+        getReactSelectOptionWithIndex(findSearchArea, 'Search', 1);
       });
     });
 
     specify('the search selector works for AAPL', () => {
-      cy.reload();
-      getSearchArea()
+      cy.reload(true);
+      findSearchArea()
         .contains('Search')
         .parent()
         .trigger('mouseover')
@@ -107,9 +75,10 @@ describe('Home screen', () => {
             .contains('AAPL')
             .should('be.visible')
             .trigger('mouseover')
-            .click()
+            .click();
         });
     });
   });
 });
+
 export {};

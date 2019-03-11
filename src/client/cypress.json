@@ -1,9 +1,9 @@
 {
-  "baseUrl": "http://localhost:5000",
   "darkMediaQuery": true,
-  "defaultCommandTimeout": 15000,
+  "defaultCommandTimeout": 30000,
   "requestTimeout": 16000,
   "viewportHeight": 500,
   "viewportWidth": 1600,
-  "watchForFileChanges": true
+  "watchForFileChanges": true,
+  "chromeWebSecurity": false
 }

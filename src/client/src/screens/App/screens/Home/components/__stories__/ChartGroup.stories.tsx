@@ -105,7 +105,7 @@ const apolloMocks = [
 ];
 
 storiesOf('App/screens/Home/components/ChartGroup', module).addWithJSX(
-  'Header',
+  'ChartGroup',
   () => (
     <MockedProvider mocks={apolloMocks} addTypename={false}>
       <Provider store={store}>

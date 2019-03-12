@@ -1,23 +1,23 @@
 import { parallel, series } from 'gulp';
-import spawnTerminal from './util/spawn-terminal';
+import terminalSpawn from 'terminal-spawn';
 
-const checkTypes = () => spawnTerminal('npx tsc -p "./tsconfig.json"');
+const checkTypes = () => terminalSpawn('npx tsc -p "./tsconfig.json"');
 
-const lintES = () => spawnTerminal('npx eslint .');
+const lintES = () => terminalSpawn('npx eslint .');
 
 const lintTS = () => {
   const rootFiles = '"./*.ts?(x)"';
   const srcFiles = '"./src/**/*.ts?(x)"';
   const configFiles = '"./config/**/*.ts?(x)"';
   const tsconfig = '--project tsconfig.json';
-  return spawnTerminal(
+  return terminalSpawn(
     `npx tslint ${rootFiles} ${srcFiles} ${configFiles} ${tsconfig}`,
   );
 };
 
 const lint = parallel(lintES, lintTS);
 
-const test = () => spawnTerminal('npx jest');
+const test = () => terminalSpawn('npx jest');
 
 const staticCheck = series(lint, checkTypes);
 
@@ -30,7 +30,7 @@ const start = (args: string) => {
     validatedArgs = args;
   }
 
-  return spawnTerminal(
+  return terminalSpawn(
     `npx babel-node index.ts --extensions ".ts" ${validatedArgs}`,
   );
 };
@@ -39,14 +39,14 @@ const startProduction = () => start('-- --production');
 
 const build = () => start('-- --build');
 
-const testWatch = () => spawnTerminal('jest --watch');
+const testWatch = () => terminalSpawn('jest --watch');
 
 const downloadData = () => start('-- --download-data');
 
 const debug = () => start('-- --inspect');
 
 const startNodemon = () =>
-  spawnTerminal('nodemon --exec babel-node --extensions ".ts" index.js');
+  terminalSpawn('nodemon --exec babel-node --extensions ".ts" index.js');
 
 const preCommit = series(build, staticCheckAndTest);
 

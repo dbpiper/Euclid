@@ -67,7 +67,7 @@
     "preCommit": "npx gulp preCommit",
     "start": "npx gulp start",
     "startProduction": "npx gulp startProduction",
-    "download-data": "npx gulp download-data",
+    "download-data": "npx gulp downloadData",
     "startNodemon": "npx gulp startNodemon",
     "test": "npx gulp test",
     "test:watch": "npx gulp testWatch",

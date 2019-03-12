@@ -6,6 +6,7 @@
   "dependencies": {
     "acorn": "^6.1.1",
     "acorn-jsx": "^5.0.1",
+    "gulp": "^4.0.0",
     "jest-cli": "^24.5.0",
     "start-server-and-test": "^1.7.12"
   },
@@ -68,7 +69,7 @@
     "preCommitServer": "cd src/server && npm run preCommit",
     "startClient": "cd src/client && npm run start",
     "startClientTest": "server-test startClient http://localhost:5000 cypress:e2e:run",
-    "startServer": "cd src/server && npm run start -- production",
+    "startServer": "cd src/server && npm run startProduction",
     "startStorybook": "cd src/client && npm run storybook"
   },
   "version": "0.0.0"

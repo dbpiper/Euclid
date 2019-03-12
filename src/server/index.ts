@@ -31,7 +31,7 @@ const server = new GraphQLServer({
 server.express.use(cors());
 
 // send HTTP 200 -- OK so that npm scripts know the server is running
-server.express.head('/', (req, res) => {
+server.express.head('/', (_req, res) => {
   res.sendStatus(HttpStatus.OK);
 });
 

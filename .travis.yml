@@ -2,7 +2,7 @@ os: linux
 dist: xenial
 language: node_js
 node_js:
-  - 'lts/*'
+  - "lts/*"
 cache:
   # cache for ci, since it deletes node_modules
   directories:
@@ -30,6 +30,7 @@ install:
   - cd src/server && docker-compose up -d && cd ../../
   # need libgconf for Cypress/Electron
   - sudo apt-get install libgconf-2-4
+  - npm ci
   # install our packages from lockfile
   - npm run installFromLock
 before_script:

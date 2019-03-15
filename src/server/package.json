@@ -26,7 +26,7 @@
     "prisma": "^1.28.5",
     "prisma-client-lib": "^1.28.5",
     "ramda": "^0.26.1",
-    "terminal-spawn": "^1.0.1",
+    "terminal-spawn": "^2.0.2",
     "ts-node": "^8.0.3",
     "util": "^0.11.1"
   },
@@ -54,6 +54,7 @@
     "jsdoc": "^3.5.5",
     "ts-jest": "^24.0.0",
     "tslint": "^5.14.0",
+    "tslint-config-euclid": "^1.1.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3333"
   },
@@ -63,15 +64,15 @@
   "scripts": {
     "build": "npx gulp build",
     "check-types": "npx gulp checkTypes",
+    "debug": "npx gulp debug",
+    "download-data": "npx gulp downloadData",
     "lint": "npx gulp lint",
     "preCommit": "npx gulp preCommit",
     "start": "npx gulp start",
-    "startProduction": "npx gulp startProduction",
-    "download-data": "npx gulp downloadData",
     "startNodemon": "npx gulp startNodemon",
+    "startProduction": "npx gulp startProduction",
     "test": "npx gulp test",
-    "test:watch": "npx gulp testWatch",
-    "debug": "npx gulp debug"
+    "test:watch": "npx gulp testWatch"
   },
   "version": "0.0.0"
 }

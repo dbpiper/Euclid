@@ -1,9 +1,9 @@
 import { parallel, series } from 'gulp';
 import terminalSpawn from 'terminal-spawn';
 
-const checkTypes = () => terminalSpawn('npx tsc -p "./tsconfig.json"');
+const checkTypes = () => terminalSpawn('npx tsc -p "./tsconfig.json"').promise;
 
-const lintES = () => terminalSpawn('npx eslint .');
+const lintES = () => terminalSpawn('npx eslint .').promise;
 
 const lintTS = () => {
   const rootFiles = '"./*.ts?(x)"';
@@ -12,12 +12,12 @@ const lintTS = () => {
   const tsconfig = '--project tsconfig.json';
   return terminalSpawn(
     `npx tslint ${rootFiles} ${srcFiles} ${configFiles} ${tsconfig}`,
-  );
+  ).promise;
 };
 
 const lint = parallel(lintES, lintTS);
 
-const test = () => terminalSpawn('npx jest');
+const test = () => terminalSpawn('npx jest').promise;
 
 const staticCheck = series(lint, checkTypes);
 
@@ -30,25 +30,25 @@ const start = (args: string) => {
     validatedArgs = args;
   }
 
+  // SIGTERM doesn't kill this, must use SIGINT!
   return terminalSpawn(
     `npx babel-node index.ts --extensions ".ts" ${validatedArgs}`,
-  );
+  ).promise;
 };
 
 const startProduction = () => start('-- --production');
 
-const build = () => start('-- --build');
-
-const testWatch = () => terminalSpawn('jest --watch');
+const testWatch = () => terminalSpawn('jest --watch').promise;
 
 const downloadData = () => start('-- --download-data');
 
 const debug = () => start('-- --inspect');
 
 const startNodemon = () =>
-  terminalSpawn('nodemon --exec babel-node --extensions ".ts" index.js');
+  terminalSpawn('nodemon --exec babel-node --extensions ".ts" index.js')
+    .promise;
 
-const preCommit = series(build, staticCheckAndTest);
+const preCommit = staticCheckAndTest;
 
 export {
   checkTypes,
@@ -60,7 +60,6 @@ export {
   staticCheckAndTest,
   start,
   startProduction,
-  build,
   testWatch,
   downloadData,
   debug,

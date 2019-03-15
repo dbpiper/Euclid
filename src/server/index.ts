@@ -20,7 +20,13 @@ const featureFlags = Object.freeze({
   downloadData: downloadDataArg,
 });
 
-const playgroundUrl: string | false = production ? '/' : false;
+let playgroundUrl: string | false;
+
+if (production) {
+  playgroundUrl = false;
+} else {
+  playgroundUrl = '/';
+}
 
 const server = new GraphQLServer({
   resolvers,

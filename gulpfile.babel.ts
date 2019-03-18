@@ -1,6 +1,9 @@
-import { parallel, series } from 'gulp';
+import { series } from 'gulp';
 import terminalSpawn from 'terminal-spawn';
 import waitOn from 'wait-on';
+
+// monkey-patch parallel to be series
+const parallel = series;
 
 /* *****************************************************************************
  * Private

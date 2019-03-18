@@ -45,14 +45,15 @@ const _clientStart = () =>
 // Tasks
 
 const _cypressStorybookRun = () =>
-  terminalSpawn(
-    'npx cypress run --config integrationFolder=cypress/integration/storybook',
-    { cwd: _clientDirectory },
-  ).promise;
+  terminalSpawn(_commands.npm.cypressStorybookRun, {
+    cwd: _clientDirectory,
+    shell: false,
+  }).promise;
 
 const _cypressE2eRun = () =>
   terminalSpawn(_commands.npm.cypressE2eRun, {
     cwd: _clientDirectory,
+    shell: false,
   }).promise;
 
 const _waitOnUrl = async (url: string) =>

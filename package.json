@@ -14,7 +14,7 @@
     "gulp": "^4.0.0",
     "jest-cli": "^24.5.0",
     "start-server-and-test": "^1.7.12",
-    "terminal-spawn": "^2.0.2",
+    "terminal-spawn": "^2.0.3",
     "wait-on": "^3.2.0"
   },
   "description": "A website dedicated to tracking PC part price information.",

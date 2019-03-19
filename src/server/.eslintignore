@@ -2,3 +2,4 @@
 **/generated/prisma-client/**
 **/package.json
 **/coverage/**
+**/dist/**

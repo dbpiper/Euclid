@@ -1,52 +1,52 @@
 import { parallel, series } from 'gulp';
 import terminalSpawn from 'terminal-spawn';
 
-const checkTypes = () => terminalSpawn('npx tsc -p "./tsconfig.json"').promise;
+const checkTypes = async () =>
+  terminalSpawn('npx tsc -p ./tsconfig.json', {
+    shell: false,
+  }).promise;
 
-const lintES = () => terminalSpawn('npx eslint .').promise;
+const lintES = async () =>
+  terminalSpawn('npx eslint .', { shell: false }).promise;
 
-const lintTS = () => {
+const lintTS = async () => {
   const rootFiles = '"./*.ts?(x)"';
   const srcFiles = '"./src/**/*.ts?(x)"';
   const configFiles = '"./config/**/*.ts?(x)"';
   const tsconfig = '--project tsconfig.json';
   return terminalSpawn(
     `npx tslint ${rootFiles} ${srcFiles} ${configFiles} ${tsconfig}`,
+    {
+      shell: false,
+    },
   ).promise;
 };
 
 const lint = parallel(lintES, lintTS);
 
-const test = () => terminalSpawn('npx jest').promise;
+const test = async () => terminalSpawn('npx jest', { shell: false }).promise;
 
 const staticCheck = series(lint, checkTypes);
 
 const staticCheckAndTest = series(staticCheck, test);
 
-const start = (args: string) => {
-  let validatedArgs = '';
-  // make sure it isn't the implicit 'cb' function arg
-  if (typeof args === 'string') {
-    validatedArgs = args;
-  }
+const build = () =>
+  terminalSpawn(`
+    npx                                     \
+      babel                                 \
+        .                                   \
+        --ignore node_modules               \
+        --extensions .ts                    \
+        --out-dir dist                      \
+        --delete-dir-on-start               \
+  `).promise;
 
-  // SIGTERM doesn't kill this, must use SIGINT!
-  return terminalSpawn(
-    `npx babel-node index.ts --extensions ".ts" ${validatedArgs}`,
-  ).promise;
-};
-
-const startProduction = () => start('-- --production');
-
-const testWatch = () => terminalSpawn('jest --watch').promise;
-
-const downloadData = () => start('-- --download-data');
-
-const debug = () => start('-- --inspect');
+const testWatch = () => terminalSpawn('jest --watch', { shell: false }).promise;
 
 const startNodemon = () =>
-  terminalSpawn('nodemon --exec babel-node --extensions ".ts" index.js')
-    .promise;
+  terminalSpawn('nodemon --exec babel-node --extensions ".ts" index.js', {
+    shell: false,
+  }).promise;
 
 const preCommit = staticCheckAndTest;
 
@@ -56,15 +56,12 @@ export {
   lintTS,
   lint,
   test,
-  staticCheck,
   staticCheckAndTest,
-  start,
-  startProduction,
+  staticCheck,
+  build,
   testWatch,
-  downloadData,
-  debug,
   startNodemon,
   preCommit,
 };
 
-export default start;
+export default preCommit;

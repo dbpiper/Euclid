@@ -24,6 +24,7 @@ const _commands = {
     ci: 'npm ci',
     start: 'npm run start',
     preCommit: 'npm run preCommit',
+    startServerProduction: 'npm run startProduction',
     cypressE2eRun: 'npm run cypress:e2e:run',
     cypressStorybookRun: 'npm run cypress:storybook:run',
   },
@@ -31,16 +32,20 @@ const _commands = {
 
 // Spawns
 
+// not a gulp task!
 const _runStorybook = () =>
-  terminalSpawn('npm run storybook', { cwd: _clientDirectory });
+  terminalSpawn('npm run storybook', { cwd: _clientDirectory, shell: false });
 
+// not a gulp task!
 const _serverStart = () =>
-  terminalSpawn('npx babel-node index.ts --extensions ".ts" -- --production', {
+  terminalSpawn(_commands.npm.startServerProduction, {
     cwd: _serverDirectory,
+    shell: false,
   });
 
+// not a gulp task!
 const _clientStart = () =>
-  terminalSpawn(_commands.npm.start, { cwd: _clientDirectory });
+  terminalSpawn(_commands.npm.start, { cwd: _clientDirectory, shell: false });
 
 // Tasks
 
@@ -63,47 +68,51 @@ const _waitOnUrl = async (url: string) =>
 
 // Cypress
 
-const _testStorybook = async () => {
-  const storybookSpawn = _runStorybook();
-  await _waitOnUrl(_storybookUrl);
-  const cypressProcess = await _cypressStorybookRun();
-  storybookSpawn.process.kill('SIGINT');
-  await storybookSpawn.promise;
+const _testStorybook = async () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const storybookSpawn = _runStorybook();
+      storybookSpawn.promise.catch(reason => reject(reason));
+      await _waitOnUrl(_storybookUrl);
+      const cypressProcess = await _cypressStorybookRun();
+      storybookSpawn.process.kill();
+      await storybookSpawn.promise;
 
-  console.log(JSON.stringify(cypressProcess));
-
-  return new Promise((resolve, reject) => {
-    if (cypressProcess.status !== 0) {
-      reject(cypressProcess.status);
-    } else {
-      resolve(0);
+      if (cypressProcess.status !== 0) {
+        reject(cypressProcess.status);
+      } else {
+        resolve(0);
+      }
+    } catch (error) {
+      reject(error);
     }
   });
-};
 
-const _testEuclidE2e = async () => {
-  const serverSpawn = _serverStart();
-  const clientSpawn = _clientStart();
-  await _waitOnUrl(_serverUrl);
-  await _waitOnUrl(_clientUrl);
-  const cypressProcess = await _cypressE2eRun();
+const _testEuclidE2e = async () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const serverSpawn = _serverStart();
+      serverSpawn.promise.catch(reason => reject(reason));
+      await _waitOnUrl(_serverUrl);
+      const clientSpawn = _clientStart();
+      clientSpawn.promise.catch(reason => reject(reason));
+      await _waitOnUrl(_clientUrl);
+      const cypressProcess = await _cypressE2eRun();
 
-  // this won't die unless we use SIGINT!
-  serverSpawn.process.kill('SIGINT');
-  clientSpawn.process.kill();
-  await serverSpawn.promise;
-  await clientSpawn.promise;
+      serverSpawn.process.kill();
+      clientSpawn.process.kill();
+      await serverSpawn.promise;
+      await clientSpawn.promise;
 
-  console.log(JSON.stringify(cypressProcess));
-
-  return new Promise((resolve, reject) => {
-    if (cypressProcess.status !== 0) {
-      reject(cypressProcess.status);
-    } else {
-      resolve(cypressProcess.status);
+      if (cypressProcess.status !== 0) {
+        reject(cypressProcess.status);
+      } else {
+        resolve(cypressProcess.status);
+      }
+    } catch (error) {
+      reject(error);
     }
   });
-};
 
 const _runCypressTests = series(_testStorybook, _testEuclidE2e);
 
@@ -112,38 +121,48 @@ const _runCypressTests = series(_testStorybook, _testEuclidE2e);
 const _clientInstall = () =>
   terminalSpawn(_commands.npm.install, {
     cwd: _clientDirectory,
+    shell: false,
   }).promise;
 
 const _clientInstallCi = () =>
   terminalSpawn(_commands.npm.ci, {
     cwd: _clientDirectory,
+    shell: false,
   }).promise;
 
 const _clientPreCommit = () =>
   terminalSpawn(_commands.npm.preCommit, {
     cwd: _serverDirectory,
+    shell: false,
   }).promise;
 
 // Server
 
 const _serverInstall = () =>
-  terminalSpawn(_commands.npm.install, { cwd: _serverDirectory }).promise;
+  terminalSpawn(_commands.npm.install, { cwd: _serverDirectory, shell: false })
+    .promise;
 
 const _serverInstallCi = () =>
-  terminalSpawn(_commands.npm.ci, { cwd: _serverDirectory }).promise;
+  terminalSpawn(_commands.npm.ci, { cwd: _serverDirectory, shell: false })
+    .promise;
 
 const _serverPreCommit = () =>
-  terminalSpawn(_commands.npm.preCommit, { cwd: _serverDirectory }).promise;
+  terminalSpawn(_commands.npm.preCommit, {
+    cwd: _serverDirectory,
+    shell: false,
+  }).promise;
 
 // Root
 
-const _npmInstall = () => terminalSpawn(_commands.npm.install).promise;
+const _npmInstall = () =>
+  terminalSpawn(_commands.npm.install, { shell: false }).promise;
 
-const _npmCi = () => terminalSpawn(_commands.npm.ci).promise;
+const _npmCi = () => terminalSpawn(_commands.npm.ci, { shell: false }).promise;
 
-const _gitStatus = () => terminalSpawn('git status').promise;
+const _gitStatus = () => terminalSpawn('git status', { shell: false }).promise;
 
-const _sleep = (seconds: number) => terminalSpawn(`sleep ${seconds}`).promise;
+const _sleep = (seconds: number) =>
+  terminalSpawn(`sleep ${seconds}`, { shell: false }).promise;
 
 const _sleepForPreview = () => _sleep(_sleepPreviewSeconds);
 

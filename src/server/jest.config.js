@@ -153,6 +153,7 @@ module.exports = {
     '/node_modules/',
     '/utils/',
     '/mockData/',
+    '/dist/',
   ],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files

@@ -14,18 +14,17 @@ process.on('unhandledRejection', (err) => {
 // Ensure environment variables are read.
 require('../config/env');
 
-
-const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const bfj = require('bfj');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
-const { checkBrowsers } = require('react-dev-utils/browsersHelper');
+const {
+  checkBrowsers,
+} = require('react-dev-utils/browsersHelper');
 const configFactory = require('../config/webpack.config');
 const paths = require('../config/paths');
 
@@ -33,7 +32,6 @@ const {
   measureFileSizesBeforeBuild,
   printFileSizesAfterBuild,
 } = FileSizeReporter;
-const useYarn = fs.existsSync(paths.yarnLockFile);
 
 const medSize2To9 = 512;
 const lgSize2To10 = 1024;
@@ -87,7 +85,11 @@ const build = (previousFileSizes) => {
         });
       } else {
         messages = formatWebpackMessages(
-          stats.toJson({ all: false, warnings: true, errors: true }),
+          stats.toJson({
+            all: false,
+            warnings: true,
+            errors: true,
+          }),
         );
       }
       const noErrors = 0;
@@ -104,15 +106,15 @@ const build = (previousFileSizes) => {
       }
 
       if (
-        process.env.CI
-        && (typeof process.env.CI !== 'string'
-          || process.env.CI.toLowerCase() !== 'false')
-        && messages.warnings.length > noWarnings
+        process.env.CI &&
+        (typeof process.env.CI !== 'string' ||
+          process.env.CI.toLowerCase() !== 'false') &&
+        messages.warnings.length > noWarnings
       ) {
         console.log(
           chalk.yellow(
-            '\nTreating warnings as errors because process.env.CI = true.\n'
-            + 'Most CI servers set it automatically.\n',
+            '\nTreating warnings as errors because process.env.CI = true.\n' +
+            'Most CI servers set it automatically.\n',
           ),
         );
         return reject(new Error(messages.warnings.join('\n\n')));
@@ -153,7 +155,11 @@ checkBrowsers(paths.appPath, isInteractive)
     return build(previousFileSizes);
   })
   .then(
-    ({ stats, previousFileSizes, warnings }) => {
+    ({
+      stats,
+      previousFileSizes,
+      warnings,
+    }) => {
       if (warnings.length > noWarnings) {
         console.log(chalk.yellow('Compiled with warnings.\n'));
         console.log(warnings.join('\n\n'));
@@ -176,20 +182,6 @@ checkBrowsers(paths.appPath, isInteractive)
         paths.appBuild,
         WARN_AFTER_BUNDLE_GZIP_SIZE,
         WARN_AFTER_CHUNK_GZIP_SIZE,
-      );
-      console.log();
-
-      // eslint-disable-next-line global-require, import/no-dynamic-require
-      const appPackage = require(paths.appPackageJson);
-      const { publicUrl } = paths;
-      const { publicPath } = config.output;
-      const buildFolder = path.relative(process.cwd(), paths.appBuild);
-      printHostingInstructions(
-        appPackage,
-        publicUrl,
-        publicPath,
-        buildFolder,
-        useYarn,
       );
     },
     (error) => {

@@ -2,33 +2,23 @@ import { parallel, series } from 'gulp';
 import terminalSpawn from 'terminal-spawn';
 
 const checkTypes = async () =>
-  terminalSpawn('npx tsc -p ./tsconfig.json', {
-    shell: false,
-  }).promise;
+  terminalSpawn('npx tsc -p ./tsconfig.json').promise;
 
-const lintES = async () =>
-  terminalSpawn('npx eslint .', { shell: false }).promise;
+const _lintES = async () => terminalSpawn('npx eslint .').promise;
 
-const lintTS = async () => {
+const _lintTS = async () => {
   const rootFiles = '"./*.ts?(x)"';
   const srcFiles = '"./src/**/*.ts?(x)"';
   const configFiles = '"./config/**/*.ts?(x)"';
   const tsconfig = '--project tsconfig.json';
   return terminalSpawn(
     `npx tslint ${rootFiles} ${srcFiles} ${configFiles} ${tsconfig}`,
-    {
-      shell: false,
-    },
   ).promise;
 };
 
-const lint = parallel(lintES, lintTS);
+const lint = parallel(_lintES, _lintTS, checkTypes);
 
-const test = async () => terminalSpawn('npx jest', { shell: false }).promise;
-
-const staticCheck = series(lint, checkTypes);
-
-const staticCheckAndTest = series(staticCheck, test);
+const test = async () => terminalSpawn('npx jest').promise;
 
 const build = () =>
   terminalSpawn(`
@@ -41,27 +31,14 @@ const build = () =>
         --delete-dir-on-start               \
   `).promise;
 
-const testWatch = () => terminalSpawn('jest --watch', { shell: false }).promise;
+const testWatch = () => terminalSpawn('jest --watch').promise;
 
 const startNodemon = () =>
-  terminalSpawn('nodemon --exec babel-node --extensions ".ts" index.js', {
-    shell: false,
-  }).promise;
+  terminalSpawn('nodemon --exec babel-node --extensions ".ts" index.js')
+    .promise;
 
-const preCommit = staticCheckAndTest;
+const preCommit = series(lint, test);
 
-export {
-  checkTypes,
-  lintES,
-  lintTS,
-  lint,
-  test,
-  staticCheckAndTest,
-  staticCheck,
-  build,
-  testWatch,
-  startNodemon,
-  preCommit,
-};
+export { lint, test, build, testWatch, startNodemon, preCommit, checkTypes };
 
 export default preCommit;

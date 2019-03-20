@@ -12,6 +12,7 @@
     "acorn": "^6.1.1",
     "acorn-jsx": "^5.0.1",
     "gulp": "^4.0.0",
+    "is-reachable": "^3.0.0",
     "jest-cli": "^24.5.0",
     "start-server-and-test": "^1.7.12",
     "terminal-spawn": "^2.0.3",
@@ -56,8 +57,8 @@
     "url": "git+https://github.com/dbpiper/Euclid.git"
   },
   "scripts": {
-    "installFromLock": "npx gulp installCi",
-    "installStandard": "npx gulp install",
+    "installFromLock": "npm ci && npx gulp postinstallCi",
+    "installStandard": "npm install && npx gulp postInstallStandard",
     "preCommit": "npx gulp preCommit"
   },
   "version": "0.0.0"

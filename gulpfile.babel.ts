@@ -20,9 +20,7 @@ const _commands = {
   npm: {
     install: 'npm install',
     ci: 'npm ci',
-    start: 'npm run start',
     preCommit: 'npm run preCommit',
-    startServerProduction: 'npm run startProduction',
     cypressE2eRun: 'npm run cypress:e2e:run',
     cypressStorybookRun: 'npm run cypress:storybook:run',
   },
@@ -32,19 +30,46 @@ const _commands = {
 
 // not a gulp task!
 const _runStorybook = () =>
-  terminalSpawn('npm run storybook:start', {
+  // this has to be run directly, not through npm or gulp
+  // as otherwise `start-storybook` won't be killed by `process.kill`!
+  terminalSpawn('start-storybook -p 6006 --ci --quiet', {
     cwd: _clientDirectory,
+    shell: false,
   });
 
 // not a gulp task!
-const _serverStart = () =>
-  terminalSpawn(_commands.npm.startServerProduction, {
+const _serverStart = async () => {
+  console.log('building server...');
+  await terminalSpawn('npm run build', {
     cwd: _serverDirectory,
+  }).promise;
+  console.log('server built successfully');
+
+  console.log('running node server...');
+  // this has to be run directly, not through npm or gulp
+  // as otherwise `node` won't be killed by `process.kill`!
+  return terminalSpawn('node dist/index.js', {
+    cwd: _serverDirectory,
+    shell: false,
   });
+};
 
 // not a gulp task!
-const _clientStart = () =>
-  terminalSpawn(_commands.npm.start, { cwd: _clientDirectory });
+const _clientStart = async () => {
+  console.log('building client...');
+  await terminalSpawn('npm run build', {
+    cwd: _clientDirectory,
+  }).promise;
+  console.log('client built successfully');
+
+  console.log('serving client...');
+  // this has to be run directly, not through npm or gulp
+  // as otherwise `serve` won't be killed by `process.kill`!
+  return terminalSpawn('npx serve -s build', {
+    cwd: _clientDirectory,
+    shell: false,
+  });
+};
 
 // Tasks
 
@@ -71,16 +96,24 @@ const _isUrlUp = async (url: string) => isReachable(url);
 const _testStorybook = async () =>
   new Promise(async (resolve, reject) => {
     try {
+      console.log('running Storybook integration tests');
       const isStorybookAlreadyRunning = await _isUrlUp(_storybookUrl);
       if (isStorybookAlreadyRunning) {
         reject('storybook is already running!!');
       } else {
+        console.log('starting Storybook...');
         const storybookSpawn = _runStorybook();
         storybookSpawn.promise.catch(reason => reject(reason));
         await _waitOnUrl(_storybookUrl);
+        console.log('Storybook is up');
+
         const cypressProcess = await _cypressStorybookRun();
+        console.log('cypress Storybook integration tests finished running');
+
+        console.log('killing storybook...');
         storybookSpawn.process.kill();
         await _waitOnUrl(_storybookUrl, true);
+        console.log('Storybook successfully killed and is now down');
 
         if (cypressProcess.status !== 0) {
           reject(cypressProcess.status);
@@ -96,27 +129,39 @@ const _testStorybook = async () =>
 const _testEuclidE2e = async () =>
   new Promise(async (resolve, reject) => {
     try {
+      console.log('running Euclid end-to-end tests');
       const isServerAlreadyRunning = await _isUrlUp(_serverUrl);
       if (isServerAlreadyRunning) {
         reject('server is already running!!');
       } else {
-        const serverSpawn = _serverStart();
+        console.log('starting server...');
+        const serverSpawn = await _serverStart();
         serverSpawn.promise.catch(reason => reject(reason));
         await _waitOnUrl(_serverUrl);
+        console.log('server is up');
 
         const isClientAlreadyRunning = await _isUrlUp(_clientUrl);
         if (isClientAlreadyRunning) {
           reject('client is already running!!');
         } else {
-          const clientSpawn = _clientStart();
+          console.log('starting client...');
+          const clientSpawn = await _clientStart();
           clientSpawn.promise.catch(reason => reject(reason));
           await _waitOnUrl(_clientUrl);
-          const cypressProcess = await _cypressE2eRun();
+          console.log('client is up');
 
+          const cypressProcess = await _cypressE2eRun();
+          console.log('cypress e2e tests finished running');
+
+          console.log('killing server...');
           serverSpawn.process.kill();
+          console.log('killing client...');
           clientSpawn.process.kill();
+
           await _waitOnUrl(_serverUrl, true);
+          console.log('server successfully killed and is now down');
           await _waitOnUrl(_clientUrl, true);
+          console.log('client successfully killed and is now down');
 
           if (cypressProcess.status !== 0) {
             reject(cypressProcess.status);

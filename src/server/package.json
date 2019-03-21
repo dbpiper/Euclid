@@ -10,7 +10,6 @@
     "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "^7.0.0",
     "async": "^2.6.2",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "cors": "^2.8.5",
     "es6-promise": "^4.2.6",
     "graphql": "^14.1.1",

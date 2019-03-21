@@ -32,7 +32,7 @@ const _commands = {
 const _runStorybook = () =>
   // this has to be run directly, not through npm or gulp
   // as otherwise `start-storybook` won't be killed by `process.kill`!
-  terminalSpawn('start-storybook -p 6006 --ci --quiet', {
+  terminalSpawn('npx start-storybook -p 6006 --ci --quiet', {
     cwd: _clientDirectory,
     shell: false,
   });
@@ -89,17 +89,15 @@ const _waitOnUrl = async (url: string, reverse: boolean = false) =>
     resources: [url],
   });
 
-const _isUrlUp = async (url: string) => isReachable(url);
-
 // Cypress
 
 const _testStorybook = async () =>
   new Promise(async (resolve, reject) => {
     try {
       console.log('running Storybook integration tests');
-      const isStorybookAlreadyRunning = await _isUrlUp(_storybookUrl);
+      const isStorybookAlreadyRunning = await isReachable(_storybookUrl);
       if (isStorybookAlreadyRunning) {
-        reject('storybook is already running!!');
+        reject(new Error('storybook is already running!!'));
       } else {
         console.log('starting Storybook...');
         const storybookSpawn = _runStorybook();
@@ -116,9 +114,16 @@ const _testStorybook = async () =>
         console.log('Storybook successfully killed and is now down');
 
         if (cypressProcess.status !== 0) {
-          reject(cypressProcess.status);
+          reject(
+            new Error(
+              `The cypress Storybook integration test process exited abnormally\
+               with a non-zero exit code: ${cypressProcess.status}`,
+            ),
+          );
         } else {
-          resolve(0);
+          resolve(
+            'cypress Storybook integration test process completed successfully',
+          );
         }
       }
     } catch (error) {
@@ -130,9 +135,9 @@ const _testEuclidE2e = async () =>
   new Promise(async (resolve, reject) => {
     try {
       console.log('running Euclid end-to-end tests');
-      const isServerAlreadyRunning = await _isUrlUp(_serverUrl);
+      const isServerAlreadyRunning = await isReachable(_serverUrl);
       if (isServerAlreadyRunning) {
-        reject('server is already running!!');
+        reject(new Error('server is already running!!'));
       } else {
         console.log('starting server...');
         const serverSpawn = await _serverStart();
@@ -140,13 +145,13 @@ const _testEuclidE2e = async () =>
         await _waitOnUrl(_serverUrl);
         console.log('server is up');
 
-        const isClientAlreadyRunning = await _isUrlUp(_clientUrl);
+        const isClientAlreadyRunning = await isReachable(_clientUrl);
         if (isClientAlreadyRunning) {
-          reject('client is already running!!');
+          reject(new Error('client is already running!!'));
         } else {
           console.log('starting client...');
           const clientSpawn = await _clientStart();
-          clientSpawn.promise.catch(reason => reject(reason));
+          clientSpawn.promise.catch(reason => reject(new Error(reason)));
           await _waitOnUrl(_clientUrl);
           console.log('client is up');
 
@@ -164,9 +169,14 @@ const _testEuclidE2e = async () =>
           console.log('client successfully killed and is now down');
 
           if (cypressProcess.status !== 0) {
-            reject(cypressProcess.status);
+            reject(
+              new Error(
+                `The cypress e2e test process exited abnormally with a non-zero\
+                 exit code: ${cypressProcess.status}`,
+              ),
+            );
           } else {
-            resolve(cypressProcess.status);
+            resolve('cypress e2e test process completed successfully');
           }
         }
       }
@@ -236,11 +246,6 @@ const preCommit = series(
   parallel(_clientServerPreCommit, _runCypressTests),
 );
 
-export {
-  postInstallStandard,
-  postinstallCi,
-  preCommit,
-  _clientServerPreCommit,
-};
+export { postInstallStandard, postinstallCi, preCommit };
 
 export default preCommit;

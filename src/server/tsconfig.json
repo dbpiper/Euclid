@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "allowJs": false
   },
   "exclude": [
     "node_modules",
-    "generated"
+    "generated",
+    "./**/*.{js,jsx}"
   ],
   "extends": "../../tsconfig-base",
   "include": [
-    "src",
-    "config"
+    "./**/*.{ts,tsx,d.ts}",
+    "."
   ]
 }

@@ -1,3 +1,6 @@
+# Generated babel directories
+**/dist/
+
 # Logs
 logs
 *.log

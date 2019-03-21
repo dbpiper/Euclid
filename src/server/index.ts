@@ -20,7 +20,13 @@ const featureFlags = Object.freeze({
   downloadData: downloadDataArg,
 });
 
-const playgroundUrl: string | false = production ? '/' : false;
+let playgroundUrl: string | false;
+
+if (production) {
+  playgroundUrl = false;
+} else {
+  playgroundUrl = '/';
+}
 
 const server = new GraphQLServer({
   resolvers,
@@ -31,7 +37,7 @@ const server = new GraphQLServer({
 server.express.use(cors());
 
 // send HTTP 200 -- OK so that npm scripts know the server is running
-server.express.head('/', (req, res) => {
+server.express.head('/', (_req, res) => {
   res.sendStatus(HttpStatus.OK);
 });
 

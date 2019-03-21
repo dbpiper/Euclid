@@ -4,10 +4,20 @@
     "url": "https://github.com/dbpiper/Euclid/issues"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-typescript": "^7.3.3",
+    "@babel/register": "^7.0.0",
+    "@types/gulp": "^4.0.6",
+    "@types/is-reachable": "^3.0.0",
+    "@types/wait-on": "^3.2.0",
     "acorn": "^6.1.1",
     "acorn-jsx": "^5.0.1",
+    "gulp": "^4.0.0",
+    "is-reachable": "^3.0.0",
     "jest-cli": "^24.5.0",
-    "start-server-and-test": "^1.7.12"
+    "start-server-and-test": "^1.7.12",
+    "terminal-spawn": "^2.0.3",
+    "wait-on": "^3.2.0"
   },
   "description": "A website dedicated to tracking PC part price information.",
   "devDependencies": {
@@ -48,28 +58,9 @@
     "url": "git+https://github.com/dbpiper/Euclid.git"
   },
   "scripts": {
-    "cypress:e2e:launch-run": "server-test startServer http://localhost:4000 startClientTest",
-    "cypress:e2e:run": "cd src/client && npm run cypress:e2e:run",
-    "cypress:run-all": "npm run cypress:storybook:launch-run && npm run cypress:e2e:launch-run",
-    "cypress:storybook:launch-run": "server-test startStorybook http://localhost:6006 cypress:storybook:run",
-    "cypress:storybook:run": "cd src/client && npm run cypress:storybook:run",
-    "gitStatus": "npx git status && sleep 8",
-    "installClient": "cd src/client && npm install",
-    "installClientFromLock": "cd src/client && npm ci",
-    "installFromLock": "npm ci && npm run postinstallFromLock",
-    "installServer": "cd src/server && npm install",
-    "installServerFromLock": "cd src/server && npm ci",
-    "installStandard": "npm install && npm run postinstallStandard",
-    "lint-and-unit-test": "npm run preCommitClient && npm run preCommitServer",
-    "postinstallFromLock": "npm run installClientFromLock && npm run installServerFromLock",
-    "postinstallStandard": "npm run installClient && npm run installServer",
-    "preCommit": "npm run gitStatus && npm run lint-and-unit-test && npm run cypress:run-all",
-    "preCommitClient": "cd src/client && npm run preCommit",
-    "preCommitServer": "cd src/server && npm run preCommit",
-    "startClient": "cd src/client && npm run start",
-    "startClientTest": "server-test startClient http://localhost:5000 cypress:e2e:run",
-    "startServer": "cd src/server && npm run start -- production",
-    "startStorybook": "cd src/client && npm run storybook"
+    "installFromLock": "npm ci && npx gulp postinstallCi",
+    "installStandard": "npm install && npx gulp postInstallStandard",
+    "preCommit": "npx gulp preCommit"
   },
   "version": "0.0.0"
 }

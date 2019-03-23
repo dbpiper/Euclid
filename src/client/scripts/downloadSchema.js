@@ -4,12 +4,15 @@ process.env.BABEL_ENV = 'node';
 import {
   spawn,
 } from 'child_process';
-import ServerInfo from '../config/ServerInfo-secret';
+
+const serverUrl = `${process.env.SERVER_PROTOCOL}://${
+  process.env.SERVER_ADDRESS
+}:${process.env.SERVER_PORT}`;
 
 const main = async () => {
   try {
     const apolloGenerate = spawn('npx', ['apollo', 'schema:download',
-      `--endpoint=${ServerInfo.Node.uri}`, 'graphql-schema.json',
+      `--endpoint=${serverUrl}`, 'graphql-schema.json',
     ]);
 
     apolloGenerate.stdout.on('data', (data) => {

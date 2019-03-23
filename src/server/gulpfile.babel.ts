@@ -1,5 +1,9 @@
-import { parallel, series } from 'gulp';
+import { series } from 'gulp';
+import path from 'path';
 import terminalSpawn from 'terminal-spawn';
+import ServerCommands from './config/server-commands';
+
+const _dotenvPath = path.join(__dirname, '..', '..', '.env');
 
 const checkTypes = async () =>
   terminalSpawn('npx tsc -p ./tsconfig.json').promise;
@@ -16,7 +20,7 @@ const _lintTS = async () => {
   ).promise;
 };
 
-const lint = parallel(_lintES, _lintTS, checkTypes);
+const lint = series(_lintES, _lintTS, checkTypes);
 
 const test = async () => terminalSpawn('npx jest').promise;
 
@@ -33,12 +37,29 @@ const build = () =>
 
 const testWatch = () => terminalSpawn('jest --watch').promise;
 
-const startNodemon = () =>
-  terminalSpawn('nodemon --exec babel-node --extensions ".ts" index.js')
-    .promise;
+const start = async () => {
+  await terminalSpawn('npx gulp build').promise;
+
+  return terminalSpawn(ServerCommands.start(_dotenvPath)).promise;
+};
+
+const startProduction = async () => {
+  await terminalSpawn('npx gulp build').promise;
+
+  return terminalSpawn(ServerCommands.startProduction(_dotenvPath)).promise;
+};
 
 const preCommit = series(lint, test);
 
-export { lint, test, build, testWatch, startNodemon, preCommit, checkTypes };
+export {
+  lint,
+  test,
+  build,
+  testWatch,
+  preCommit,
+  checkTypes,
+  start,
+  startProduction,
+};
 
 export default preCommit;

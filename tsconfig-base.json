@@ -1,7 +1,8 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "alwaysStrict": true,
     "charset": "utf8",
@@ -19,11 +20,9 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "plugins": [
-      {
-        "name": "typescript-tslint-plugin"
-      }
-    ],
+    "plugins": [{
+      "name": "typescript-tslint-plugin"
+    }],
     "pretty": true,
     "skipLibCheck": true,
     "strict": true,

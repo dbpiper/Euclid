@@ -1,6 +1,15 @@
 # Generated babel directories
 **/dist/
 
+# dotenv file at root
+# will still commit the ones in config/dotenvs as these
+# represent the deployment configurations
+/.env
+
+# ignore the generated template dotenv files
+/src/server/prisma.yml
+/src/server/docker-compose.yml
+
 # Logs
 logs
 *.log

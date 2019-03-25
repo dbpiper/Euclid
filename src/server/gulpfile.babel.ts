@@ -37,6 +37,15 @@ const build = () =>
 
 const testWatch = () => terminalSpawn('jest --watch').promise;
 
+const downloadData = async () => {
+  await terminalSpawn('npx gulp build').promise;
+
+  return terminalSpawn(
+    `node -r dotenv/config dist/index.js \
+        dotenv_config_path=${_dotenvPath} -- --download-data`,
+  ).promise;
+};
+
 const start = async () => {
   await terminalSpawn('npx gulp build').promise;
 
@@ -60,6 +69,7 @@ export {
   checkTypes,
   start,
   startProduction,
+  downloadData,
 };
 
 export default preCommit;

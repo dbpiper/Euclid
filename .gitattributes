@@ -50,4 +50,3 @@ eol=lf
 # and also: https://git-scm.com/docs/gitattributes
 # under "Marking files as binary"
 package-lock.json -diff
-**/generated/prisma-client/** -diff

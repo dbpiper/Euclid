@@ -36,7 +36,7 @@ using Linux in a VirtualBox VM on Windows as I am not currently doing a dual-boo
 This project follows the philosophies of [_The Twelve-Factor App_](https://12factor.net/)
 and its [config section](https://12factor.net/config), meaning that all
 deployment information is stored in [dotenv files](https://www.npmjs.com/package/dotenv).
-However, it uses a modification for simplicity, the configurations \*_are_ grouped
+However, it uses a modification for simplicity, the configurations **are** grouped
 together. Specifically, there are dotenv files for each deployment, so for
 now it is my dev environment and the CI environment. This can technically be
 anything, and this approach is only used as there are a limited amount of

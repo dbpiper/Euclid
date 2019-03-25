@@ -69,6 +69,9 @@ const tryAddData = async (ticker: string) => {
   });
 
   if (_featureFlags.downloadData) {
+    // tslint:disable-next-line: no-console
+    console.log('Downloading data...');
+
     await tryAddData('AAPL');
     await tryAddData('SPY');
     await tryAddData('AMZN');

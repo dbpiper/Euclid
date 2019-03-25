@@ -1,6 +1,9 @@
 # Generated babel directories
 **/dist/
 
+# Generated Prisma directory
+**/generated/prisma-client/
+
 # dotenv file at root
 # will still commit the ones in config/dotenvs as these
 # represent the deployment configurations

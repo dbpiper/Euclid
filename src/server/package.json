@@ -66,7 +66,7 @@
     "build": "npx gulp build",
     "check-types": "npx gulp checkTypes",
     "debug": "npm run start -- --inspect",
-    "download-data": "npm run start -- --download-data",
+    "download-data": "npx gulp downloadData",
     "lint": "npx gulp lint",
     "preCommit": "npx gulp preCommit",
     "start": "npx gulp start",

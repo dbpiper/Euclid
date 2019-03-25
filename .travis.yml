@@ -24,6 +24,9 @@ before_install:
   - git-crypt unlock travis-key
   - sudo pip3 install setuptools
   - sudo -H pip3 install docker-compose-wait --ignore-installed PyYAML
+  # setup environment variables from dotenv file
+  - sudo cp ./config/dotenvs/CI/.env .env
+  - sudo ./config/replace-env-vars.sh
 install:
   # start docker services now so that it can have some time to come up before
   # we need it to speed up the build

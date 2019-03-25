@@ -5,7 +5,7 @@ rootPath="${dir}/.."
 # get the absolute path to the script so it works with dot space calling
 loadDotenvPath=$(readlink -e "${dir}/helper-scripts/load-dotenv.sh")
 
-# use "dot space script" calling syntax to exectue the script usint
+# use "dot space script" calling syntax to exectue the script using
 # the current shell, which lets us use the .env vars
 . /${loadDotenvPath}
 

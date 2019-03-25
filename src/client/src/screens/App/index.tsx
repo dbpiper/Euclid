@@ -11,9 +11,13 @@ const serverUrl = `${process.env.SERVER_PROTOCOL}://${
   process.env.SERVER_ADDRESS
 }:${process.env.SERVER_PORT}`;
 
+// if the url is broken, we want to know about it...
 if (serverUrl.includes('undefined')) {
-  // tslint:disable-next-line: no-console
-  console.warn('server url is not loaded properly!!');
+  // but, not in production!!
+  if (process.env.NODE_ENV !== 'production') {
+    // tslint:disable-next-line: no-console
+    console.warn('server url is not loaded properly!!');
+  }
 }
 
 const client = new ApolloClient({

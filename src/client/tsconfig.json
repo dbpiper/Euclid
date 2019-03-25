@@ -21,10 +21,8 @@
   ],
   "extends": "../../tsconfig-base",
   "include": [
-    "config/client-commands.ts",
-    "../../config/loadDotenv.ts",
-    "src",
-    "./src/**/*", "config/loadDotenv.ts"
+    "src/**/*",
+    "config/**/*"
   ],
   "types": [
     "jest",

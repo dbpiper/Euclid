@@ -21,8 +21,8 @@
   ],
   "extends": "../../tsconfig-base",
   "include": [
-    "src",
-    "./src/**/*"
+    "src/**/*",
+    "config/**/*"
   ],
   "types": [
     "jest",

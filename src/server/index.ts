@@ -4,40 +4,42 @@ import HttpStatus from 'http-status-codes';
 
 import { prisma } from './generated/prisma-client';
 
-import ServerInfo from './config/ServerInfo-secret';
 import pullAndSaveData from './src/pullAndSaveData';
 import resolvers from './src/resolvers';
 
-const firstArg = 2;
-const notFound = -1;
-const args = process.argv.slice(firstArg);
-const buildOnly = args.indexOf('--build') !== notFound;
-const production: boolean = args.indexOf('--production') !== notFound;
-const downloadDataArg = args.indexOf('--download-data') !== notFound;
+const _firstArg = 2;
+const _notFound = -1;
+const _args = process.argv.slice(_firstArg);
+const _buildOnly = _args.indexOf('--build') !== _notFound;
+const _production: boolean = _args.indexOf('--production') !== _notFound;
+const _downloadDataArg = _args.indexOf('--download-data') !== _notFound;
+const _serverUrl = `${process.env.SERVER_PROTOCOL}://${
+  process.env.SERVER_ADDRESS
+}:${process.env.SERVER_PORT}`;
 
-const featureFlags = Object.freeze({
+const _featureFlags = Object.freeze({
   __proto__: null,
-  downloadData: downloadDataArg,
+  downloadData: _downloadDataArg,
 });
 
 let playgroundUrl: string | false;
 
-if (production) {
+if (_production) {
   playgroundUrl = false;
 } else {
   playgroundUrl = '/';
 }
 
-const server = new GraphQLServer({
+const _server = new GraphQLServer({
   resolvers,
   typeDefs: './schema.graphql',
   context: prisma,
 });
 
-server.express.use(cors());
+_server.express.use(cors());
 
 // send HTTP 200 -- OK so that npm scripts know the server is running
-server.express.head('/', (_req, res) => {
+_server.express.head('/', (_req, res) => {
   res.sendStatus(HttpStatus.OK);
 });
 
@@ -56,17 +58,20 @@ const tryAddData = async (ticker: string) => {
     playground: playgroundUrl,
   };
 
-  const httpServer = await server.start(options, () => {
+  const httpServer = await _server.start(options, () => {
     // tslint:disable-next-line no-console
-    console.log(`Server is running on ${ServerInfo.Node.uri}`);
+    console.log(`Server is running on ${_serverUrl}`);
 
-    if (buildOnly) {
+    if (_buildOnly) {
       const noErrors = 0;
       process.exit(noErrors);
     }
   });
 
-  if (featureFlags.downloadData) {
+  if (_featureFlags.downloadData) {
+    // tslint:disable-next-line: no-console
+    console.log('Downloading data...');
+
     await tryAddData('AAPL');
     await tryAddData('SPY');
     await tryAddData('AMZN');

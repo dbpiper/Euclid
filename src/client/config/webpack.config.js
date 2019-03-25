@@ -1,3 +1,4 @@
+const Dotenv = require('dotenv-webpack');
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
@@ -24,6 +25,7 @@ const postCssPresetEnv = require('postcss-preset-env');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 
+const dotenvPath = path.join(__dirname, '..', '..', '..', '.env');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -49,9 +51,9 @@ module.exports = (webpackEnv) => {
   // Webpack uses `publicPath` to determine where the app is being served from.
   // It requires a trailing slash, or the file assets will get an incorrect path.
   // In development, we always serve from the root. This makes config easier.
-  const publicPath = isEnvProduction
-    ? paths.servedPath
-    : isEnvDevelopment && '/';
+  const publicPath = isEnvProduction ?
+    paths.servedPath :
+    isEnvDevelopment && '/';
   // Some apps do not use client-side routing with pushState.
   // For these, "homepage" can be set to "." to enable relative asset paths.
   const shouldUseRelativeAssetPaths = publicPath === './';
@@ -61,9 +63,9 @@ module.exports = (webpackEnv) => {
   // `publicUrl` is just like `publicPath`, but we will provide it to our app
   // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
   // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
-  const publicUrl = isEnvProduction
-    ? publicPath.slice(startChar, endCharSpecial)
-    : isEnvDevelopment && '';
+  const publicUrl = isEnvProduction ?
+    publicPath.slice(startChar, endCharSpecial) :
+    isEnvDevelopment && '';
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(publicUrl);
 
@@ -73,9 +75,10 @@ module.exports = (webpackEnv) => {
       isEnvDevelopment && require.resolve('style-loader'),
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
-        options: Object.assign(
-          {},
-          shouldUseRelativeAssetPaths ? { publicPath: '../../' } : undefined,
+        options: Object.assign({},
+          shouldUseRelativeAssetPaths ? {
+            publicPath: '../../'
+          } : undefined,
         ),
       },
       {
@@ -129,34 +132,34 @@ module.exports = (webpackEnv) => {
     if (checkTypes) {
       return (
         // TypeScript type checking
-        useTypeScript
-          && new ForkTsCheckerWebpackPlugin({
-            typescript: resolve.sync('typescript', {
-              basedir: paths.appNodeModules,
-            }),
-            async: false,
-            checkSyntacticErrors: true,
-            tsconfig: paths.appTsConfig,
-            compilerOptions: {
-              module: 'esnext',
-              moduleResolution: 'node',
-              resolveJsonModule: true,
-              isolatedModules: true,
-              noEmit: true,
-              jsx: 'preserve',
-            },
-            reportFiles: [
-              '**',
-              '!**/*.json',
-              '!**/__tests__/**',
-              '!**/?(*.)(spec|test).*',
-              '!**/src/setupProxy.*',
-              '!**/src/setupTests.*',
-            ],
-            watch: paths.appSrc,
-            silent: true,
-            formatter: typescriptFormatter,
-          })
+        useTypeScript &&
+        new ForkTsCheckerWebpackPlugin({
+          typescript: resolve.sync('typescript', {
+            basedir: paths.appNodeModules,
+          }),
+          async: false,
+          checkSyntacticErrors: true,
+          tsconfig: paths.appTsConfig,
+          compilerOptions: {
+            module: 'esnext',
+            moduleResolution: 'node',
+            resolveJsonModule: true,
+            isolatedModules: true,
+            noEmit: true,
+            jsx: 'preserve',
+          },
+          reportFiles: [
+            '**',
+            '!**/*.json',
+            '!**/__tests__/**',
+            '!**/?(*.)(spec|test).*',
+            '!**/src/setupProxy.*',
+            '!**/src/setupTests.*',
+          ],
+          watch: paths.appSrc,
+          silent: true,
+          formatter: typescriptFormatter,
+        })
       );
     }
 
@@ -181,8 +184,8 @@ module.exports = (webpackEnv) => {
       // the line below with these two lines if you prefer the stock client:
       // require.resolve('webpack-dev-server/client') + '?/',
       // require.resolve('webpack/hot/dev-server'),
-      isEnvDevelopment
-        && require.resolve('react-dev-utils/webpackHotDevClient'),
+      isEnvDevelopment &&
+      require.resolve('react-dev-utils/webpackHotDevClient'),
       // Finally, this is your app's code:
       paths.appIndexJs,
       // We include the app code last so that if there is a runtime error during
@@ -196,23 +199,20 @@ module.exports = (webpackEnv) => {
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
-      filename: isEnvProduction
-        ? 'static/js/[name].[chunkhash:8].js'
-        : isEnvDevelopment && 'static/js/bundle.js',
+      filename: isEnvProduction ?
+        'static/js/[name].[chunkhash:8].js' : isEnvDevelopment && 'static/js/bundle.js',
       // There are also additional JS chunk files if you use code splitting.
-      chunkFilename: isEnvProduction
-        ? 'static/js/[name].[chunkhash:8].chunk.js'
-        : isEnvDevelopment && 'static/js/[name].chunk.js',
+      chunkFilename: isEnvProduction ?
+        'static/js/[name].[chunkhash:8].chunk.js' : isEnvDevelopment && 'static/js/[name].chunk.js',
       // We inferred the "public path" (such as / or /my-project) from homepage.
       // We use "/" in development.
       publicPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
-      devtoolModuleFilenameTemplate: isEnvProduction
-        ? info => path
-          .relative(paths.appSrc, info.absoluteResourcePath)
-          .replace(/\\/g, '/')
-        : isEnvDevelopment
-          && (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+      devtoolModuleFilenameTemplate: isEnvProduction ?
+        info => path
+        .relative(paths.appSrc, info.absoluteResourcePath)
+        .replace(/\\/g, '/') : isEnvDevelopment &&
+        (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
     },
     optimization: {
       minimize: isEnvProduction,
@@ -264,16 +264,14 @@ module.exports = (webpackEnv) => {
         new OptimizeCSSAssetsPlugin({
           cssProcessorOptions: {
             parser: safePostCssParser,
-            map: shouldUseSourceMap
-              ? {
-                // `inline: false` forces the sourcemap to be output into a
-                // separate file
-                inline: false,
-                // `annotation: true` appends the sourceMappingURL to the end of
-                // the css file, helping the browser find the sourcemap
-                annotation: true,
-              }
-              : false,
+            map: shouldUseSourceMap ? {
+              // `inline: false` forces the sourcemap to be output into a
+              // separate file
+              inline: false,
+              // `annotation: true` appends the sourceMappingURL to the end of
+              // the css file, helping the browser find the sourcemap
+              annotation: true,
+            } : false,
           },
         }),
       ],
@@ -334,23 +332,25 @@ module.exports = (webpackEnv) => {
       strictExportPresence: true,
       rules: [
         // Disable require.ensure as it's not a standard language feature.
-        { parser: { requireEnsure: false } },
+        {
+          parser: {
+            requireEnsure: false
+          }
+        },
 
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
         {
           test: /\.(js|mjs|jsx)$/,
           enforce: 'pre',
-          use: [
-            {
-              options: {
-                formatter: require.resolve('react-dev-utils/eslintFormatter'),
-                eslintPath: require.resolve('eslint'),
+          use: [{
+            options: {
+              formatter: require.resolve('react-dev-utils/eslintFormatter'),
+              eslintPath: require.resolve('eslint'),
 
-              },
-              loader: require.resolve('eslint-loader'),
             },
-          ],
+            loader: require.resolve('eslint-loader'),
+          }, ],
           include: paths.appSrc,
         },
         {
@@ -386,8 +386,7 @@ module.exports = (webpackEnv) => {
                     {
                       loaderMap: {
                         svg: {
-                          ReactComponent:
-                            '@svgr/webpack?-prettier,-svgo![path]',
+                          ReactComponent: '@svgr/webpack?-prettier,-svgo![path]',
                         },
                       },
                     },
@@ -414,7 +413,9 @@ module.exports = (webpackEnv) => {
                 presets: [
                   [
                     require.resolve('babel-preset-react-app/dependencies'),
-                    { helpers: true },
+                    {
+                      helpers: true
+                    },
                   ],
                 ],
                 cacheDirectory: true,
@@ -464,8 +465,7 @@ module.exports = (webpackEnv) => {
             {
               test: sassRegex,
               exclude: sassModuleRegex,
-              use: getStyleLoaders(
-                {
+              use: getStyleLoaders({
                   importLoaders: 2,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                 },
@@ -481,8 +481,7 @@ module.exports = (webpackEnv) => {
             // using the extension .module.scss or .module.sass
             {
               test: sassModuleRegex,
-              use: getStyleLoaders(
-                {
+              use: getStyleLoaders({
                   importLoaders: 2,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                   modules: true,
@@ -514,37 +513,39 @@ module.exports = (webpackEnv) => {
       ],
     },
     plugins: [
+      // Search and replace the env vars: `process.env.${ENV_VAR}`
+      // for use on the web
+      new Dotenv({
+        path: dotenvPath,
+      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
+        Object.assign({}, {
             inject: true,
             template: paths.appHtml,
           },
-          isEnvProduction
-            ? {
-              minify: {
-                removeComments: true,
-                collapseWhitespace: true,
-                removeRedundantAttributes: true,
-                useShortDoctype: true,
-                removeEmptyAttributes: true,
-                removeStyleLinkTypeAttributes: true,
-                keepClosingSlash: true,
-                minifyJS: true,
-                minifyCSS: true,
-                minifyURLs: true,
-              },
-            }
-            : undefined,
+          isEnvProduction ? {
+            minify: {
+              removeComments: true,
+              collapseWhitespace: true,
+              removeRedundantAttributes: true,
+              useShortDoctype: true,
+              removeEmptyAttributes: true,
+              removeStyleLinkTypeAttributes: true,
+              keepClosingSlash: true,
+              minifyJS: true,
+              minifyCSS: true,
+              minifyURLs: true,
+            },
+          } :
+          undefined,
         ),
       ),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
-      isEnvProduction
-        && shouldInlineRuntimeChunk
-        && new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
+      isEnvProduction &&
+      shouldInlineRuntimeChunk &&
+      new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
       // Makes some environment variables available in index.html.
       // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
       // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
@@ -571,15 +572,15 @@ module.exports = (webpackEnv) => {
       // to restart the development server for Webpack to discover it. This plugin
       // makes the discovery automatic so you don't have to restart.
       // See https://github.com/facebook/create-react-app/issues/186
-      isEnvDevelopment
-        && new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-      isEnvProduction
-        && new MiniCssExtractPlugin({
-          // Options similar to the same options in webpackOptions.output
-          // both options are optional
-          filename: 'static/css/[name].[contenthash:8].css',
-          chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-        }),
+      isEnvDevelopment &&
+      new WatchMissingNodeModulesPlugin(paths.appNodeModules),
+      isEnvProduction &&
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: 'static/css/[name].[contenthash:8].css',
+        chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+      }),
       // Generate a manifest file which contains a mapping of all asset filenames
       // to their corresponding output file so that tools can pick it up without
       // having to parse `index.html`.
@@ -595,20 +596,20 @@ module.exports = (webpackEnv) => {
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       // Generate a service worker script that will precache, and keep up to date,
       // the HTML & assets that are part of the Webpack build.
-      isEnvProduction
-        && new WorkboxWebpackPlugin.GenerateSW({
-          clientsClaim: true,
-          exclude: [/\.map$/, /asset-manifest\.json$/],
-          importWorkboxFrom: 'cdn',
-          navigateFallback: `${publicUrl}/index.html`,
-          navigateFallbackBlacklist: [
-            // Exclude URLs starting with /_, as they're likely an API call
-            new RegExp('^/_'),
-            // Exclude URLs containing a dot, as they're likely a resource in
-            // public/ and not a SPA route
-            new RegExp('/[^/]+\\.[^/]+$'),
-          ],
-        }),
+      isEnvProduction &&
+      new WorkboxWebpackPlugin.GenerateSW({
+        clientsClaim: true,
+        exclude: [/\.map$/, /asset-manifest\.json$/],
+        importWorkboxFrom: 'cdn',
+        navigateFallback: `${publicUrl}/index.html`,
+        navigateFallbackBlacklist: [
+          // Exclude URLs starting with /_, as they're likely an API call
+          new RegExp('^/_'),
+          // Exclude URLs containing a dot, as they're likely a resource in
+          // public/ and not a SPA route
+          new RegExp('/[^/]+\\.[^/]+$'),
+        ],
+      }),
       getCheckTypeScriptTypesPlugin(false),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.

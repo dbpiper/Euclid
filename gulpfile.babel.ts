@@ -1,7 +1,16 @@
-import { parallel, series } from 'gulp';
+// tslint:disable: no-console
+import { series } from 'gulp';
 import isReachable from 'is-reachable';
+import path from 'path';
 import terminalSpawn from 'terminal-spawn';
 import waitOn from 'wait-on';
+
+import './config/loadDotenv.ts';
+
+import ClientCommands from './src/client/config/client-commands';
+import ServerCommands from './src/server/config/server-commands';
+
+const _dotenvPath = path.join(__dirname, '.env');
 
 /* *****************************************************************************
  * Private
@@ -9,9 +18,16 @@ import waitOn from 'wait-on';
 
 // Variables
 
-const _clientUrl = 'http://localhost:5000';
-const _storybookUrl = 'http://localhost:6006';
-const _serverUrl = 'http://localhost:4000';
+const _clientUrl = `${process.env.CLIENT_PROTOCOL}://${
+  process.env.CLIENT_ADDRESS
+}:${process.env.CLIENT_PORT}`;
+const _storybookUrl = `${process.env.STORYBOOK_PROTOCOL}://${
+  process.env.STORYBOOK_ADDRESS
+}:${process.env.STORYBOOK_PORT}`;
+const _serverUrl = `${process.env.SERVER_PROTOCOL}://${
+  process.env.SERVER_ADDRESS
+}:${process.env.SERVER_PORT}`;
+
 const _sleepPreviewSeconds = 8;
 const _clientDirectory = 'src/client';
 const _serverDirectory = 'src/server';
@@ -32,7 +48,7 @@ const _commands = {
 const _runStorybook = () =>
   // this has to be run directly, not through npm or gulp
   // as otherwise `start-storybook` won't be killed by `process.kill`!
-  terminalSpawn('npx start-storybook -p 6006 --ci --quiet', {
+  terminalSpawn(ClientCommands.startStorybook, {
     cwd: _clientDirectory,
     shell: false,
   });
@@ -48,7 +64,7 @@ const _serverStart = async () => {
   console.log('running node server...');
   // this has to be run directly, not through npm or gulp
   // as otherwise `node` won't be killed by `process.kill`!
-  return terminalSpawn('node dist/index.js', {
+  return terminalSpawn(ServerCommands.start(_dotenvPath), {
     cwd: _serverDirectory,
     shell: false,
   });
@@ -65,7 +81,7 @@ const _clientStart = async () => {
   console.log('serving client...');
   // this has to be run directly, not through npm or gulp
   // as otherwise `serve` won't be killed by `process.kill`!
-  return terminalSpawn('npx serve -s build', {
+  return terminalSpawn(ClientCommands.serveClient, {
     cwd: _clientDirectory,
     shell: false,
   });
@@ -229,7 +245,7 @@ const _sleepForPreview = () => _sleep(_sleepPreviewSeconds);
 
 const _gitReview = series(_gitStatus, _sleepForPreview);
 
-const _clientServerPreCommit = parallel(_clientPreCommit, _serverPreCommit);
+const _clientServerPreCommit = series(_clientPreCommit, _serverPreCommit);
 
 /* *****************************************************************************
  * Public
@@ -237,13 +253,13 @@ const _clientServerPreCommit = parallel(_clientPreCommit, _serverPreCommit);
 
 // Root
 
-const postInstallStandard = parallel(_clientInstall, _serverInstall);
+const postInstallStandard = series(_clientInstall, _serverInstall);
 
-const postinstallCi = parallel(_clientInstallCi, _serverInstallCi);
+const postinstallCi = series(_clientInstallCi, _serverInstallCi);
 
 const preCommit = series(
   _gitReview,
-  parallel(_clientServerPreCommit, _runCypressTests),
+  series(_clientServerPreCommit, _runCypressTests),
 );
 
 export { postInstallStandard, postinstallCi, preCommit };

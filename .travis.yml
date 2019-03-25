@@ -2,9 +2,15 @@ os: linux
 dist: xenial
 language: node_js
 node_js:
-  - "lts/*"
+  - lts/*
+notifications:
+  slack:
+    rooms:
+      - secure: "pTew9GvA+OLQ0Z3DgXVFk1RrzrGaxtrBflCm0dfAu+MQKE/F0DI2ycwnWRu0583h/svvo2kCJuROu37d2oVqYYC5194TyCGiy+nO8yuItbziFlSVwPq4/BwhBFV7B8LztSvVYD7pHXrFz/yi3W1M11PzQmNm8coNRWKMpbyu44e4E+mmp9ybVPr/QEPZqSFCNElw4Rc5nYEsz10QizhDhdiK8zgWSh8ImsoEOnLy9F1KzlmoSsExDgHt1eOEZTl5yt2O2C49mcOLnrQ+ijS7w5zi1U4QtES4Q4Jxn+flD7FbJHo7SkuTe7QtTCm1JcGFhVv7yWQ4R7WRruM4uvt4hvfvYGXF2ljhWaYo7xtXijvPMYCUQv57FPwD/X+bfiJV7kHx3UYcZEQpBGOi7uBUu8fSeiEU3Ry2haGlznG/7bwcQUMpYZl0PMOGlkFfKspLB1qXsStjG0bSZ8pzwAJ3g8ja/T3vUmerBNwvJbx7pf1OutvDRQP6tNZCpYXpzURsUd7NjNmbgqgrerdE/E9RK2Rtg+YJgDYEXt3KpLXtXsgyM48bogobfq502K0zB2uvb29VtC8xNM1/1SW0IZaDKlq18I2lICuhIr8QHmX2zbAuMdHgglmN2KwhWN4SmQQAHLa2QHDWyBJYpd5lGTTIGjMFh8abBcKjhbu+3GbXs2U="
+    on_success: always
+    on_failure: always
+    on_pull_requests: true
 cache:
-  # cache for ci, since it deletes node_modules
   directories:
     - "$HOME/.npm"
 addons:
@@ -24,22 +30,16 @@ before_install:
   - git-crypt unlock travis-key
   - sudo pip3 install setuptools
   - sudo -H pip3 install docker-compose-wait --ignore-installed PyYAML
+  - sudo cp ./config/dotenvs/CI/.env .env
+  - sudo ./config/replace-env-vars.sh
 install:
-  # start docker services now so that it can have some time to come up before
-  # we need it to speed up the build
   - cd src/server && docker-compose up -d && cd ../../
-  # need libgconf for Cypress/Electron
   - sudo apt-get install libgconf-2-4
-  # install our packages from lockfile
   - npm run installFromLock
 before_script:
-  # go the server directory since all of our prisma stuff is there
   - cd src/server
-  # ensure that docker services are up before we try to use them
   - docker-compose-wait
-  # use prisma from lockfile so that we have reproducible builds
   - npx prisma deploy
   - npm run download-data
-  # go back to main directory
   - cd ../../
 script: npm run preCommit

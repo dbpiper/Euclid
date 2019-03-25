@@ -5,9 +5,11 @@
   "exclude": [
     "node_modules"
   ],
-  "extends": "tsconfig-base",
+  "extends": "./tsconfig-base",
   "include": [
     "src/client",
-    "src/server"
+    "src/server",
+    "config/loadDotenv.ts",
+    "src/client/config/client-commands.ts"
   ]
 }

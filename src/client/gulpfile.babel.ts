@@ -1,5 +1,9 @@
-import { parallel, series } from 'gulp';
+import { series } from 'gulp';
 import terminalSpawn from 'terminal-spawn';
+
+import './config/loadDotenv.ts';
+
+import ClientCommands from './config/client-commands';
 
 // Miscellaneous Helper Tasks
 
@@ -20,7 +24,7 @@ const _lintTS = () =>
     'npx tslint "./**/*.ts?(x)" "src/**/*.ts?(x)" --project tsconfig.json',
   ).promise;
 
-const lint = parallel(_lintES, _lintTS, _checkTypes);
+const lint = series(_lintES, _lintTS, _checkTypes);
 
 const build = () => terminalSpawn('node scripts/build.js').promise;
 
@@ -33,7 +37,7 @@ const startDevelopment = () => terminalSpawn('node scripts/start.js').promise;
 const storybookBuild = () => terminalSpawn('npx build-storybook').promise;
 
 const storybookStart = () =>
-  terminalSpawn('npx start-storybook -p 6006 --ci').promise;
+  terminalSpawn(ClientCommands.startStorybook).promise;
 
 // Cypress
 

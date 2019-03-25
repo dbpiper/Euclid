@@ -4,9 +4,9 @@
     "url": "https://github.com/dbpiper/Euclid/issues"
   },
   "dependencies": {
-    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-env": "^7.4.2",
     "@babel/preset-typescript": "^7.3.3",
-    "@babel/register": "^7.0.0",
+    "@babel/register": "^7.4.0",
     "@types/dotenv": "^6.1.0",
     "@types/gulp": "^4.0.6",
     "@types/is-reachable": "^3.0.0",
@@ -17,6 +17,7 @@
     "gulp": "^4.0.0",
     "is-reachable": "^3.0.0",
     "jest-cli": "^24.5.0",
+    "npm-check-updates": "^3.1.1",
     "start-server-and-test": "^1.7.12",
     "terminal-spawn": "^2.0.3",
     "wait-on": "^3.2.0"
@@ -29,7 +30,7 @@
     "babel-eslint": "^10.0.1",
     "commitlint": "^7.5.2",
     "cypress": "^3.2.0",
-    "eslint": "^5.15.2",
+    "eslint": "^5.15.3",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jest": "^22.4.1",
@@ -42,7 +43,7 @@
     "tslint": "^5.14.0",
     "tslint-config-euclid": "1.1.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.3.3333"
+    "typescript": "^3.3.4000"
   },
   "homepage": "https://github.com/dbpiper/Euclid#readme",
   "husky": {

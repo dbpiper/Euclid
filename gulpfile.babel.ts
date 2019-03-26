@@ -30,6 +30,7 @@ const _serverUrl = `${process.env.SERVER_PROTOCOL}://${
 
 const _sleepPreviewSeconds = 8;
 const _clientDirectory = 'src/client';
+const _cypressDirectory = 'src/client/cypress';
 const _serverDirectory = 'src/server';
 
 const _commands = {
@@ -203,6 +204,16 @@ const _testEuclidE2e = async () =>
 
 const _runCypressTests = series(_testStorybook, _testEuclidE2e);
 
+const _cypressInstall = () =>
+  terminalSpawn(_commands.npm.install, {
+    cwd: _cypressDirectory,
+  }).promise;
+
+const _cypressInstallCi = () =>
+  terminalSpawn(_commands.npm.install, {
+    cwd: _cypressDirectory,
+  }).promise;
+
 // Client
 
 const _clientInstall = () =>
@@ -253,9 +264,17 @@ const _clientServerPreCommit = series(_clientPreCommit, _serverPreCommit);
 
 // Root
 
-const postInstallStandard = series(_clientInstall, _serverInstall);
+const postInstallStandard = series(
+  _clientInstall,
+  _cypressInstall,
+  _serverInstall,
+);
 
-const postinstallCi = series(_clientInstallCi, _serverInstallCi);
+const postinstallCi = series(
+  _clientInstallCi,
+  _cypressInstallCi,
+  _serverInstallCi,
+);
 
 const preCommit = series(
   _gitReview,

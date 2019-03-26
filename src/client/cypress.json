@@ -1,9 +1,11 @@
 {
   "darkMediaQuery": true,
-  "defaultCommandTimeout": 30000,
+  "defaultCommandTimeout": 50000,
   "requestTimeout": 16000,
   "viewportHeight": 500,
   "viewportWidth": 1600,
   "watchForFileChanges": true,
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "screenshotsFolder": "cypress/snapshots/actual",
+  "trashAssetsBeforeRuns": true
 }

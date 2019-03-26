@@ -4,6 +4,9 @@
 # Generated Prisma directory
 **/generated/prisma-client/
 
+# Cypress screenshots
+**/cypress/snapshots/actual/
+
 # dotenv file at root
 # will still commit the ones in config/dotenvs as these
 # represent the deployment configurations

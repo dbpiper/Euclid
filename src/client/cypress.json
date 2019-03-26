@@ -1,6 +1,6 @@
 {
   "darkMediaQuery": true,
-  "defaultCommandTimeout": 30000,
+  "defaultCommandTimeout": 100000,
   "requestTimeout": 16000,
   "viewportHeight": 500,
   "viewportWidth": 1600,

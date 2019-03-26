@@ -32,9 +32,5 @@
     "strictPropertyInitialization": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "esnext"
-  },
-  "types": [
-    "jest",
-    "enzyme"
-  ]
+  }
 }

@@ -10,14 +10,21 @@
     "@types/dotenv": "^6.1.1",
     "@types/gulp": "^4.0.6",
     "@types/is-reachable": "^3.0.0",
+    "@types/lodash": "^4.14.123",
+    "@types/undertaker": "^1.2.1",
     "@types/wait-on": "^3.2.0",
     "acorn": "^6.1.1",
     "acorn-jsx": "^5.0.1",
     "dotenv": "^7.0.0",
     "gulp": "^4.0.0",
+    "gulp-errorable": "^1.0.0-beta.2",
     "is-reachable": "^3.0.0",
     "jest-cli": "^24.7.1",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "slack-notify": "^0.1.7",
     "terminal-spawn": "^2.0.3",
+    "undertaker": "^1.2.0",
     "wait-on": "^3.2.0"
   },
   "description": "A website dedicated to tracking PC part price information.",
@@ -47,8 +54,8 @@
   "husky": {
     "hooks": {
       "commit-msg": "npx commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "npm run preCommit",
-      "pre-push": "npm run preCommit"
+      "pre-commit": "npm run verify",
+      "pre-push": "npm run verify"
     }
   },
   "license": "MIT",
@@ -61,7 +68,8 @@
   "scripts": {
     "installFromLock": "npm ci && npx gulp postinstallCi",
     "installStandard": "npm install && npx gulp postInstallStandard",
-    "preCommit": "npx gulp preCommit"
+    "verify": "npx gulp verify",
+    "verifyCi": "npx gulp verifyCi"
   },
   "version": "0.0.0"
 }

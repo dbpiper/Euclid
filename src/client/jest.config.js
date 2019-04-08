@@ -32,6 +32,8 @@ module.exports = {
   setupFiles: [
     'react-app-polyfill/jsdom',
   ],
+  // this is a jest key, which I have no control over...
+  // eslint-disable-next-line unicorn/prevent-abbreviations
   setupFilesAfterEnv: [
     'jest-enzyme',
   ],

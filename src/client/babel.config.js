@@ -1,7 +1,7 @@
 module.exports = function babelConfig(api) {
   api.cache(true);
 
-  const env = {
+  const environment = {
     node: {
       presets: [
         [
@@ -62,8 +62,10 @@ module.exports = function babelConfig(api) {
   ];
 
   return {
-    env,
     plugins,
     presets,
+    // babel wants this to be called env...
+    // eslint-disable-next-line unicorn/prevent-abbreviations
+    env: environment,
   };
 };

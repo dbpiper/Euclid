@@ -7,8 +7,8 @@ process.env.NODE_ENV = 'development';
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on('unhandledRejection', (err) => {
-  throw err;
+process.on('unhandledRejection', (error) => {
+  throw error;
 });
 
 // Ensure environment variables are read.
@@ -102,18 +102,18 @@ checkBrowsers(paths.appPath, isInteractive)
       proxyConfig,
       urls.lanUrlForConfig,
     );
-    const devServer = new WebpackDevServer(compiler, serverConfig);
+    const developmentServer = new WebpackDevServer(compiler, serverConfig);
     // Launch WebpackDevServer.
-    devServer.listen(port, HOST, (err) => {
-      if (err) {
-        return console.log(err);
+    developmentServer.listen(port, HOST, (error) => {
+      if (error) {
+        return console.log(error);
       }
       return console.log(chalk.cyan('Starting the development server...\n'));
     });
 
     ['SIGINT', 'SIGTERM'].forEach((sig) => {
       process.on(sig, () => {
-        devServer.close();
+        developmentServer.close();
         process.exit();
       });
     });

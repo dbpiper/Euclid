@@ -7,7 +7,7 @@ const url = require('url');
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
-const envPublicUrl = process.env.PUBLIC_URL;
+const environmentPublicUrl = process.env.PUBLIC_URL;
 
 function ensureSlash(inputPath, needsSlash) {
   const hasSlash = inputPath.endsWith('/');
@@ -16,7 +16,8 @@ function ensureSlash(inputPath, needsSlash) {
   const endChar = inputPath.length - diffFromLength;
   if (hasSlash && !needsSlash) {
     return inputPath.substr(startChar, endChar);
-  } if (!hasSlash && needsSlash) {
+  }
+  if (!hasSlash && needsSlash) {
     return `${inputPath}/`;
   }
   return inputPath;
@@ -28,7 +29,7 @@ function ensureSlash(inputPath, needsSlash) {
    and I see no reason to change the code just for ESLint
 */
 // eslint-disable-next-line global-require, import/no-dynamic-require
-const getPublicUrl = appPackageJson => envPublicUrl || require(appPackageJson).homepage;
+const getPublicUrl = appPackageJson => environmentPublicUrl || require(appPackageJson).homepage;
 
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
 // "public path" at which the app is served.
@@ -38,7 +39,7 @@ const getPublicUrl = appPackageJson => envPublicUrl || require(appPackageJson).h
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
 function getServedPath(appPackageJson) {
   const publicUrl = getPublicUrl(appPackageJson);
-  const servedUrl = envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : '/');
+  const servedUrl = environmentPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : '/');
   return ensureSlash(servedUrl, true);
 }
 
@@ -58,8 +59,8 @@ const moduleFileExtensions = [
 
 // Resolve file paths in the same order as webpack
 const resolveModule = (resolveFn, filePath) => {
-  const extension = moduleFileExtensions.find(ext => (
-    fs.existsSync(resolveFn(`${filePath}.${ext}`))
+  const extension = moduleFileExtensions.find(moduleExtension => (
+    fs.existsSync(resolveFn(`${filePath}.${moduleExtension}`))
   ));
 
   if (extension) {
@@ -78,7 +79,7 @@ module.exports = {
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
-  appSrc: resolveApp('src'),
+  appSource: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveModule(resolveApp, 'src/setupTests'),

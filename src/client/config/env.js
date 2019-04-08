@@ -7,7 +7,9 @@ const paths = require('./paths');
 // Make sure that including paths.js after env.js will read .env variables.
 delete require.cache[require.resolve('./paths')];
 
-const { NODE_ENV } = process.env;
+const {
+  NODE_ENV
+} = process.env;
 if (!NODE_ENV) {
   throw new Error(
     'The NODE_ENV environment variable is required but was not specified.',
@@ -64,11 +66,10 @@ function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
     .reduce(
-      (env, key) => ({
-        ...env,
+      (environment, key) => ({
+        ...environment,
         key: process.env[key],
-      }),
-      {
+      }), {
         // Useful for determining whether we’re running in production mode.
         // Most importantly, it switches React into the correct mode.
         NODE_ENV: process.env.NODE_ENV || 'development',
@@ -81,13 +82,16 @@ function getClientEnvironment(publicUrl) {
     );
   // Stringify all values so we can feed into Webpack DefinePlugin
   const stringified = {
-    'process.env': Object.keys(raw).reduce((env, key) => ({
-      ...env,
+    'process.env': Object.keys(raw).reduce((environment, key) => ({
+      ...environment,
       key: JSON.stringify(raw[key]),
     }), {}),
   };
 
-  return { raw, stringified };
+  return {
+    raw,
+    stringified
+  };
 }
 
 module.exports = getClientEnvironment;

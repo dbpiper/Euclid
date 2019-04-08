@@ -7,8 +7,8 @@ process.env.NODE_ENV = 'production';
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on('unhandledRejection', (err) => {
-  throw err;
+process.on('unhandledRejection', (error) => {
+  throw error;
 });
 
 // Ensure environment variables are read.
@@ -44,7 +44,7 @@ const isInteractive = process.stdout.isTTY;
 const noWarnings = 0;
 const errorExitCode = 1;
 const endSpecial = -1;
-const argsToSkip = 2;
+const argumentsToSkip = 2;
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -53,7 +53,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 
 // Process CLI arguments
-const argv = process.argv.slice(argsToSkip);
+const argv = process.argv.slice(argumentsToSkip);
 const writeStatsJson = argv.indexOf('--stats') !== endSpecial;
 
 // Generate configuration
@@ -73,14 +73,14 @@ const build = (previousFileSizes) => {
 
   const compiler = webpack(config);
   return new Promise((resolve, reject) => {
-    compiler.run((err, stats) => {
+    compiler.run((error, stats) => {
       let messages;
-      if (err) {
-        if (!err.message) {
-          return reject(err);
+      if (error) {
+        if (!error.message) {
+          return reject(error);
         }
         messages = formatWebpackMessages({
-          errors: [err.message],
+          errors: [error.message],
           warnings: [],
         });
       } else {
@@ -120,7 +120,7 @@ const build = (previousFileSizes) => {
         return reject(new Error(messages.warnings.join('\n\n')));
       }
 
-      const resolveArgs = {
+      const resolveArguments = {
         stats,
         previousFileSizes,
         warnings: messages.warnings,
@@ -128,11 +128,11 @@ const build = (previousFileSizes) => {
       if (writeStatsJson) {
         return bfj
           .write(`${paths.appBuild} /bundle-stats.json`, stats.toJson())
-          .then(() => resolve(resolveArgs))
-          .catch(error => reject(new Error(error)));
+          .then(() => resolve(resolveArguments))
+          .catch(error2 => reject(new Error(error2)));
       }
 
-      return resolve(resolveArgs);
+      return resolve(resolveArguments);
     });
   });
 };

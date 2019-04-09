@@ -1,7 +1,5 @@
-// tslint:disable-next-line: no-reference
-/// <reference path="config/types/slack-notify/index.d.ts" />
-
 // tslint:disable: no-console
+import SlackNotifyStatus from '@dbpiper/slack-notify-status';
 import { registry } from 'gulp';
 import {
   ErrorableRegistry,
@@ -11,9 +9,9 @@ import {
 } from 'gulp-errorable';
 import terminalSpawn from 'terminal-spawn';
 
+import SlackInfo from './config/gulp/helpers/slack-info';
 import './config/loadDotenv.ts';
 
-import { slackSendMessage, startTimer } from './config/gulp/helpers/slack';
 import {
   cypressInstall,
   cypressInstallCi,
@@ -42,7 +40,12 @@ const _commands = {
   },
 };
 
-const _slackErrorHandler: ErrorHandlingFunction = () => slackSendMessage(false);
+const _slackNotifyStatus = new SlackNotifyStatus({
+  slackUrl: SlackInfo.url,
+  slackChannel: SlackInfo.channel,
+});
+const _slackErrorHandler: ErrorHandlingFunction = () =>
+  _slackNotifyStatus.slackSendMessage(false);
 
 // -----------------------------------------------------------------------------
 // Gulp Registry
@@ -57,13 +60,13 @@ registry(new ErrorableRegistry(_slackErrorHandler));
 // Slack
 
 const _slackNotify = async () => {
-  const slackPromise = slackSendMessage();
+  const slackPromise = _slackNotifyStatus.slackSendMessage();
   await slackPromise;
   return Promise.resolve();
 };
 
 const _registerSlackNotify = () => {
-  startTimer();
+  _slackNotifyStatus.timer.start();
   return Promise.resolve();
 };
 

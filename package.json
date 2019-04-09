@@ -22,7 +22,6 @@
     "jest-cli": "^24.7.1",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
-    "slack-notify": "^0.1.7",
     "terminal-spawn": "^2.0.3",
     "undertaker": "^1.2.0",
     "wait-on": "^3.2.0"
@@ -31,6 +30,7 @@
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
+    "@dbpiper/slack-notify-status": "^1.0.0-beta.2",
     "@types/jest": "^24.0.11",
     "babel-eslint": "^10.0.1",
     "commitlint": "^7.5.2",

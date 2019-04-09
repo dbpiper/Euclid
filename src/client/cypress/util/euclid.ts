@@ -33,4 +33,11 @@ const findSearchArea = () => findElementRegex('div', 'Header.{2}SearchArea.*');
 const findSearchSection = () =>
   findElementRegex('section', 'SearchField.{2}SearchSection.*');
 
-export { findSearchArea, findElementRegex, findSearchSection };
+/**
+ * Finds the Cypress wrapped element of the Euclid ChartGroup's
+ * ChartBody. This can then be used to perform tests on the ChartBody.
+ */
+const findChartBody = () =>
+  findElementRegex('div', 'ChartGroup.{2}ChartBody.*');
+
+export { findChartBody, findSearchArea, findElementRegex, findSearchSection };

@@ -15,21 +15,25 @@ loadDotenvPath=$(readlink -e "${dir}/helper-scripts/load-dotenv.sh")
 prismaTemplate="${rootPath}/src/server/config/templates/prisma.yml"
 dockerComposeTemplate="${rootPath}/src/server/config/templates/docker-compose.yml"
 dockerfileTemplate="${rootPath}/src/server/config/templates/Dockerfile"
+cypressDotenvsTemplate="${rootPath}/src/client/cypress/config/templates/dotenvs.ts"
 
 # put them into a fake "array"
 envTemplateFiles="${envTemplateFiles} ${prismaTemplate}"
 envTemplateFiles="${envTemplateFiles} ${dockerComposeTemplate}"
 envTemplateFiles="${envTemplateFiles} ${dockerfileTemplate}"
+envTemplateFiles="${envTemplateFiles} ${cypressDotenvsTemplate}"
 
 # output files which are actually used by Euclid
 prisma="${rootPath}/src/server/prisma.yml"
 dockerCompose="${rootPath}/src/server/docker-compose.yml"
 dockerfile="${rootPath}/src/server/config/docker/prisma/Dockerfile"
+cypressDotenvs="${rootPath}/src/client/cypress/config/dotenvs.ts"
 
 # put them into a fake "array"
 envOutputFiles="${envOutputFiles} ${prisma}"
 envOutputFiles="${envOutputFiles} ${dockerCompose}"
 envOutputFiles="${envOutputFiles} ${dockerfile}"
+envOutputFiles="${envOutputFiles} ${cypressDotenvs}"
 
 mkdir -p "${rootPath}/src/server/config/docker/prisma"
 

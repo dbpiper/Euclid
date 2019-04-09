@@ -35,8 +35,6 @@ const _commands = {
     install: 'npm install',
     ci: 'npm ci',
     preCommit: 'npm run preCommit',
-    cypressE2eRun: 'npm run cypress:e2e:run',
-    cypressStorybookRun: 'npm run cypress:storybook:run',
   },
 };
 

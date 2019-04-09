@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^11.13.2",
     "cypress-visual-regression": "^1.0.0"
   }
 }

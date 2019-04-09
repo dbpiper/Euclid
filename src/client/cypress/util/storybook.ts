@@ -1,3 +1,5 @@
+import { getStorybookUrl } from '../config/dotenvs';
+
 /**
  * Get the internal storybook id of the component, this is needed to
  * open the iframe as its src attribute is unreliable and sometimes appears
@@ -9,7 +11,7 @@
  *
  * @param {string} componentName The name of the component to grab the id of
  */
-const getComponentId = (componentName: string) => {
+const _getComponentId = (componentName: string) => {
   const lowerCaseName: string = componentName.toLowerCase();
   const typedName = cy
     .get('input')
@@ -39,7 +41,7 @@ const getComponentId = (componentName: string) => {
  *
  * @param {string} storybookUrl The base url of the running storybook
  */
-const navigateToStorybookIFrame = (storybookUrl: string) => {
+const _navigateToStorybookIFrame = (storybookUrl: string) => {
   cy.get('@ComponentId').then(componentId => {
     const iframeUrl = `iframe.html?id=${componentId}`;
     cy.visit(`${storybookUrl}/${iframeUrl}`, {
@@ -65,8 +67,8 @@ const visitComponentStoryIFrame = (
   componentName: string,
 ) => {
   cy.visit(storybookUrl);
-  getComponentId(componentName);
-  navigateToStorybookIFrame(storybookUrl);
+  _getComponentId(componentName);
+  _navigateToStorybookIFrame(storybookUrl);
 };
 
-export { visitComponentStoryIFrame };
+export { getStorybookUrl, visitComponentStoryIFrame };

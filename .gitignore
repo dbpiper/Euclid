@@ -16,6 +16,7 @@
 /src/server/prisma.yml
 /src/server/docker-compose.yml
 /src/server/config/docker/prisma/Dockerfile
+/src/client/cypress/config/dotenvs.ts
 
 # Logs
 logs

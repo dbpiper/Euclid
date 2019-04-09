@@ -3,13 +3,14 @@ import {
   getReactSelectOption,
   getReactSelectOptionWithIndex,
 } from '../../util/react-select';
-import { visitComponentStoryIFrame } from '../../util/storybook';
-
-const storybookUrl = 'localhost:6006';
+import {
+  getStorybookUrl,
+  visitComponentStoryIFrame,
+} from '../../util/storybook';
 
 describe('Header', () => {
   specify('successfully loads', () => {
-    visitComponentStoryIFrame(storybookUrl, 'Header');
+    visitComponentStoryIFrame(getStorybookUrl(), 'Header');
   });
 
   describe('header tests', () => {

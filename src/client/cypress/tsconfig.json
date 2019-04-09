@@ -3,10 +3,13 @@
   "compilerOptions": {
     "baseUrl": "../node_modules",
     "target": "esnext",
-    "types": ["cypress"],
+    "types": ["cypress", "node"],
     "noEmit": false
   },
   "include": [
     "**/*.ts"
+  ],
+  "exclude": [
+    "**/templates/**"
   ]
 }

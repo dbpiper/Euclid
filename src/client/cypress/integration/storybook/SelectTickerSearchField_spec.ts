@@ -3,13 +3,14 @@ import {
   getReactSelectOption,
   getReactSelectOptionWithIndex,
 } from '../../util/react-select';
-import { visitComponentStoryIFrame } from '../../util/storybook';
-
-const storybookUrl = 'localhost:6006';
+import {
+  getStorybookUrl,
+  visitComponentStoryIFrame,
+} from '../../util/storybook';
 
 describe('SelectTickerSearchField tests', () => {
   specify('successfully loads', () => {
-    visitComponentStoryIFrame(storybookUrl, 'SelectTickerSearchField');
+    visitComponentStoryIFrame(getStorybookUrl(), 'SelectTickerSearchField');
   });
 
   specify('the topic selector works', () => {

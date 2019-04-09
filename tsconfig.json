@@ -10,6 +10,8 @@
     "src/client",
     "src/server",
     "config/loadDotenv.ts",
+    "config/types/**/*.ts",
+    "config/gulp-tasks/**/*.ts",
     "src/client/config/client-commands.ts"
-  ]
+  ],
 }

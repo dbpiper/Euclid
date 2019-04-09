@@ -14,17 +14,24 @@ loadDotenvPath=$(readlink -e "${dir}/helper-scripts/load-dotenv.sh")
 # template files containing the env vars that get replaced
 prismaTemplate="${rootPath}/src/server/config/templates/prisma.yml"
 dockerComposeTemplate="${rootPath}/src/server/config/templates/docker-compose.yml"
+dockerfileTemplate="${rootPath}/src/server/config/templates/Dockerfile"
+
 # put them into a fake "array"
 envTemplateFiles="${envTemplateFiles} ${prismaTemplate}"
 envTemplateFiles="${envTemplateFiles} ${dockerComposeTemplate}"
+envTemplateFiles="${envTemplateFiles} ${dockerfileTemplate}"
 
 # output files which are actually used by Euclid
 prisma="${rootPath}/src/server/prisma.yml"
 dockerCompose="${rootPath}/src/server/docker-compose.yml"
+dockerfile="${rootPath}/src/server/config/docker/prisma/Dockerfile"
+
 # put them into a fake "array"
 envOutputFiles="${envOutputFiles} ${prisma}"
 envOutputFiles="${envOutputFiles} ${dockerCompose}"
+envOutputFiles="${envOutputFiles} ${dockerfile}"
 
+mkdir -p "${rootPath}/src/server/config/docker/prisma"
 
 # cut's -f${index} syntax is 1-indexed instead of 0
 i=1

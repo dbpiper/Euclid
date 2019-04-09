@@ -42,4 +42,4 @@ before_script:
   - npx prisma deploy
   - npm run download-data
   - cd ../../
-script: npm run preCommit
+script: npm run verifyCi

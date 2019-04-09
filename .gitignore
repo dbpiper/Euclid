@@ -15,6 +15,7 @@
 # ignore the generated template dotenv files
 /src/server/prisma.yml
 /src/server/docker-compose.yml
+/src/server/config/docker/prisma/Dockerfile
 
 # Logs
 logs

@@ -51,6 +51,14 @@ const cypressStorybookRun = () =>
     'npx cypress run --config integrationFolder=cypress/integration/storybook',
   ).promise;
 
+const cypressStorybookUpdateSnapshots = () =>
+  terminalSpawn(
+    `npx cypress run \
+      --config integrationFolder=cypress/integration/storybook \
+      --env updateSnapshots=true \
+     `,
+  ).promise;
+
 const cypressE2eOpen = () =>
   terminalSpawn(
     'npx cypress open --config integrationFolder=cypress/integration/end-to-end',
@@ -76,6 +84,7 @@ export {
   cypressE2eRun,
   cypressE2eOpen,
   cypressStorybookRun,
+  cypressStorybookUpdateSnapshots,
   cypressStorybookOpen,
   storybookStart,
   startDevelopment,

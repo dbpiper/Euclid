@@ -11,6 +11,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import styled from 'styled-components';
 
 import getStocksQuery from '../queries/getStocksQuery';
 import { Stocks, StocksVariables } from '../queries/types/Stocks';
@@ -44,7 +45,14 @@ const darkTooltipContentStyle = {
   borderColor: '#5d5d5d',
 };
 
-class Chart extends React.Component<IChartProps, void> {
+const DoneLoadingSpan = styled.span`
+  visibility: hidden;
+`;
+
+class Chart extends React.Component<
+  IChartProps,
+  { doneAnimatingClass: string }
+> {
   public static defaultProps = {
     timeWindow: TimeWindow.ThreeYears,
     selectedTicker: 'AAPL',
@@ -62,10 +70,14 @@ class Chart extends React.Component<IChartProps, void> {
 
   constructor(props: IChartProps) {
     super(props);
+    this.state = {
+      doneAnimatingClass: 'not-done',
+    };
   }
 
   public render() {
     const { timeWindow, selectedTicker, getDateTime } = this.props;
+    const { doneAnimatingClass } = this.state;
     return (
       <StocksQuery
         query={getStocksQuery}
@@ -114,50 +126,63 @@ class Chart extends React.Component<IChartProps, void> {
             return unixTimeToDate(dateNumber);
           };
 
+          const doneWithAnimation = () => {
+            this.setState({
+              doneAnimatingClass: 'done-animating',
+            });
+          };
+
           const width = 730;
           const height = 250;
           const minTickGap = 30;
 
           return (
-            <LineChart
-              width={width}
-              height={height}
-              data={convertStocksToKeyedStocks(stocks)}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid stroke="#3d3d3d" strokeDasharray="3 3" />
-              <XAxis
-                dataKey="date"
-                scale="time"
-                type="number"
-                domain={['dataMin', 'dataMax']}
-                interval="preserveEnd"
-                tick={{ stroke: 'none', fill: '#c0bebb' }}
-                minTickGap={minTickGap}
-                tickFormatter={xTickFormatter}
+            <>
+              <DoneLoadingSpan
+                id="done-animating-checker"
+                className={doneAnimatingClass}
               />
-              <YAxis
-                tick={{ stroke: 'none', fill: '#c0bebb' }}
-                tickFormatter={yTickFormatter}
-              />
-              <Tooltip
-                formatter={tooltipFormatter}
-                labelFormatter={tooltipLabelFormatter}
-                contentStyle={darkTooltipContentStyle}
-              />
-              <Legend />
-              <Line
-                dot={false}
-                type="monotone"
-                dataKey={getTickerFromStocks(stocks)}
-                stroke="#8884d8"
-              />
-            </LineChart>
+              <LineChart
+                width={width}
+                height={height}
+                data={convertStocksToKeyedStocks(stocks)}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid stroke="#3d3d3d" strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="date"
+                  scale="time"
+                  type="number"
+                  domain={['dataMin', 'dataMax']}
+                  interval="preserveEnd"
+                  tick={{ stroke: 'none', fill: '#c0bebb' }}
+                  minTickGap={minTickGap}
+                  tickFormatter={xTickFormatter}
+                />
+                <YAxis
+                  tick={{ stroke: 'none', fill: '#c0bebb' }}
+                  tickFormatter={yTickFormatter}
+                />
+                <Tooltip
+                  formatter={tooltipFormatter}
+                  labelFormatter={tooltipLabelFormatter}
+                  contentStyle={darkTooltipContentStyle}
+                />
+                <Legend />
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey={getTickerFromStocks(stocks)}
+                  stroke="#8884d8"
+                  onAnimationEnd={doneWithAnimation}
+                />
+              </LineChart>
+            </>
           );
         }}
       </StocksQuery>

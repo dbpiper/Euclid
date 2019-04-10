@@ -1,3 +1,5 @@
-const compareSnapshotCommand = require('cypress-visual-regression/dist/command');
+import {
+  addMatchImageSnapshotCommand
+} from 'cypress-image-snapshot/command';
 
-compareSnapshotCommand();
+addMatchImageSnapshotCommand();

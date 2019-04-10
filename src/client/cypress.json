@@ -5,7 +5,5 @@
   "viewportHeight": 500,
   "viewportWidth": 1600,
   "watchForFileChanges": true,
-  "chromeWebSecurity": false,
-  "screenshotsFolder": "cypress/snapshots/actual",
-  "trashAssetsBeforeRuns": true
+  "chromeWebSecurity": false
 }

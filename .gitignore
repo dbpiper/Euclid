@@ -4,8 +4,8 @@
 # Generated Prisma directory
 **/generated/prisma-client/
 
-# Cypress screenshots
-**/cypress/snapshots/actual/
+# Cypress failed visual regression snapshot results
+**/__diff_output__/
 
 # dotenv file at root
 # will still commit the ones in config/dotenvs as these

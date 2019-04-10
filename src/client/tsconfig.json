@@ -24,9 +24,5 @@
   "include": [
     "src/**/*",
     "config/**/*"
-  ],
-  "types": [
-    "jest",
-    "enzyme"
   ]
 }

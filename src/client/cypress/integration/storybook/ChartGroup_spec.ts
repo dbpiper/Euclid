@@ -13,24 +13,14 @@ describe('ChartGroup', () => {
     describe('the chart works', () => {
       specify('the default view is the same', () => {
         cy.reload(true);
-        findChartBody()
-          .contains('Feb')
-          .then(() => {
-            cy.compareSnapshot('ChartGroup');
-          });
 
-        // findSearchArea()
-        //   .contains('All')
-        //   .parent()
-        //   .trigger('mouseover')
-        //   .click()
-        //   .then(() => {
-        //     getReactSelectOption()
-        //       .contains('Stocks')
-        //       .should('be.visible')
-        //       .trigger('mouseover')
-        //       .click();
-        //   });
+        findChartBody()
+          .find('#done-animating-checker')
+          .should('exist')
+          .should('have.class', 'done-animating')
+          .then(() => {
+            cy.matchImageSnapshot();
+          });
       });
     });
   });

@@ -6,6 +6,7 @@ slack-info.ts filter=git-crypt diff=git-crypt
 **/generated/prisma-client/** filter=git-crypt diff=git-crypt
 .graphqlconfig filter=git-crypt diff=git-crypt
 .env filter=git-crypt diff=git-crypt
+**/dropbox_uploader.sh filter=git-crypt diff=git-crypt
 
 # don't encrypt .gitattributes!
 .gitattributes !filter !diff

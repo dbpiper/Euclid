@@ -43,3 +43,8 @@ before_script:
   - npm run download-data
   - cd ../../
 script: npm run verifyCi
+after_failure:
+  - '[ -f ./config/ci/dropbox_uploader ] && ./config/ci/dropbox_uploader.sh \
+  upload src/client/cypress/snapshots travis-artifacts/$TRAVIS_JOB_NUMBER/'
+  - '[ -f ./config/ci/dropbox_uploader ] && ./config/ci/dropbox_uploader.sh \
+  upload src/client/cypress/videos travis-artifacts/$TRAVIS_JOB_NUMBER/'

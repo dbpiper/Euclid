@@ -1,25 +1,65 @@
-import { findChartBody } from '../../util/euclid';
+import { visualTestChart } from '../../util/euclid';
 import {
   getStorybookUrl,
   visitComponentStoryIFrame,
 } from '../../util/storybook';
 
-describe('ChartGroup', () => {
+describe('ChartGroup tests', () => {
   specify('successfully loads', () => {
     visitComponentStoryIFrame(getStorybookUrl(), 'ChartGroup');
   });
 
   describe('header tests', () => {
     describe('the chart works', () => {
-      specify('the default view is the same', () => {
-        cy.reload(true);
+      specify('the default view works', () => {
+        visualTestChart();
+      });
 
-        findChartBody()
-          .find('#done-animating-checker')
-          .should('exist')
-          .should('have.class', 'done-animating')
+      specify('YTD works', () => {
+        cy.contains('YTD')
+          .click()
           .then(() => {
-            cy.matchImageSnapshot();
+            visualTestChart();
+          });
+      });
+
+      specify('6 Months works', () => {
+        cy.contains('6 Months')
+          .click()
+          .then(() => {
+            visualTestChart();
+          });
+      });
+
+      specify('1 Year works', () => {
+        cy.contains('1 Year')
+          .click()
+          .then(() => {
+            visualTestChart();
+          });
+      });
+
+      specify('3 Years works', () => {
+        cy.contains('3 Years')
+          .click()
+          .then(() => {
+            visualTestChart();
+          });
+      });
+
+      specify('5 Years works', () => {
+        cy.contains('5 Years')
+          .click()
+          .then(() => {
+            visualTestChart();
+          });
+      });
+
+      specify('All Time works', () => {
+        cy.contains('All Time')
+          .click()
+          .then(() => {
+            visualTestChart();
           });
       });
     });

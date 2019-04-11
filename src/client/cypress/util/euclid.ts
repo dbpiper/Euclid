@@ -40,4 +40,19 @@ const findSearchSection = () =>
 const findChartBody = () =>
   findElementRegex('div', 'ChartGroup.{2}ChartBody.*');
 
-export { findChartBody, findSearchArea, findElementRegex, findSearchSection };
+const visualTestChart = () =>
+  cy
+    .get('#done-animating-checker')
+    .should('exist')
+    .should('have.class', 'done-animating')
+    .then(() => {
+      cy.matchImageSnapshot();
+    });
+
+export {
+  visualTestChart,
+  findChartBody,
+  findSearchArea,
+  findElementRegex,
+  findSearchSection,
+};

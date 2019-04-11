@@ -151,6 +151,7 @@
     "cypress:storybook:open": "npx gulp cypressStorybookOpen",
     "cypress:storybook:run": "npx gulp cypressStorybookRun",
     "cypress:storybook:update-snapshots": "npx gulp cypressStorybookUpdateSnapshots",
+    "cypress:storybook:open-update-snapshots": "npx gulp cypressStorybookOpenUpdateSnapshots",
     "generate:graphql-types": "npx gulp generateGraphQlTypes",
     "lint": "npx gulp lint",
     "preCommit": "npx gulp preCommit",

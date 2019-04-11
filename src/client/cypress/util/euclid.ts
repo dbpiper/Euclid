@@ -40,6 +40,20 @@ const findSearchSection = () =>
 const findChartBody = () =>
   findElementRegex('div', 'ChartGroup.{2}ChartBody.*');
 
+/**
+ * Finds the svg path which represents the curve of the chart, aka.
+ * the graph.
+ */
+const findChartCurve = () => cy.get('.recharts-curve.recharts-line-curve');
+
+const findChartGrid = () => cy.get('.recharts-cartesian-grid');
+
+/**
+ * Gets the surface of the chart, which is the actual svg element
+ * on which the chart is drawn on.
+ */
+const findChartSurface = () => cy.get('svg.recharts-surface').first();
+
 const visualTestChart = () =>
   cy
     .get('#done-animating-checker')
@@ -50,6 +64,9 @@ const visualTestChart = () =>
     });
 
 export {
+  findChartSurface,
+  findChartGrid,
+  findChartCurve,
   visualTestChart,
   findChartBody,
   findSearchArea,

@@ -71,13 +71,25 @@ class Chart extends React.Component<
   constructor(props: IChartProps) {
     super(props);
     this.state = {
-      doneAnimatingClass: 'not-done',
+      doneAnimatingClass: 'animation-in-progress',
     };
+  }
+  public handleAnimationStart() {
+    this.setState({
+      doneAnimatingClass: 'animation-in-progress',
+    });
+  }
+
+  public handleAnimationFinish() {
+    this.setState({
+      doneAnimatingClass: 'done-animating',
+    });
   }
 
   public render() {
     const { timeWindow, selectedTicker, getDateTime } = this.props;
     const { doneAnimatingClass } = this.state;
+    const handleAnimationFinish = this.handleAnimationFinish.bind(this);
     return (
       <StocksQuery
         query={getStocksQuery}
@@ -88,6 +100,12 @@ class Chart extends React.Component<
       >
         {({ loading, error, data }) => {
           if (error) return <p>Error :(</p>;
+
+          if (loading) {
+            if (doneAnimatingClass !== 'animation-in-progress') {
+              this.handleAnimationStart();
+            }
+          }
 
           const baseStocks: IStock[] = [
             {
@@ -124,12 +142,6 @@ class Chart extends React.Component<
           const tooltipLabelFormatter = (date: ReactText): string => {
             const dateNumber = reactTextToNumber(date);
             return unixTimeToDate(dateNumber);
-          };
-
-          const doneWithAnimation = () => {
-            this.setState({
-              doneAnimatingClass: 'done-animating',
-            });
           };
 
           const width = 730;
@@ -179,7 +191,7 @@ class Chart extends React.Component<
                   type="monotone"
                   dataKey={getTickerFromStocks(stocks)}
                   stroke="#8884d8"
-                  onAnimationEnd={doneWithAnimation}
+                  onAnimationEnd={handleAnimationFinish}
                 />
               </LineChart>
             </>

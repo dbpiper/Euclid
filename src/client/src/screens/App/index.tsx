@@ -1,8 +1,8 @@
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
+import { BatchHttpLink } from 'apollo-link-batch-http';
 import { onError } from 'apollo-link-error';
-import { HttpLink } from 'apollo-link-http';
 import 'normalize.css';
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
@@ -36,9 +36,10 @@ const client = new ApolloClient({
       }
       if (networkError) console.log(`[Network error]: ${networkError}`);
     }),
-    new HttpLink({
+    new BatchHttpLink({
       uri: serverUrl,
       credentials: 'same-origin',
+      batchInterval: 25,
     }),
   ]),
   cache: new InMemoryCache(),

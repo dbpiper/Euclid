@@ -108,7 +108,7 @@ class Chart extends React.Component<
         {({ loading, error, data }) => {
           if (error) return <p>Error :(</p>;
 
-          if (loading) {
+          if (loading && (!data || !data.stocks || data.stocks.length === 0)) {
             this.handleAnimationStart();
           }
 

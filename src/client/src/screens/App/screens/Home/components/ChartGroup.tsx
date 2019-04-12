@@ -44,12 +44,17 @@ const LinkButton = styled.button`
   margin: 0.5rem;
 `;
 
+interface ChartGroupProps {
+  getDateTime?: () => number;
+  timeWindow?: string;
+}
+
 interface IChartGroupState {
   timeWindow: string;
 }
 
-class ChartGroup extends React.Component<any, IChartGroupState> {
-  constructor(props: any) {
+class ChartGroup extends React.Component<ChartGroupProps, IChartGroupState> {
+  constructor(props: ChartGroupProps) {
     super(props);
     this.state = {
       timeWindow: TimeWindow.ThreeYears,
@@ -57,11 +62,10 @@ class ChartGroup extends React.Component<any, IChartGroupState> {
   }
 
   public funcSetTimeWindow(newTimeWindow: string) {
-    return () => (
+    return () =>
       this.setState({
         timeWindow: newTimeWindow,
-      })
-    );
+      });
   }
 
   public render() {

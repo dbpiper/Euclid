@@ -75,21 +75,25 @@ class Chart extends React.Component<
     };
   }
   public handleAnimationStart() {
-    this.setState({
-      doneAnimatingClass: 'animation-in-progress',
-    });
+    if (this.state.doneAnimatingClass !== 'animation-in-progress') {
+      this.setState({
+        doneAnimatingClass: 'animation-in-progress',
+      });
+    }
   }
 
-  public handleAnimationFinish() {
-    this.setState({
-      doneAnimatingClass: 'done-animating',
-    });
+  public handleAnimationEnd() {
+    if (this.state.doneAnimatingClass !== 'done-animating') {
+      this.setState({
+        doneAnimatingClass: 'done-animating',
+      });
+    }
   }
 
   public render() {
     const { timeWindow, selectedTicker, getDateTime } = this.props;
     const { doneAnimatingClass } = this.state;
-    const handleAnimationFinish = this.handleAnimationFinish.bind(this);
+    const handleAnimationEnd = this.handleAnimationEnd.bind(this);
     return (
       <StocksQuery
         query={getStocksQuery}
@@ -102,9 +106,7 @@ class Chart extends React.Component<
           if (error) return <p>Error :(</p>;
 
           if (loading) {
-            if (doneAnimatingClass !== 'animation-in-progress') {
-              this.handleAnimationStart();
-            }
+            this.handleAnimationStart();
           }
 
           const baseStocks: IStock[] = [
@@ -191,7 +193,7 @@ class Chart extends React.Component<
                   type="monotone"
                   dataKey={getTickerFromStocks(stocks)}
                   stroke="#8884d8"
-                  onAnimationEnd={handleAnimationFinish}
+                  onAnimationEnd={handleAnimationEnd}
                 />
               </LineChart>
             </>

@@ -49,6 +49,9 @@ const DoneLoadingSpan = styled.span`
   visibility: hidden;
 `;
 
+/** how long the chart animations takes in milliseconds */
+const animationDuration = 500;
+
 class Chart extends React.Component<
   IChartProps,
   { doneAnimatingClass: string }
@@ -193,6 +196,7 @@ class Chart extends React.Component<
                   type="monotone"
                   dataKey={getTickerFromStocks(stocks)}
                   stroke="#8884d8"
+                  animationDuration={animationDuration}
                   onAnimationEnd={handleAnimationEnd}
                 />
               </LineChart>

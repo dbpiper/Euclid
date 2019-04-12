@@ -64,7 +64,8 @@
     "installFromLock": "npm ci && npx gulp postinstallCi",
     "installStandard": "npm install && npx gulp postInstallStandard",
     "verify": "npx gulp verify",
-    "verifyCi": "npx gulp verifyCi"
+    "verifyCi": "npx gulp verifyCi",
+    "update-cypress-storybook-snapshots": "npx gulp updateCypressStorybookSnapshots"
   },
   "version": "0.0.0"
 }

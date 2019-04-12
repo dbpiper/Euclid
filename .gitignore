@@ -4,6 +4,9 @@
 # Generated Prisma directory
 **/generated/prisma-client/
 
+# Cypress failed visual regression snapshot results
+**/__diff_output__/
+
 # dotenv file at root
 # will still commit the ones in config/dotenvs as these
 # represent the deployment configurations
@@ -13,6 +16,7 @@
 /src/server/prisma.yml
 /src/server/docker-compose.yml
 /src/server/config/docker/prisma/Dockerfile
+/src/client/cypress/config/dotenvs.ts
 
 # Logs
 logs

@@ -17,15 +17,12 @@
     }
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/templates/**"
   ],
   "extends": "../../tsconfig-base",
   "include": [
     "src/**/*",
     "config/**/*"
-  ],
-  "types": [
-    "jest",
-    "enzyme"
   ]
 }

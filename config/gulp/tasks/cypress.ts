@@ -39,6 +39,8 @@ const _commands = {
     preCommit: 'npm run preCommit',
     cypressE2eRun: 'npm run cypress:e2e:run',
     cypressStorybookRun: 'npm run cypress:storybook:run',
+    cypressStorybookUpdateSnapshots:
+      'npm run cypress:storybook:update-snapshots',
   },
 };
 
@@ -95,8 +97,17 @@ const _runStorybook = () =>
     shell: false,
   });
 
+// -----------------------------------------------------------------------------
+// Tasks
+// -----------------------------------------------------------------------------
+
 const _cypressStorybookRun = () =>
   terminalSpawn(_commands.npm.cypressStorybookRun, {
+    cwd: _clientDirectory,
+  }).promise;
+
+const _cypressStorybookUpdateSnapshots = () =>
+  terminalSpawn(_commands.npm.cypressStorybookUpdateSnapshots, {
     cwd: _clientDirectory,
   }).promise;
 
@@ -199,6 +210,46 @@ const _testEuclidE2e = async () =>
     }
   });
 
+const updateCypressStorybookSnapshots = async () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      console.log('running Storybook snapshot update');
+      const isStorybookAlreadyRunning = await isReachable(_storybookUrl);
+      if (isStorybookAlreadyRunning) {
+        reject(new Error('storybook is already running!!'));
+      } else {
+        console.log('starting Storybook...');
+        const storybookSpawn = _runStorybook();
+        storybookSpawn.promise.catch(reason => reject(reason));
+        await _waitOnUrl(_storybookUrl);
+        console.log('Storybook is up');
+
+        const cypressProcess = await _cypressStorybookUpdateSnapshots();
+        console.log('cypress Storybook snapshot update finished running');
+
+        console.log('killing storybook...');
+        storybookSpawn.process.kill();
+        await _waitOnUrl(_storybookUrl, true);
+        console.log('Storybook successfully killed and is now down');
+
+        if (cypressProcess.status !== 0) {
+          reject(
+            new Error(
+              `The cypress Storybook snapshot update process exited abnormally\
+               with a non-zero exit code: ${cypressProcess.status}`,
+            ),
+          );
+        } else {
+          resolve(
+            'cypress Storybook snapshot update process completed successfully',
+          );
+        }
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+
 const runCypressTests = seriesPromise({
   name: 'runCypressTests',
   tasks: [_testStorybook, _testEuclidE2e],
@@ -214,4 +265,9 @@ const cypressInstallCi = () =>
     cwd: _cypressDirectory,
   }).promise;
 
-export { runCypressTests, cypressInstall, cypressInstallCi };
+export {
+  updateCypressStorybookSnapshots,
+  runCypressTests,
+  cypressInstall,
+  cypressInstallCi,
+};

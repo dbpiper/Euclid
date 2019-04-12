@@ -16,6 +16,7 @@ import {
   cypressInstall,
   cypressInstallCi,
   runCypressTests,
+  updateCypressStorybookSnapshots,
 } from './config/gulp/tasks/cypress';
 
 /* *****************************************************************************
@@ -35,8 +36,6 @@ const _commands = {
     install: 'npm install',
     ci: 'npm ci',
     preCommit: 'npm run preCommit',
-    cypressE2eRun: 'npm run cypress:e2e:run',
-    cypressStorybookRun: 'npm run cypress:storybook:run',
   },
 };
 
@@ -148,6 +147,12 @@ const verify = seriesPromise({
   tasks: [_registerSlackNotify, verifyCi, _slackNotify],
 });
 
-export { postInstallStandard, postinstallCi, verifyCi, verify };
+export {
+  updateCypressStorybookSnapshots,
+  postInstallStandard,
+  postinstallCi,
+  verifyCi,
+  verify,
+};
 
 export default verify;

@@ -50,7 +50,7 @@ const DoneLoadingSpan = styled.span`
 `;
 
 /** how long the chart animations takes in milliseconds */
-const animationDuration = 500;
+const animationDuration = 750;
 
 const baseStocks: IStock[] = [
   {

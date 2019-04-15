@@ -52,6 +52,15 @@ const DoneLoadingSpan = styled.span`
 /** how long the chart animations takes in milliseconds */
 const animationDuration = 500;
 
+const baseStocks: IStock[] = [
+  {
+    ticker: '',
+    date: 0,
+    price: 0,
+  },
+];
+let stocks = baseStocks;
+
 class Chart extends React.Component<
   IChartProps,
   { doneAnimatingClass: string }
@@ -111,15 +120,6 @@ class Chart extends React.Component<
           if (loading && (!data || !data.stocks || data.stocks.length === 0)) {
             this.handleAnimationStart();
           }
-
-          const baseStocks: IStock[] = [
-            {
-              ticker: '',
-              date: 0,
-              price: 0,
-            },
-          ];
-          let stocks = baseStocks;
 
           if (!loading) {
             if (

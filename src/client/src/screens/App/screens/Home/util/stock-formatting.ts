@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import memoizeOne from 'memoize-one';
 import * as R from 'ramda';
 
 import { IStock, ITickerData } from '../types/StockInterfaces';
@@ -13,17 +14,19 @@ import { IStock, ITickerData } from '../types/StockInterfaces';
  * @param {IStock[]} stocks The stock array to get the ticker from
  * @returns {string} ticker The ticker of the stock array
  */
-const getTickerFromStocks = (stocks: IStock[]): string => {
-  let first = _.first(stocks);
-  if (typeof first === 'undefined') {
-    if (stocks.length > 0) {
-      first = stocks[0];
-    }
+const getTickerFromStocks = memoizeOne(
+  (stocks: IStock[]): string => {
+    let first = _.first(stocks);
+    if (typeof first === 'undefined') {
+      if (stocks.length > 0) {
+        first = stocks[0];
+      }
 
-    return '';
-  }
-  return first.ticker;
-};
+      return '';
+    }
+    return first.ticker;
+  },
+);
 
 /**
  * Converts a vanilla stocks object array to a special stocks array that
@@ -38,7 +41,7 @@ const getTickerFromStocks = (stocks: IStock[]): string => {
  * @returns {ITickerData[]} The Recharts formatted data that was converted
  */
 // prettier-ignore
-const convertStocksToKeyedStocks = (stocks: IStock[]): ITickerData[] => {
+const convertStocksToKeyedStocks = memoizeOne((stocks: IStock[]): ITickerData[] => {
   if (stocks && stocks.length > 0) {
     // prettier-ignore
     return R.map((stockElem) => {
@@ -53,9 +56,6 @@ const convertStocksToKeyedStocks = (stocks: IStock[]): ITickerData[] => {
   }
 
   return [] as ITickerData[];
-};
+});
 
-export {
-  getTickerFromStocks,
-  convertStocksToKeyedStocks,
-};
+export { getTickerFromStocks, convertStocksToKeyedStocks };

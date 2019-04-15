@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import memoizeOne from 'memoize-one';
 import moment from 'moment';
 import { ReactText } from 'react';
 import { IStock } from '../types/StockInterfaces';
@@ -16,35 +17,34 @@ import TimeWindow from '../shared/TimeWindow';
  * @returns {number} The date as a unix timestamp which is the
  * earliest possible date that fits in our time slice, based on the time window.
  */
-const getEarliestDate = (
-  timeWindow: string,
-  startingDate: number,
-): number => {
-  const startingDateMoment = moment.unix(startingDate).utc();
-  const sixMonths = 6;
-  const oneYear = 1;
-  const threeYears = 3;
-  const fiveYears = 5;
+const getEarliestDate = memoizeOne(
+  (timeWindow: string, startingDate: number): number => {
+    const startingDateMoment = moment.unix(startingDate).utc();
+    const sixMonths = 6;
+    const oneYear = 1;
+    const threeYears = 3;
+    const fiveYears = 5;
 
-  switch (timeWindow) {
-    case TimeWindow.AllTime:
-      return 0;
-    case TimeWindow.YTD:
-      return moment
-        .utc(`01/01/${startingDateMoment.year()}`, 'MM/DD/YYYY')
-        .unix();
-    case TimeWindow.SixMonths:
-      return startingDateMoment.subtract(sixMonths, 'months').unix();
-    case TimeWindow.OneYear:
-      return startingDateMoment.subtract(oneYear, 'year').unix();
-    case TimeWindow.ThreeYears:
-      return startingDateMoment.subtract(threeYears, 'years').unix();
-    case TimeWindow.FiveYears:
-      return startingDateMoment.subtract(fiveYears, 'years').unix();
-    default:
-      return 0;
-  }
-};
+    switch (timeWindow) {
+      case TimeWindow.AllTime:
+        return 0;
+      case TimeWindow.YTD:
+        return moment
+          .utc(`01/01/${startingDateMoment.year()}`, 'MM/DD/YYYY')
+          .unix();
+      case TimeWindow.SixMonths:
+        return startingDateMoment.subtract(sixMonths, 'months').unix();
+      case TimeWindow.OneYear:
+        return startingDateMoment.subtract(oneYear, 'year').unix();
+      case TimeWindow.ThreeYears:
+        return startingDateMoment.subtract(threeYears, 'years').unix();
+      case TimeWindow.FiveYears:
+        return startingDateMoment.subtract(fiveYears, 'years').unix();
+      default:
+        return 0;
+    }
+  },
+);
 
 /**
  * Formats the unix timestamp as short month string. This is used
@@ -54,22 +54,24 @@ const getEarliestDate = (
  * @param {number} unixTime The date as a unix timestamp
  * @returns {string} The date formatted in a short month format
  */
-const monthFormat = (unixTime: number): string => {
-  const longestShortMonthName = 6;
-  const month = moment
-    .unix(unixTime)
-    .utc()
-    .format('MMMM');
+const monthFormat = memoizeOne(
+  (unixTime: number): string => {
+    const longestShortMonthName = 6;
+    const month = moment
+      .unix(unixTime)
+      .utc()
+      .format('MMMM');
 
-  if (month.length < longestShortMonthName) {
-    return month;
-  }
+    if (month.length < longestShortMonthName) {
+      return month;
+    }
 
-  return moment
-    .unix(unixTime)
-    .utc()
-    .format('MMM.');
-};
+    return moment
+      .unix(unixTime)
+      .utc()
+      .format('MMM.');
+  },
+);
 
 /**
  * Formats the unix timestamp in a medium length format, which combines
@@ -84,22 +86,24 @@ const monthFormat = (unixTime: number): string => {
  * @param {number} unixTime The date as a unix timestamp
  * @returns {string} The date formatted in a medium-length month and day format
  */
-const dayMonthFormat = (unixTime: number): string => {
-  const longestShortMonthName = 6;
-  const month = moment
-    .unix(unixTime)
-    .utc()
-    .format('MMMM D');
+const dayMonthFormat = memoizeOne(
+  (unixTime: number): string => {
+    const longestShortMonthName = 6;
+    const month = moment
+      .unix(unixTime)
+      .utc()
+      .format('MMMM D');
 
-  if (month.length < longestShortMonthName) {
-    return month;
-  }
+    if (month.length < longestShortMonthName) {
+      return month;
+    }
 
-  return moment
-    .unix(unixTime)
-    .utc()
-    .format('MMM. D');
-};
+    return moment
+      .unix(unixTime)
+      .utc()
+      .format('MMM. D');
+  },
+);
 
 /**
  * Formats the unix timestamp in a long format, which combines
@@ -113,13 +117,15 @@ const dayMonthFormat = (unixTime: number): string => {
  * @param {number} unixTime The date as a unix timestamp
  * @returns {string} The date formatted in a long month and day format
  */
-const longDayMonthFormat = (unixTime: number): string => {
-  const month = moment
-    .unix(unixTime)
-    .utc()
-    .format('MMMM D');
-  return month;
-};
+const longDayMonthFormat = memoizeOne(
+  (unixTime: number): string => {
+    const month = moment
+      .unix(unixTime)
+      .utc()
+      .format('MMMM D');
+    return month;
+  },
+);
 
 /**
  * Formats the unix timestamp date in an appropriate format based on how much
@@ -133,29 +139,31 @@ const longDayMonthFormat = (unixTime: number): string => {
  * which to measure the distance, usually the current timestamp.
  * @returns {string} The date formatted appropriately based on the range of time.
  */
-const getDateFormat = (
-  unixTime: number,
-  mostDistantDate: number,
-  // we'll just assume that the user wants to measure from right now
-  // unless told otherwise
-  timestampToMeasureFrom: number = moment.utc().unix(),
-): string => {
-  const longestLongMonthTime = 3;
-  const longestMedMonthTime = 7;
-  const elapsedMonths = moment
-    .unix(timestampToMeasureFrom)
-    .utc()
-    .diff(moment.unix(mostDistantDate).utc(), 'months');
+const getDateFormat = memoizeOne(
+  (
+    unixTime: number,
+    mostDistantDate: number,
+    // we'll just assume that the user wants to measure from right now
+    // unless told otherwise
+    timestampToMeasureFrom: number = moment.utc().unix(),
+  ): string => {
+    const longestLongMonthTime = 3;
+    const longestMedMonthTime = 7;
+    const elapsedMonths = moment
+      .unix(timestampToMeasureFrom)
+      .utc()
+      .diff(moment.unix(mostDistantDate).utc(), 'months');
 
-  if (elapsedMonths < longestLongMonthTime) {
-    return longDayMonthFormat(unixTime);
-  }
-  if (elapsedMonths < longestMedMonthTime) {
-    return dayMonthFormat(unixTime);
-  }
+    if (elapsedMonths < longestLongMonthTime) {
+      return longDayMonthFormat(unixTime);
+    }
+    if (elapsedMonths < longestMedMonthTime) {
+      return dayMonthFormat(unixTime);
+    }
 
-  return monthFormat(unixTime);
-};
+    return monthFormat(unixTime);
+  },
+);
 
 /**
  * Gets the earliest date in a list of stocks. Which is helpful for telling
@@ -164,14 +172,15 @@ const getDateFormat = (
  * @param {IStock[]} stocks The list of stocks to get the earliest date from
  * @returns {number} The earliest date from the list of stocks in unix time
  */
-const getEarliestDateInStocks = (stocks: IStock[]): number => {
-  const sortedStocks = _.sortBy(stocks, ['date']);
-  const firstStock = _.first(sortedStocks);
-  if (typeof firstStock === 'undefined') {
-    return 0;
-  }
-  return firstStock.date;
-};
+const getEarliestDateInStocks = memoizeOne(
+  (stocks: IStock[]): number => {
+    const earliestDate = _.minBy(stocks, 'date');
+    if (typeof earliestDate === 'undefined') {
+      return 0;
+    }
+    return earliestDate.date;
+  },
+);
 
 /**
  * Converts a unix time stamp to a date string, used by the tooltip
@@ -181,12 +190,12 @@ const getEarliestDateInStocks = (stocks: IStock[]): number => {
  * @returns {string} The date formatted as: MMMM D, YYYY
  */
 // prettier-ignore
-const unixTimeToDate = (unixTime: number): string => (
+const unixTimeToDate = memoizeOne((unixTime: number): string => (
   moment
     .unix(unixTime)
     .utc()
     .format('MMMM D, YYYY')
-);
+));
 
 /**
  * This function helps with converting between ReactText objects
@@ -197,28 +206,30 @@ const unixTimeToDate = (unixTime: number): string => (
  * is some sort of ReactText object or array of them
  * @returns {number} The number which we got from the text
  */
-const reactTextToNumber = (maybeText: ReactText | ReactText[]): number => {
-  let textArray: ReactText[];
-  let text: ReactText;
-  let num: number;
-  if (typeof maybeText !== 'string' && maybeText.hasOwnProperty('length')) {
-    textArray = maybeText as ReactText[];
-    text = textArray[0];
-  } else {
-    text = maybeText as ReactText;
-  }
+const reactTextToNumber = memoizeOne(
+  (maybeText: ReactText | ReactText[]): number => {
+    let textArray: ReactText[];
+    let text: ReactText;
+    let num: number;
+    if (typeof maybeText !== 'string' && maybeText.hasOwnProperty('length')) {
+      textArray = maybeText as ReactText[];
+      text = textArray[0];
+    } else {
+      text = maybeText as ReactText;
+    }
 
-  if (
-    (typeof maybeText === 'string' || typeof maybeText === 'object') &&
-    typeof text !== 'number'
-  ) {
-    num = Number.parseFloat(text);
-  } else {
-    num = maybeText as number;
-  }
+    if (
+      (typeof maybeText === 'string' || typeof maybeText === 'object') &&
+      typeof text !== 'number'
+    ) {
+      num = Number.parseFloat(text);
+    } else {
+      num = maybeText as number;
+    }
 
-  return num;
-};
+    return num;
+  },
+);
 
 export {
   getEarliestDate,

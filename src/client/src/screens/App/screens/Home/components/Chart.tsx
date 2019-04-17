@@ -49,6 +49,18 @@ const DoneLoadingSpan = styled.span`
   visibility: hidden;
 `;
 
+/** how long the chart animations takes in milliseconds */
+const animationDuration = 750;
+
+const baseStocks: IStock[] = [
+  {
+    ticker: '',
+    date: 0,
+    price: 0,
+  },
+];
+let stocks = baseStocks;
+
 class Chart extends React.Component<
   IChartProps,
   { doneAnimatingClass: string }
@@ -75,21 +87,25 @@ class Chart extends React.Component<
     };
   }
   public handleAnimationStart() {
-    this.setState({
-      doneAnimatingClass: 'animation-in-progress',
-    });
+    if (this.state.doneAnimatingClass !== 'animation-in-progress') {
+      this.setState({
+        doneAnimatingClass: 'animation-in-progress',
+      });
+    }
   }
 
-  public handleAnimationFinish() {
-    this.setState({
-      doneAnimatingClass: 'done-animating',
-    });
+  public handleAnimationEnd() {
+    if (this.state.doneAnimatingClass !== 'done-animating') {
+      this.setState({
+        doneAnimatingClass: 'done-animating',
+      });
+    }
   }
 
   public render() {
     const { timeWindow, selectedTicker, getDateTime } = this.props;
     const { doneAnimatingClass } = this.state;
-    const handleAnimationFinish = this.handleAnimationFinish.bind(this);
+    const handleAnimationEnd = this.handleAnimationEnd.bind(this);
     return (
       <StocksQuery
         query={getStocksQuery}
@@ -101,20 +117,9 @@ class Chart extends React.Component<
         {({ loading, error, data }) => {
           if (error) return <p>Error :(</p>;
 
-          if (loading) {
-            if (doneAnimatingClass !== 'animation-in-progress') {
-              this.handleAnimationStart();
-            }
+          if (loading && (!data || !data.stocks || data.stocks.length === 0)) {
+            this.handleAnimationStart();
           }
-
-          const baseStocks: IStock[] = [
-            {
-              ticker: '',
-              date: 0,
-              price: 0,
-            },
-          ];
-          let stocks = baseStocks;
 
           if (!loading) {
             if (
@@ -191,7 +196,8 @@ class Chart extends React.Component<
                   type="monotone"
                   dataKey={getTickerFromStocks(stocks)}
                   stroke="#8884d8"
-                  onAnimationEnd={handleAnimationFinish}
+                  animationDuration={animationDuration}
+                  onAnimationEnd={handleAnimationEnd}
                 />
               </LineChart>
             </>

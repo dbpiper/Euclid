@@ -153,6 +153,7 @@ export {
   postinstallCi,
   verifyCi,
   verify,
+  runCypressTests,
 };
 
 export default verify;

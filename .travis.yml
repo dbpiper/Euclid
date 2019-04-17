@@ -17,15 +17,13 @@ addons:
   apt:
     sources:
       - deadsnakes
-    packages:
-      - python3.7
-      - python3-pip
 services:
   - docker
 before_install:
   - openssl aes-256-cbc -K $encrypted_163f8f7b49e8_key -iv $encrypted_163f8f7b49e8_iv
     -in travis-key.enc -out travis-key -d
   - sudo apt-get update
+  - sudo apt-get install python3.7 python3-pip
   - sudo apt-get install git-crypt
   - git-crypt unlock travis-key
   - sudo pip3 install setuptools

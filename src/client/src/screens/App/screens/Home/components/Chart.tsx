@@ -13,6 +13,7 @@ import {
 } from 'recharts';
 import styled from 'styled-components';
 
+import { textColorHex } from 'App/shared/styles/text-color';
 import getStocksQuery from '../queries/getStocksQuery';
 import { Stocks, StocksVariables } from '../queries/types/Stocks';
 import TimeWindow from '../shared/TimeWindow';
@@ -43,7 +44,13 @@ interface IChartProps {
 const darkTooltipContentStyle = {
   backgroundColor: '#18181a',
   borderColor: '#5d5d5d',
+  color: textColorHex,
 };
+
+const ChartWrapper = styled.section`
+  display: inline-block;
+  background-color: #111111;
+`;
 
 const DoneLoadingSpan = styled.span`
   visibility: hidden;
@@ -154,7 +161,7 @@ class Chart extends React.Component<
           const minTickGap = 30;
 
           return (
-            <>
+            <ChartWrapper>
               <DoneLoadingSpan
                 id="done-animating-checker"
                 className={doneAnimatingClass}
@@ -200,7 +207,7 @@ class Chart extends React.Component<
                   onAnimationEnd={handleAnimationEnd}
                 />
               </LineChart>
-            </>
+            </ChartWrapper>
           );
         }}
       </StocksQuery>

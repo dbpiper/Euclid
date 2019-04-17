@@ -61,11 +61,12 @@
     "url": "git+https://github.com/dbpiper/Euclid.git"
   },
   "scripts": {
+    "cypress:run": "npx gulp runCypressTests",
     "installFromLock": "npm ci && npx gulp postinstallCi",
     "installStandard": "npm install && npx gulp postInstallStandard",
+    "update-cypress-storybook-snapshots": "npx gulp updateCypressStorybookSnapshots",
     "verify": "npx gulp verify",
-    "verifyCi": "npx gulp verifyCi",
-    "update-cypress-storybook-snapshots": "npx gulp updateCypressStorybookSnapshots"
+    "verifyCi": "npx gulp verifyCi"
   },
   "version": "0.0.0"
 }

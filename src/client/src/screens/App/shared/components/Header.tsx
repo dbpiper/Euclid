@@ -25,9 +25,7 @@ const SearchArea = styled.div`
 
 const Header = () => (
   <Head>
-    <Title>
-      Euclid
-    </Title>
+    <Title>Euclid</Title>
 
     <SearchArea>
       <ErrorBoundary>

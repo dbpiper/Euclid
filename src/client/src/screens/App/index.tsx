@@ -39,7 +39,6 @@ const client = new ApolloClient({
     new BatchHttpLink({
       uri: serverUrl,
       credentials: 'same-origin',
-      batchInterval: 25,
     }),
   ]),
   cache: new InMemoryCache(),

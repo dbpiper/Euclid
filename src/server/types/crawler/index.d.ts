@@ -1,8 +1,7 @@
 import crawler from 'crawler';
 
-import Cheerio from 'cheerio';
+import cheerio from 'cheerio';
 import { IncomingMessage } from 'http';
-import { JSDOM } from 'jsdom';
 import Request, { Options } from 'request';
 
 declare module 'crawler' {
@@ -21,7 +20,7 @@ declare module 'crawler' {
 
   export interface Response extends IncomingMessage {
     statusCode: number;
-    $: Cheerio | JSDOM;
+    $: typeof cheerio;
     charset: Encoding;
     body: string | Buffer;
     headers: object;
@@ -37,49 +36,49 @@ declare module 'crawler' {
 
   export interface CrawlerOptions extends Options {
     // Basic request options
-    uri: string;
-    timeout: number;
-    callback: CallbackFunction;
+    uri?: string;
+    timeout?: number;
+    callback?: CallbackFunction;
 
     // Schedule options
-    maxConnections: number;
-    rateLimit: number;
-    priorityRange: number;
-    priority: number;
+    maxConnections?: number;
+    rateLimit?: number;
+    priorityRange?: number;
+    priority?: number;
 
     // Retry options
-    retries: number;
-    retryTimeout: number;
+    retries?: number;
+    retryTimeout?: number;
 
     // Server-side DOM options
-    jQuery: boolean | string | object;
+    jQuery?: boolean | string | object;
 
     // Charset encoding
-    forceUTF8: boolean;
-    incomingEncoding: Encoding;
+    forceUTF8?: boolean;
+    incomingEncoding?: Encoding;
 
     // Cache
-    skipDuplicates: boolean;
+    skipDuplicates?: boolean;
 
     // Http headers
-    rotateUA: boolean;
-    userAgent: string | [];
-    referer: boolean;
-    headers: object;
+    rotateUA?: boolean;
+    userAgent?: string | [];
+    referer?: boolean;
+    headers?: object;
 
     // Other options
-    skipEventRequest: boolean;
-    autoWindowClose: boolean;
-    gzip: boolean;
-    method: HttpRequestMethods;
-    homogeneous: boolean;
+    skipEventRequest?: boolean;
+    autoWindowClose?: boolean;
+    gzip?: boolean;
+    method?: HttpRequestMethods;
+    homogeneous?: boolean;
   }
 
   export type OnEventFunction = (options: CrawlerOptions) => void;
 
   declare class Crawler {
     constructor(options: CrawlerOptions);
-    public queue(options: CrawlerOptions): void;
+    public queue(optionsOrUri: CrawlerOptions | string): void;
     public setLimiterProperty(
       limiter: string,
       property: string,

@@ -122,7 +122,7 @@ const findBestSellerNode = ($: CheerioAPI) => {
     .find(`*:contains(${bestSellerTitleText})`)
     .last()
     .parent()
-    .find('td.a-size-base > span > span')
+    .find('td')
     .map((_i, element) =>
       removeSeeTopTextBestSeller(
         $(element)

@@ -4,7 +4,7 @@ import HttpStatus from 'http-status-codes';
 
 import { prisma } from './generated/prisma-client';
 
-// import { crawlPage } from './src/crawlAmazon';
+import { crawlAmazon } from './src/amazon-crawler/crawlAmazon';
 import pullAndSaveData from './src/pullAndSaveData';
 import resolvers from './src/resolvers';
 
@@ -18,14 +18,14 @@ const _serverUrl = `${process.env.SERVER_PROTOCOL}://${
   process.env.SERVER_ADDRESS
 }:${process.env.SERVER_PORT}`;
 
+(async () => {
+  await crawlAmazon();
+})();
+
 const _featureFlags = Object.freeze({
   __proto__: null,
   downloadData: _downloadDataArg,
 });
-
-// crawlPage(
-//   'Thermacell-Cartridge-Repellent-Protection-Mosquito-Free/dp/B01BGHU7R6',
-// );
 
 let playgroundUrl: string | false;
 

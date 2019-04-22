@@ -11,7 +11,7 @@ import { IFormattedStockData } from './types';
  * this is limited to avoid crashing the DB with tons of
  * simultaneous requests.
  */
-const batchSize: number = 50;
+const batchSize: number = 15;
 
 /**
  * Add each of the stocks pulled from IEX to the DB

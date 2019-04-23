@@ -10,6 +10,10 @@
     "no-unsafe-any": true,
     "no-any": {
       "severity": "warning"
-    }
+    },
+    "no-submodule-imports": [
+      true,
+      "rxjs"
+    ]
   }
 }

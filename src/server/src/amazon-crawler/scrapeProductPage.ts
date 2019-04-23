@@ -1,7 +1,6 @@
 import Globalize from 'globalize';
 import _ from 'lodash';
 import moment from 'moment';
-// tslint:disable-next-line: no-submodule-imports
 import { map } from 'rxjs/operators';
 import ObservableCrawler from './util/observableCrawler';
 
@@ -15,6 +14,7 @@ Globalize.loadTimeZone(require('iana-tz-data'));
 Globalize.locale('en-US');
 
 export interface AmazonProduct {
+  asin: string;
   url: string;
   name: string;
   seller: string;
@@ -142,7 +142,8 @@ const _findBestSellerNode = ($: CheerioAPI) => {
     .find(`*:contains(${bestSellerTitleText})`)
     .last()
     .parent()
-    .find('td')
+    .find('td > span')
+    .find('span')
     .map((_i, element) =>
       _removeSeeTopTextBestSeller(
         $(element)
@@ -200,12 +201,12 @@ const _parseImageUrl = ($: CheerioAPI) =>
   // idea if we'll even use the image I'm using this hack for now.
   $('#landingImage').attr('data-old-hires');
 
-const scrapeProductPage = (productPath: string) =>
+const scrapeProductPage = (asin: string) =>
   new Promise<AmazonProduct | Error>((resolve, reject) => {
     const crawler = new ObservableCrawler({
       maxConnections: 10,
     });
-    crawler.queue(`https://www.amazon.com/${productPath}`);
+    crawler.queue(`https://www.amazon.com/dp/${asin}/`);
 
     crawler.crawlerResult$
       .pipe(
@@ -216,6 +217,7 @@ const scrapeProductPage = (productPath: string) =>
           const amazonPriceObject = _parsePrice($);
           if (url) {
             const amazonProduct: AmazonProduct = {
+              asin,
               url,
               name: $('#productTitle')
                 .text()
@@ -268,7 +270,7 @@ const scrapeProductPage = (productPath: string) =>
         if (amazonProduct) {
           resolve(amazonProduct);
         } else {
-          reject(new Error(`unable to scrape product: ${productPath}`));
+          reject(new Error(`unable to scrape product: ${asin}`));
         }
       });
   });

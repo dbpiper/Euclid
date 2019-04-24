@@ -259,6 +259,7 @@ const scrapeProductPage = (asin: string) =>
               modelNumber: _parseModelNumber($),
               date: moment.utc().unix(),
             };
+            console.log(amazonProduct);
             return amazonProduct;
           }
 
